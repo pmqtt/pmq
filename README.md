@@ -1,4 +1,4 @@
-# PMQ: MQTT Message Broker and Messagebus
+# PMQ: MQTT Message Broker and Message bus
 
 
 PMQ will be a high-performance, distributed MQTT message broker and messagebus. 
