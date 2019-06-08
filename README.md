@@ -3,7 +3,7 @@
 
 PMQ will be a high-performance, distributed MQTT message broker and message bus. 
 
-PMQ implements the MQTT 3.1 and 3.1.1 specifiaction with qualatiy of service 1.
+PMQ implements the MQTT 3.1 and 3.1.1 specifiaction with qualaty of service 1.
 
 ### Roadmap
 * Support QOS 2
