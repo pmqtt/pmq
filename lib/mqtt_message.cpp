@@ -1,5 +1,5 @@
 //
-// Created by Michael Burzan on 2019-03-28.
+// Created by PMQTT on 2019-03-28.
 //
 
 #include "lib/mqtt_package.hpp"

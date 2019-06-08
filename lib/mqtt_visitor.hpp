@@ -1,5 +1,5 @@
 //
-// Created by Michael Burzan on 2019-04-14.
+// Created by PMQTT on 2019-04-14.
 //
 
 #ifndef PMQ_MQTT_VISITOR_HPP

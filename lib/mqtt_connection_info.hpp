@@ -1,5 +1,5 @@
 //
-// Created by Michael Burzan on 2019-04-12.
+// Created by PMQTT on 2019-04-12.
 //
 
 #ifndef PMQ_MQTT_CONNECTION_INFO_HPP

@@ -1,5 +1,5 @@
 //
-// Created by Michael Burzan on 2019-04-04.
+// Created by PMQTT on 2019-04-04.
 //
 
 #ifndef PMQ_MQTT_EXCEPTION_HPP

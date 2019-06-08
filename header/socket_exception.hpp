@@ -1,5 +1,5 @@
 //
-// Created by Michael Burzan on 2019-03-28.
+// Created by PMQTT on 2019-03-28.
 //
 
 #ifndef PMQ_SOCKET_EXCEPTION_HPP

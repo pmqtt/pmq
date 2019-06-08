@@ -1,5 +1,5 @@
 //
-// Created by Michael Burzan on 2019-04-13.
+// Created by PMQTT on 2019-04-13.
 //
 
 #ifndef PMQ_MQTT_BAD_HEADER_EXCEPTION_HPP

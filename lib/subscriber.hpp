@@ -1,5 +1,5 @@
 //
-// Created by Michael Burzan on 2019-05-03.
+// Created by PMQTT on 2019-05-03.
 //
 
 #ifndef PMQ_SUBSCRIBER_HPP
