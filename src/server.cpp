@@ -22,14 +22,15 @@ pmq::server::~server() {
 }
 
 void pmq::server::run(){
+    tcp::socket *socket = nullptr;
     while(this->should_service_run){
-        tcp::socket *socket = new tcp::socket(this->io_context);
+        socket = new tcp::socket(this->io_context);
         this->acceptor.accept(*socket);
         auto process_func = std::bind(&server::process,this,
                                       std::make_shared<pmq::socket>(socket));
         this->client_threads.emplace_back( std::make_shared<boost::thread>(process_func) );
     }
-    clean_up();
+    clean_up(socket);
 }
 
 
@@ -53,8 +54,11 @@ void pmq::server::process(std::shared_ptr<pmq::socket> & socket) {
     }
 }
 
-void pmq::server::clean_up() {
-
+void pmq::server::clean_up(tcp::socket * socket) {
+    if(socket != nullptr) {
+        delete socket;
+        socket = nullptr;
+    }
 }
 
 void pmq::server::visit(pmq::mqtt_connect *msg) {

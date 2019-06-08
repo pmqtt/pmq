@@ -109,7 +109,7 @@ namespace pmq{
 
     private:
         void process(std::shared_ptr<pmq::socket> & socket);
-        void clean_up();
+        void clean_up(tcp::socket * socket);
 
 
 
