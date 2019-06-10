@@ -18,14 +18,26 @@ Everybody is welcome!
 
 ### Building PMQ
 
-Note: PMQ requires BOOST 1.65 or newer.
-
+Note: PMQ requires 
+* BOOST 1.65 or newer 
+* microsofts cpprestsdk
 
 ```shell
 $ cd $PMQ
 $ cmake .
 $ make
-```    
+```
+#### Troubleshooting
+On MAC OS X I have discovered, that buiding PMQ with cpprestsdk can hard to compile.
+If you see this error message from cmake
+```shell
+Could NOT find OpenSSL, try to set the path to OpenSSL root folder in the
+  system variable OPENSSL_ROOT_DIR (missing: OPENSSL_INCLUDE_DIR)
+```
+Try to call cmake with this command
+```shell
+$cmake -DOPENSSL_ROOT_DIR=[PATH TO OPENSSL_ROOT_DIR e.g  /usr/local/Cellar/openssl/1.0.2p/]
+
 
 ### Starting PMQ
 
