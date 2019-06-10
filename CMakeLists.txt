@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 
 find_package( Boost REQUIRED COMPONENTS system program_options thread date_time chrono unit_test_framework fiber log log_setup)
+find_package( cpprestsdk REQUIRED)
+
 add_definitions(-DBOOST_LOG_DYN_LINK)
 
 include_directories(${PROJECT_BINARY_DIR} ${Boost_INCLUDE_DIRS})
@@ -24,7 +26,7 @@ add_executable(PMQ src/main.cpp
                 src/server.cpp header/server.hpp
                 header/null_deleter.hpp header/PMQConfigure.hpp
                 header/security.hpp header/startup_configuration.hpp
-        lib/socket.hpp header/socket_exception.hpp )
+        lib/socket.hpp header/socket_exception.hpp header/http_rest_server.hpp src/http_rest_server.cpp)
 
-target_link_libraries(PMQ ${Boost_LIBRARIES} pmqtt)
+target_link_libraries(PMQ ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)
 
