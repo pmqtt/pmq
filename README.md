@@ -6,6 +6,7 @@ PMQ will be a high-performance, distributed MQTT message broker and message bus.
 PMQ implements the MQTT 3.1 and 3.1.1 specifiaction with qualaty of service 1.
 
 ### Roadmap
+* REST API to configure and manage PMQ Message Broker
 * Support QOS 2
 * Support MQTT 5
 * Support Authentification
