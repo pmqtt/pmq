@@ -28,7 +28,7 @@ $ cmake .
 $ make
 ```
 #### Troubleshooting
-On MAC OS X I have discovered, that buiding PMQ with cpprestsdk can hard to compile.
+On MAC OS X I have discovered, that buiding PMQ with cpprestsdk is a little bit difficult.
 If you see this error message from cmake
 ```shell
 Could NOT find OpenSSL, try to set the path to OpenSSL root folder in the
