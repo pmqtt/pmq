@@ -9,7 +9,7 @@ PMQ implements the MQTT 3.1 and 3.1.1 specifiaction with qualaty of service 1.
 * REST API to configure and manage PMQ Message Broker
 * Support QOS 2
 * Support MQTT 5
-* Support Wildcard topics
+* Support Wildcard subscriptions
 * Support Authentification
 * Support TLS
 * Support for Websockets
