@@ -37,7 +37,7 @@ Could NOT find OpenSSL, try to set the path to OpenSSL root folder in the
 Try to call cmake with this command
 ```shell
 $cmake -DOPENSSL_ROOT_DIR=[PATH TO OPENSSL_ROOT_DIR e.g  /usr/local/Cellar/openssl/1.0.2p/]
-
+```
 
 ### Starting PMQ
 
