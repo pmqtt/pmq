@@ -4,8 +4,12 @@
 
 #include "lib/mqtt_static_package.hpp"
 #include "lib/subscriber.hpp"
+#include "header/client_factory.hpp"
+#include "header/tcp_client_factory.hpp"
 #include "header/server.hpp"
+#include "header/ssl_client_factory.hpp"
 
+#include <functional>
 #include <list>
 #include <map>
 #include <string>
@@ -18,19 +22,29 @@ namespace {
 
 
 pmq::server::~server() {
-
+    clean_up();
 }
 
-void pmq::server::run(){
-    tcp::socket *socket = nullptr;
+void pmq::server::run(pmq::client_factory & factory){
+
+    std::unique_ptr<pmq::client_factory> factory( new pmq::ssl_client_factory(io_context,this->port) );
     while(this->should_service_run){
-        socket = new tcp::socket(this->io_context);
-        this->acceptor.accept(*socket);
+        /*auto socket = create_socket();
+        create_acceptor(socket);
+
         auto process_func = std::bind(&server::process,this,
-                                      std::make_shared<pmq::socket>(socket));
-        this->client_threads.emplace_back( std::make_shared<boost::thread>(process_func) );
+                                      socket);
+        */
+        // this->client_threads.emplace_back( std::make_shared<boost::thread>(process_func) );
+        std::function< void(std::shared_ptr<pmq::socket>&)> f ([&](std::shared_ptr<pmq::socket>& socket){
+            this->process(socket);
+        });
+
+
+        auto client = factory->create_client_thread(f);
+        this->client_threads.emplace_back( client );
     }
-    clean_up(socket);
+    clean_up();
 }
 
 
@@ -54,11 +68,8 @@ void pmq::server::process(std::shared_ptr<pmq::socket> & socket) {
     }
 }
 
-void pmq::server::clean_up(tcp::socket * socket) {
-    if(socket != nullptr) {
-        delete socket;
-        socket = nullptr;
-    }
+void pmq::server::clean_up() {
+
 }
 
 void pmq::server::visit(pmq::mqtt_connect *msg) {

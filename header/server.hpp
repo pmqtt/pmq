@@ -10,6 +10,7 @@
 #include <boost/log/trivial.hpp>
 #include <vector>
 
+#include "header/client_factory.hpp"
 
 #include "lib/control_packet_type.hpp"
 #include "lib/mqtt_message.hpp"
@@ -73,14 +74,15 @@ namespace pmq{
 
     class server : public pmq::mqtt_visitor {
     public:
-        server(std::size_t port) :
+        server( std::size_t port ) :
             port(port),
-            acceptor(io_context,tcp::endpoint(tcp::v4(),this->port)),
             should_service_run(true){
             this->server_info = std::make_shared<server_information>();
         }
-        ~server();
-        void run();
+        virtual ~server();
+
+        virtual void run( pmq::client_factory & factory );
+        void process(std::shared_ptr<pmq::socket> & socket);
 
         void visit(mqtt_connect *msg) override;
 
@@ -107,17 +109,30 @@ namespace pmq{
         void visit(mqtt_controll_package<144, 2> *msg) override;
         void visit(pmq::mqtt_puback *msg) override;
 
-    private:
-        void process(std::shared_ptr<pmq::socket> & socket);
-        void clean_up(tcp::socket * socket);
 
+    private:
+        void clean_up();
+
+    protected:
+        boost::asio::io_context & get_io_context(){
+            return io_context;
+        }
+        virtual void create_acceptor(std::shared_ptr<pmq::socket> & socket){
+            tcp::acceptor acceptor(io_context,tcp::endpoint(tcp::v4(),this->port));
+            acceptor.accept(*socket->get_inner_socket());
+        }
+
+        virtual std::shared_ptr<pmq::socket>  create_socket(){
+            std::shared_ptr<pmq::socket> socket = std::make_shared<pmq::socket>(new tcp::socket(this->io_context));
+            return socket;
+        }
 
 
     private:
         std::shared_ptr<server_information> server_info;
         boost::asio::io_context io_context;
+        tcp::socket * inner_socket;
         std::size_t port;
-        tcp::acceptor acceptor;
         std::vector<std::shared_ptr<boost::thread>> client_threads;
         std::atomic_bool should_service_run;
 

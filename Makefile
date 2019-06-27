@@ -379,6 +379,60 @@ src/server.cpp.s:
 	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/server.cpp.s
 .PHONY : src/server.cpp.s
 
+src/ssl_client_factory.o: src/ssl_client_factory.cpp.o
+
+.PHONY : src/ssl_client_factory.o
+
+# target to build an object file
+src/ssl_client_factory.cpp.o:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/ssl_client_factory.cpp.o
+.PHONY : src/ssl_client_factory.cpp.o
+
+src/ssl_client_factory.i: src/ssl_client_factory.cpp.i
+
+.PHONY : src/ssl_client_factory.i
+
+# target to preprocess a source file
+src/ssl_client_factory.cpp.i:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/ssl_client_factory.cpp.i
+.PHONY : src/ssl_client_factory.cpp.i
+
+src/ssl_client_factory.s: src/ssl_client_factory.cpp.s
+
+.PHONY : src/ssl_client_factory.s
+
+# target to generate assembly for a file
+src/ssl_client_factory.cpp.s:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/ssl_client_factory.cpp.s
+.PHONY : src/ssl_client_factory.cpp.s
+
+src/tcp_client_factory.o: src/tcp_client_factory.cpp.o
+
+.PHONY : src/tcp_client_factory.o
+
+# target to build an object file
+src/tcp_client_factory.cpp.o:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/tcp_client_factory.cpp.o
+.PHONY : src/tcp_client_factory.cpp.o
+
+src/tcp_client_factory.i: src/tcp_client_factory.cpp.i
+
+.PHONY : src/tcp_client_factory.i
+
+# target to preprocess a source file
+src/tcp_client_factory.cpp.i:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/tcp_client_factory.cpp.i
+.PHONY : src/tcp_client_factory.cpp.i
+
+src/tcp_client_factory.s: src/tcp_client_factory.cpp.s
+
+.PHONY : src/tcp_client_factory.s
+
+# target to generate assembly for a file
+src/tcp_client_factory.cpp.s:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/tcp_client_factory.cpp.s
+.PHONY : src/tcp_client_factory.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -416,6 +470,12 @@ help:
 	@echo "... src/server.o"
 	@echo "... src/server.i"
 	@echo "... src/server.s"
+	@echo "... src/ssl_client_factory.o"
+	@echo "... src/ssl_client_factory.i"
+	@echo "... src/ssl_client_factory.s"
+	@echo "... src/tcp_client_factory.o"
+	@echo "... src/tcp_client_factory.i"
+	@echo "... src/tcp_client_factory.s"
 .PHONY : help
 
 
