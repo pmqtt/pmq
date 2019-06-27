@@ -9,9 +9,11 @@
 namespace pmq{
     class tcp_client_factory : public client_factory{
     public:
-        tcp_client_factory(boost::asio::io_context & context,std::size_t port);
+        tcp_client_factory(std::size_t port);
+
         virtual ~tcp_client_factory();
         std::shared_ptr<boost::thread> create_client_thread( std::function< void(std::shared_ptr<socket>&)> & process) override;
+
     private:
         void create_acceptor(std::shared_ptr<pmq::socket> & socket){
             tcp::acceptor acceptor(context,tcp::endpoint(tcp::v4(),this->port));
@@ -24,7 +26,7 @@ namespace pmq{
         }
     private:
 
-        boost::asio::io_context &context;
+        boost::asio::io_context context;
         std::size_t port;
 
     };

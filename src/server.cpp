@@ -25,23 +25,13 @@ pmq::server::~server() {
     clean_up();
 }
 
-void pmq::server::run(pmq::client_factory & factory){
+void pmq::server::run(pmq::client_factory & socket_factory){
 
-    std::unique_ptr<pmq::client_factory> factory( new pmq::ssl_client_factory(io_context,this->port) );
     while(this->should_service_run){
-        /*auto socket = create_socket();
-        create_acceptor(socket);
-
-        auto process_func = std::bind(&server::process,this,
-                                      socket);
-        */
-        // this->client_threads.emplace_back( std::make_shared<boost::thread>(process_func) );
         std::function< void(std::shared_ptr<pmq::socket>&)> f ([&](std::shared_ptr<pmq::socket>& socket){
             this->process(socket);
         });
-
-
-        auto client = factory->create_client_thread(f);
+        auto client = socket_factory.create_client_thread(f);
         this->client_threads.emplace_back( client );
     }
     clean_up();

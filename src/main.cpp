@@ -5,6 +5,8 @@
 #include <boost/program_options.hpp>
 #include <boost/shared_ptr.hpp>
 #include <iostream>
+#include <header/tcp_client_factory.hpp>
+#include <header/ssl_client_factory.hpp>
 
 #include "header/null_deleter.hpp"
 #include "header/PMQConfigure.hpp"
@@ -22,7 +24,11 @@ pmq::config parse_program_options(int argc,char **argv){
             ("help,h", "Help screen")
             ("version,v", "print version")
             ("port,p", boost::program_options::value<int>()->default_value(1883) ,"MQTT Broker port")
-            ("rest-port,rp",boost::program_options::value<int>()->default_value(1884) ,"REST Interface port");
+            ("rest-port,rp",boost::program_options::value<int>()->default_value(1884) ,"REST Interface port")
+            ("tls-certificate",boost::program_options::value<std::string>(),"TLS certificate file")
+            ("tls-private-key",boost::program_options::value<std::string>(),"TLS private key")
+            ("tls-dh-file",boost::program_options::value<std::string>(),"DH file")
+            ;
 
     boost::program_options::variables_map vm;
     store(parse_command_line(argc, argv, desc), vm);
@@ -42,6 +48,15 @@ pmq::config parse_program_options(int argc,char **argv){
     }
     if(vm.count("rest-port")){
         conf.set_rest_port(vm["rest-port"].as<int>());
+    }
+    if(vm.count("tls-certificate")){
+        conf.set_tls_cert_path(vm["tls-certificate"].as<std::string>());
+    }
+    if(vm.count("tls-private-key")){
+        conf.set_tls_private_key(vm["tls-private-key"].as<std::string>());
+    }
+    if(vm.count("tls-dh-file")){
+        conf.set_tls_dh_file(vm["tls-dh-file"].as<std::string>());
     }
 
     return conf;
@@ -66,8 +81,15 @@ int main(int argc,char **argv,char **envp){
 
     auto rest_api_func = std::bind(&init_rest_api,std::ref(server),std::ref(conf));
     boost::thread rest_api_thread( rest_api_func );
+    if(conf.should_use_tls()){
+        auto client_factory = pmq::ssl_client_factory(conf.get_port(),conf);
+        server.run(client_factory);
+    }else{
+        auto client_factory = pmq::tcp_client_factory(conf.get_port());
+        server.run(client_factory);
+    }
 
-    server.run();
+
     rest_api_thread.join();
 
     return 0;
