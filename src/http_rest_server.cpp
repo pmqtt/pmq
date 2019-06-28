@@ -38,21 +38,26 @@ namespace pmq{
 
 
 
-    std::unique_ptr<http_rest_server> api_server;
+    std::shared_ptr<http_rest_server> api_server;
+    std::atomic_bool runLoop = true;
     void on_initialize(const string_t& address){
         uri_builder uri(address);
         uri.append_path(U("rest/api/v0.1/"));
 
         auto addr = uri.to_uri().to_string();
-        api_server = std::unique_ptr<http_rest_server>(new http_rest_server(addr));
-        api_server->open().wait();
-        while(true){
-            boost::this_thread::sleep_for(boost::chrono::seconds(1));
+        api_server = std::shared_ptr<http_rest_server>(new http_rest_server(addr));
+        if(api_server) {
+            api_server->open().wait();
+            while (runLoop) {
+                boost::this_thread::sleep_for(boost::chrono::seconds(1));
+            }
+            api_server->close().wait();
         }
 
     }
     void on_shutdown(){
-        api_server->close().wait();
+        runLoop = false;
+
     }
 
 }

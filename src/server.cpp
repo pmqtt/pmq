@@ -13,6 +13,8 @@
 #include <list>
 #include <map>
 #include <string>
+#include <header/acceptor_exception.hpp>
+#include <header/tls_handshake_exception.hpp>
 
 namespace {
     typedef std::map<std::string,std::list<std::shared_ptr<pmq::socket>>> SubscriptionContainer;
@@ -28,11 +30,15 @@ pmq::server::~server() {
 void pmq::server::run(pmq::client_factory & socket_factory){
 
     while(this->should_service_run){
-        std::function< void(std::shared_ptr<pmq::socket>&)> f ([&](std::shared_ptr<pmq::socket>& socket){
-            this->process(socket);
-        });
-        auto client = socket_factory.create_client_thread(f);
-        this->client_threads.emplace_back( client );
+        try {
+            std::function<void(std::shared_ptr<pmq::socket> &)> f([&](std::shared_ptr<pmq::socket> &socket) {
+                this->process(socket);
+            });
+            auto client = socket_factory.create_client_thread(f);
+            this->client_threads.emplace_back(client);
+        }catch ( const std::exception & e){
+            BOOST_LOG_TRIVIAL(error) << e.what();
+        }
     }
     clean_up();
 }

@@ -27,7 +27,7 @@ pmq::config parse_program_options(int argc,char **argv){
             ("rest-port,rp",boost::program_options::value<int>()->default_value(1884) ,"REST Interface port")
             ("tls-certificate",boost::program_options::value<std::string>(),"TLS certificate file")
             ("tls-private-key",boost::program_options::value<std::string>(),"TLS private key")
-            ("tls-dh-file",boost::program_options::value<std::string>(),"DH file")
+            ("tls-dh-file",boost::program_options::value<std::string>(),"Diffie-Hellman file")
             ;
 
     boost::program_options::variables_map vm;
@@ -75,21 +75,25 @@ int main(int argc,char **argv,char **envp){
     pmq::ring_zero::clean_argv(argc,&argv);
     pmq::ring_zero::clean_environment(&envp);
 
-
-
     pmq::server server;
-    auto rest_api_func = std::bind(&init_rest_api,std::ref(server),std::ref(conf));
-    boost::thread rest_api_thread( rest_api_func );
-    if(conf.should_use_tls()){
-        auto client_factory = pmq::ssl_client_factory(conf);
-        server.run(client_factory);
-    }else{
-        auto client_factory = pmq::tcp_client_factory(conf);
-        server.run(client_factory);
+    auto rest_api_func = std::bind(&init_rest_api, std::ref(server), std::ref(conf));
+    boost::thread rest_api_thread(rest_api_func);
+    try {
+        if (conf.should_use_tls()) {
+            auto client_factory = pmq::ssl_client_factory(conf);
+            server.run(client_factory);
+        } else {
+            auto client_factory = pmq::tcp_client_factory(conf);
+            server.run(client_factory);
+        }
+
+    }catch (const pmq::exception::config_exception & e){
+        std::cout<<e.what()<<std::endl;
+        pmq::on_shutdown();
     }
-
-
     rest_api_thread.join();
+
+
 
     return 0;
 }

@@ -4,8 +4,11 @@
 
 #ifndef PMQ_TCP_CLIENT_FACTORY_HPP
 #define PMQ_TCP_CLIENT_FACTORY_HPP
+#include "acceptor_exception.hpp"
 #include "client_factory.hpp"
 #include "startup_configuration.hpp"
+
+#include <string>
 namespace pmq{
     class tcp_client_factory : public client_factory{
     public:
@@ -16,8 +19,17 @@ namespace pmq{
 
     private:
         void create_acceptor(std::shared_ptr<pmq::socket> & socket){
+         try{
             tcp::acceptor acceptor(context,tcp::endpoint(tcp::v4(),config.get_port()));
             acceptor.accept(*socket->get_inner_socket());
+         }catch( const boost::system::system_error & e ){
+            throw pmq::exception::acceptor_exception("Listening on port "
+                                                     + std::to_string(config.get_port())
+                                                     + " not established -"
+                                                     + std::to_string(e.code().value())
+                                                     + " - Error message : "
+                                                     + e.what());
+            }
         }
 
         std::shared_ptr<pmq::socket>  create_socket(){
