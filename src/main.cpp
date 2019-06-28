@@ -77,15 +77,14 @@ int main(int argc,char **argv,char **envp){
 
 
 
-    pmq::server server(conf.get_port());
-
+    pmq::server server;
     auto rest_api_func = std::bind(&init_rest_api,std::ref(server),std::ref(conf));
     boost::thread rest_api_thread( rest_api_func );
     if(conf.should_use_tls()){
-        auto client_factory = pmq::ssl_client_factory(conf.get_port(),conf);
+        auto client_factory = pmq::ssl_client_factory(conf);
         server.run(client_factory);
     }else{
-        auto client_factory = pmq::tcp_client_factory(conf.get_port());
+        auto client_factory = pmq::tcp_client_factory(conf);
         server.run(client_factory);
     }
 

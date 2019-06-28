@@ -6,9 +6,9 @@
 
 
 namespace pmq{
-    ssl_client_factory::ssl_client_factory( std::size_t port,const pmq::config & cfg)
-        : port(port),
-          ssl_contex(boost::asio::ssl::context::sslv23){
+    ssl_client_factory::ssl_client_factory( const pmq::config & cfg)
+        : config(cfg), ssl_contex(boost::asio::ssl::context::sslv23){
+
 
         ssl_contex.set_options(
                   boost::asio::ssl::context::default_workarounds
@@ -33,7 +33,7 @@ namespace pmq{
         try {
 
             ssl_socket *socket = new ssl_socket(context, ssl_contex);
-            tcp::acceptor acceptor(context, tcp::endpoint(tcp::v4(), this->port));
+            tcp::acceptor acceptor(context, tcp::endpoint(tcp::v4(), config.get_port() ) );
             acceptor.accept(socket->lowest_layer());
             boost::system::error_code  ec;
             socket->handshake(boost::asio::ssl::stream_base::server,ec);

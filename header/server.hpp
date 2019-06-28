@@ -74,8 +74,7 @@ namespace pmq{
 
     class server : public pmq::mqtt_visitor {
     public:
-        server( std::size_t port ) :
-            port(port),
+        server(  ) :
             should_service_run(true){
             this->server_info = std::make_shared<server_information>();
         }
@@ -115,8 +114,6 @@ namespace pmq{
 
     private:
         std::shared_ptr<server_information> server_info;
-        boost::asio::io_context io_context;
-        std::size_t port;
         std::vector<std::shared_ptr<boost::thread>> client_threads;
         std::atomic_bool should_service_run;
 

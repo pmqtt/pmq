@@ -3,8 +3,8 @@
 //
 #include "header/tcp_client_factory.hpp"
 namespace pmq{
-    tcp_client_factory::tcp_client_factory(std::size_t port)
-            : port(port){
+    tcp_client_factory::tcp_client_factory(const pmq::config & cfg)
+            : config(cfg) {
     }
     tcp_client_factory::~tcp_client_factory() {
 
