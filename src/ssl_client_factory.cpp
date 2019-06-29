@@ -8,6 +8,9 @@
 
 
 namespace pmq{
+    /*
+     * synchron ssl handling with boost::asio
+     */
     ssl_client_factory::ssl_client_factory( const pmq::config & cfg)
         : config(cfg), ssl_contex(boost::asio::ssl::context::sslv23){
 
@@ -16,6 +19,7 @@ namespace pmq{
                   boost::asio::ssl::context::default_workarounds
                 | boost::asio::ssl::context::no_sslv2
                 | boost::asio::ssl::context::single_dh_use);
+
 
         ssl_contex.set_password_callback(boost::bind(&ssl_client_factory::get_password,this));
         ssl_contex.use_certificate_chain_file(cfg.get_tls_cert_path());
