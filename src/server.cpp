@@ -134,14 +134,15 @@ void pmq::server::visit(pmq::mqtt_ping_request *msg) {
     auto client_socket = msg->get_socket();
     pmq::mqtt_ping_response response(client_socket);
     response.send();
+}
+
+
+
+void pmq::server::visit(pmq::mqtt_ping_response * msg) {
 
 }
 
-void pmq::server::visit(pmq::mqtt_static_package<208, 0> *msg) {
-
-}
-
-void pmq::server::visit(pmq::mqtt_static_package<224, 0> *msg) {
+void pmq::server::visit(pmq::mqtt_disconnect *msg) {
 
 }
 
@@ -182,15 +183,15 @@ void pmq::server::visit(pmq::mqtt_pubrel *msg) {
 
 }
 
-void pmq::server::visit(pmq::mqtt_controll_package<32, 2> *msg) {
+void pmq::server::visit(pmq::mqtt_connack *msg) {
 
 }
 
-void pmq::server::visit(pmq::mqtt_controll_package<176, 2> *msg) {
+void pmq::server::visit(pmq::mqtt_unsuback *msg) {
 
 }
 
-void pmq::server::visit(pmq::mqtt_controll_package<144, 2> *msg) {
+void pmq::server::visit(pmq::mqtt_suback *msg) {
 
 }
 
