@@ -54,7 +54,7 @@ PMQ will start on port 1883
 ### Starting PMQ with TLS support
 ```shell
 $ cd $PMQ/
-$ ./PMQ ./PMQ --tls-certificat [server certificat] --tls-private-key [private key file] --tls-dh-file [Diffie file]
+$ ./PMQ  --tls-certificat [server certificat] --tls-private-key [private key file] --tls-dh-file [Diffie file]
 ```
 
 
