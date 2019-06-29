@@ -14,18 +14,18 @@ namespace pmq{
     ssl_client_factory::ssl_client_factory( const pmq::config & cfg)
         : config(cfg), ssl_contex(boost::asio::ssl::context::sslv23){
 
-
-        ssl_contex.set_options(
-                  boost::asio::ssl::context::default_workarounds
-                | boost::asio::ssl::context::no_sslv2
-                | boost::asio::ssl::context::single_dh_use);
-
-
-        ssl_contex.set_password_callback(boost::bind(&ssl_client_factory::get_password,this));
-        ssl_contex.use_certificate_chain_file(cfg.get_tls_cert_path());
-        ssl_contex.use_private_key_file(cfg.get_tls_private_key(),boost::asio::ssl::context::pem);
-        ssl_contex.use_tmp_dh_file(cfg.get_tls_dh_file());
-
+        try {
+            ssl_contex.set_options(
+                    boost::asio::ssl::context::default_workarounds
+                    | boost::asio::ssl::context::no_sslv2
+                    | boost::asio::ssl::context::single_dh_use);
+            ssl_contex.set_password_callback(boost::bind(&ssl_client_factory::get_password, this));
+            ssl_contex.use_certificate_chain_file(cfg.get_tls_cert_path());
+            ssl_contex.use_private_key_file(cfg.get_tls_private_key(), boost::asio::ssl::context::pem);
+            ssl_contex.use_tmp_dh_file(cfg.get_tls_dh_file());
+        }catch( const boost::system::system_error & e ){
+            throw pmq::exception::config_exception(e.what());
+        }
     }
     ssl_client_factory::~ssl_client_factory() {
 
