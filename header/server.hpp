@@ -23,8 +23,6 @@
 #include "lib/socket.hpp"
 
 
-
-
 using boost::asio::ip::tcp;
 
 namespace pmq{
@@ -49,6 +47,7 @@ namespace pmq{
         std::shared_ptr<pmq::mqtt_connection_info> connection_info;
 
     };
+
     struct server_information{
         std::chrono::system_clock::time_point server_started_at;
         std::vector<std::shared_ptr<client_information>> client_infos;
@@ -72,10 +71,11 @@ namespace pmq{
 
     };
 
-    class server : public pmq::mqtt_visitor {
+    class server {
     public:
-        server(  ) :
-            should_service_run(true){
+        server(  std::shared_ptr< pmq::mqtt_visitor> & handler ) :
+            should_service_run(true),
+            handler(handler){
             this->server_info = std::make_shared<server_information>();
         }
         virtual ~server();
@@ -83,30 +83,6 @@ namespace pmq{
         virtual void run( pmq::client_factory & socket_factory );
         void process(std::shared_ptr<pmq::socket> & socket);
 
-        void visit(mqtt_connect *msg) override;
-
-        void visit(mqtt_publish *msg) override;
-
-        void visit(mqtt_subscribe *msg) override;
-
-        void visit(mqtt_static_package<192, 0> *msg) override;
-
-        void visit(mqtt_static_package<208, 0> *msg) override;
-
-        void visit(mqtt_static_package<224, 0> *msg) override;
-
-        void visit(mqtt_controll_package<112, 2> *msg) override;
-
-        void visit(mqtt_controll_package<80, 2> *msg) override;
-
-        void visit(mqtt_controll_package<98, 2> *msg) override;
-
-        void visit(mqtt_controll_package<32, 2> *msg) override;
-
-        void visit(mqtt_controll_package<176, 2> *msg) override;
-
-        void visit(mqtt_controll_package<144, 2> *msg) override;
-        void visit(pmq::mqtt_puback *msg) override;
 
 
     private:
@@ -116,6 +92,7 @@ namespace pmq{
         std::shared_ptr<server_information> server_info;
         std::vector<std::shared_ptr<boost::thread>> client_threads;
         std::atomic_bool should_service_run;
+        std::shared_ptr< pmq::mqtt_visitor> handler;
 
     };
 }

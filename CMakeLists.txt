@@ -35,11 +35,13 @@ add_executable(PMQ
                 header/socket_exception.hpp
                 header/http_rest_server.hpp
                 src/http_rest_server.cpp
-        header/client_factory.hpp
+                header/client_factory.hpp
                 header/tcp_client_factory.hpp
                 src/tcp_client_factory.cpp
                 header/ssl_client_factory.hpp
-                src/ssl_client_factory.cpp )
+                src/ssl_client_factory.cpp
+                header/client_handler.hpp
+                src/client_handler.cpp)
 
 target_link_libraries(PMQ ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)
 

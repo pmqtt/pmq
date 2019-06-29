@@ -298,6 +298,33 @@ lib/subscriber.cpp.s:
 	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/subscriber.cpp.s
 .PHONY : lib/subscriber.cpp.s
 
+src/client_handler.o: src/client_handler.cpp.o
+
+.PHONY : src/client_handler.o
+
+# target to build an object file
+src/client_handler.cpp.o:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/client_handler.cpp.o
+.PHONY : src/client_handler.cpp.o
+
+src/client_handler.i: src/client_handler.cpp.i
+
+.PHONY : src/client_handler.i
+
+# target to preprocess a source file
+src/client_handler.cpp.i:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/client_handler.cpp.i
+.PHONY : src/client_handler.cpp.i
+
+src/client_handler.s: src/client_handler.cpp.s
+
+.PHONY : src/client_handler.s
+
+# target to generate assembly for a file
+src/client_handler.cpp.s:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/client_handler.cpp.s
+.PHONY : src/client_handler.cpp.s
+
 src/http_rest_server.o: src/http_rest_server.cpp.o
 
 .PHONY : src/http_rest_server.o
@@ -461,6 +488,9 @@ help:
 	@echo "... lib/subscriber.o"
 	@echo "... lib/subscriber.i"
 	@echo "... lib/subscriber.s"
+	@echo "... src/client_handler.o"
+	@echo "... src/client_handler.i"
+	@echo "... src/client_handler.s"
 	@echo "... src/http_rest_server.o"
 	@echo "... src/http_rest_server.i"
 	@echo "... src/http_rest_server.s"
