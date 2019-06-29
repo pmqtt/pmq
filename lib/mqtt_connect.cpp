@@ -88,3 +88,4 @@ void pmq::mqtt_connect::parse(const std::string &payload) {
 void pmq::mqtt_connect::accept(pmq::mqtt_visitor &v) {
     v.visit(this);
 }
+

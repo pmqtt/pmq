@@ -24,6 +24,63 @@ namespace pmq {
         }
 
         void accept(mqtt_visitor & v) override ;
+
+        unsigned int get_version() const {
+            return version;
+        }
+
+        unsigned int get_keep_alive() const {
+            return keep_alive;
+        }
+
+        bool is_user_name_flag() const {
+            return user_name_flag;
+        }
+
+        bool is_password_flag() const {
+            return password_flag;
+        }
+
+        bool is_will_retain() const {
+            return will_retain;
+        }
+
+        size_t get_will_qos() const {
+            return will_qos;
+        }
+
+        bool is_will_flag() const {
+            return will_flag;
+        }
+
+        bool is_clean_start() const {
+            return clean_start;
+        }
+
+        bool is_reserved() const {
+            return reserved;
+        }
+
+        const std::string &get_will_topic() const {
+            return will_topic;
+        }
+
+        const std::string &get_will_payload() const {
+            return will_payload;
+        }
+
+        const std::string &get_user_name() const {
+            return user_name;
+        }
+
+        const std::string &get_password() const {
+            return password;
+        }
+
+        const std::shared_ptr<mqtt_api> &get_api() const {
+            return api;
+        }
+
     private:
         std::size_t payload_length;
 
@@ -35,10 +92,14 @@ namespace pmq {
         bool password_flag;
         bool will_retain;
         std::size_t will_qos;
+
+    private:
         bool will_flag;
         bool clean_start;
         bool reserved;
         std::string client_id;
+
+    private:
         std::string will_topic;
         std::string will_payload;
         std::string user_name;

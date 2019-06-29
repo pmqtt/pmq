@@ -71,6 +71,7 @@ namespace pmq{
 
     };
 
+
     class server {
     public:
         server(  std::shared_ptr< pmq::mqtt_visitor> & handler ) :
