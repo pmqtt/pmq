@@ -1,7 +1,7 @@
 //
 // Created by PMQTT on 2019-03-03.
 //
-
+#include "header/bad_connection_exception.hpp"
 #include "header/client_factory.hpp"
 #include "header/tcp_client_factory.hpp"
 #include "header/server.hpp"
@@ -46,15 +46,19 @@ void pmq::server::process(std::shared_ptr<pmq::socket> & socket) {
         pmq::mqtt_message message(socket);
 
         std::shared_ptr<pmq::mqtt_package> package = message.create_package(client_info->connection_info);
+        package->accept(*(handler.get()));
 
-        pmq::mqtt_connack connack(socket, 0x0, 0x0);
-        connack.send();
         while (socket->is_connected()) {
             std::shared_ptr<pmq::mqtt_package> action_package = message.create_package(client_info->connection_info);
             action_package->accept(*(handler.get()));
         }
-    } catch (pmq::exception::socket_exception &e) {
-        BOOST_LOG_TRIVIAL(info) << "Client closed the connection";
+    }catch(const pmq::exception::bad_connection_exception & e){
+        BOOST_LOG_TRIVIAL(info)<<e.what();
+        pmq::mqtt_disconnect disconnect(socket);
+        disconnect.send();
+    }
+    catch (pmq::exception::socket_exception &e) {
+        BOOST_LOG_TRIVIAL(info) << "Client closed the connection: " << e.what();
     }
 }
 

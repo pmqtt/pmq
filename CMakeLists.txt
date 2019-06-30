@@ -24,6 +24,9 @@ add_library(pmqtt STATIC lib/control_packet_type.hpp
 
 
 add_executable(PMQ
+                header/acceptor_exception.hpp
+                header/bad_connection_exception.hpp
+                header/config_exception.hpp
                 src/main.cpp
                 src/server.cpp
                 header/server.hpp
@@ -41,7 +44,9 @@ add_executable(PMQ
                 header/ssl_client_factory.hpp
                 src/ssl_client_factory.cpp
                 header/client_handler.hpp
-                src/client_handler.cpp)
+                src/client_handler.cpp
+                header/storage.hpp
+                header/in_memory_storage.hpp src/in_memory_storage.cpp header/bad_connection_exception.hpp)
 
 target_link_libraries(PMQ ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)
 

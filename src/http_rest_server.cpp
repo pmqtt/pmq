@@ -6,7 +6,8 @@
 
 namespace pmq{
 
-    http_rest_server::http_rest_server(utility::string_t url) : listener(url)
+    http_rest_server::http_rest_server(utility::string_t url,const std::shared_ptr<pmq::storage> & storage_service)
+        : listener(url), storage_service(storage_service)
     {
         listener.support(methods::GET, std::bind(&http_rest_server::handle_get, this, std::placeholders::_1));
         listener.support(methods::PUT, std::bind(&http_rest_server::handle_put, this, std::placeholders::_1));
@@ -30,6 +31,25 @@ namespace pmq{
     }
 
     void http_rest_server::handle_post(http_request message){
+        BOOST_LOG_TRIVIAL(debug)<<"HANDLE POST";
+        auto paths = http::uri::split_path(http::uri::decode(message.relative_uri().path()));
+        if(!paths.empty()){
+            BOOST_LOG_TRIVIAL(debug)<<"EXTRACT JSON";
+            pplx::task<json::value> result = message.extract_json();
+            result.wait();
+            BOOST_LOG_TRIVIAL(debug)<<"EXTRACT JSON END";
+
+            json::value value = result.get();
+            BOOST_LOG_TRIVIAL(debug)<<"RESULT:"<<value;
+            json::object obj = value.as_object();
+
+            std::string user_name = obj.at("user").as_string();
+            std::string user_pwd = obj.at("password").as_string();
+            storage_service->add_user(user_name,user_pwd);
+            BOOST_LOG_TRIVIAL(debug)<<" POST: user_name: "+ user_name << " pwd: "<<user_pwd;
+            message.reply(status_codes::OK);
+        }
+        BOOST_LOG_TRIVIAL(debug)<<"HANDLE POST END";
     }
     void http_rest_server::handle_delete(http_request message){
     }
@@ -40,12 +60,12 @@ namespace pmq{
 
     std::shared_ptr<http_rest_server> api_server;
     std::atomic_bool runLoop = true;
-    void on_initialize(const string_t& address){
+    void on_initialize(const string_t& address,std::shared_ptr<pmq::storage> & storage_service){
         uri_builder uri(address);
         uri.append_path(U("rest/api/v0.1/"));
 
         auto addr = uri.to_uri().to_string();
-        api_server = std::shared_ptr<http_rest_server>(new http_rest_server(addr));
+        api_server = std::shared_ptr<http_rest_server>(new http_rest_server(addr,storage_service));
         if(api_server) {
             api_server->open().wait();
             while (runLoop) {

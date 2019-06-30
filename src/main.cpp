@@ -15,6 +15,8 @@
 #include "header/security.hpp"
 #include "header/server.hpp"
 #include "header/startup_configuration.hpp"
+#include "header/storage.hpp"
+#include "header/in_memory_storage.hpp"
 
 
 
@@ -29,6 +31,7 @@ pmq::config parse_program_options(int argc,char **argv){
             ("tls-certificate",boost::program_options::value<std::string>(),"TLS certificate file")
             ("tls-private-key",boost::program_options::value<std::string>(),"TLS private key")
             ("tls-dh-file",boost::program_options::value<std::string>(),"Diffie-Hellman file")
+            ("anonymous-login",boost::program_options::value<bool>()->default_value(true),"Allow or permit anoymous connection. Default is true")
             ;
 
     boost::program_options::variables_map vm;
@@ -59,13 +62,16 @@ pmq::config parse_program_options(int argc,char **argv){
     if(vm.count("tls-dh-file")){
         conf.set_tls_dh_file(vm["tls-dh-file"].as<std::string>());
     }
+    if(vm.count("anonymous-login")){
+        conf.set_allow_anonymous_login(vm["anonymous-login"].as<bool>());
+    }
 
     return conf;
 }
 
-void init_rest_api(pmq::server & server,pmq::config & conf){
+void init_rest_api(pmq::server & server,pmq::config & conf,std::shared_ptr<pmq::storage> & storage_service){
     BOOST_LOG_TRIVIAL(info)<< "START REST API: "<<"http://localhost:"+std::to_string(conf.get_rest_port());
-    pmq::on_initialize("http://localhost:"+std::to_string(conf.get_rest_port()));
+    pmq::on_initialize("http://localhost:"+std::to_string(conf.get_rest_port()),storage_service);
 
 }
 
@@ -76,10 +82,12 @@ int main(int argc,char **argv,char **envp){
     pmq::ring_zero::clean_argv(argc,&argv);
     pmq::ring_zero::clean_environment(&envp);
 
-    std::shared_ptr<pmq::mqtt_visitor> handler = std::make_shared<pmq::client_handler>();
+    std::shared_ptr<pmq::storage> storage_service = std::make_shared<pmq::in_memory_storage>();
+    std::shared_ptr<pmq::mqtt_visitor> handler = std::make_shared<pmq::client_handler>(storage_service,conf);
+
 
     pmq::server server(handler);
-    auto rest_api_func = std::bind(&init_rest_api, std::ref(server), std::ref(conf));
+    auto rest_api_func = std::bind(&init_rest_api, std::ref(server), std::ref(conf), std::ref(storage_service));
     boost::thread rest_api_thread(rest_api_func);
     try {
         if (conf.should_use_tls()) {

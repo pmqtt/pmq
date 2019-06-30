@@ -2,6 +2,7 @@
 // Created by pmqtt on 2019-06-29.
 //
 #include "header/client_handler.hpp"
+#include "lib/mqtt_connect.hpp"
 #include "lib/subscriber.hpp"
 
 namespace {
@@ -13,7 +14,30 @@ namespace {
 
 
 void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
+    BOOST_LOG_TRIVIAL(debug)<<"Handle connection";
+    bool hasEntrance = true;
 
+    if(msg->is_user_name_flag()){
+        BOOST_LOG_TRIVIAL(debug)<<"USERNAME:'"<<msg->get_user_name()<<"'";
+        BOOST_LOG_TRIVIAL(debug)<<"PASSWORD:'"<<msg->get_password()<<"'";
+        if(this->storage_service->exist_user(msg->get_user_name())){
+            if(this->storage_service->check_user_password(msg->get_user_name(),msg->get_password())){
+                hasEntrance = true;
+            }else{
+                BOOST_LOG_TRIVIAL(debug)<<"password wrong";
+                hasEntrance = false;
+            }
+        }else{
+            BOOST_LOG_TRIVIAL(debug)<<"user name doesn't exist";
+            hasEntrance = false;
+        }
+    }
+    if(!config.is_allow_anonymous_login() && !hasEntrance){
+        throw pmq::exception::bad_connection_exception("User name or password are wrong");
+    }
+    auto socket = msg->get_socket();
+    pmq::mqtt_connack connack( socket,0x0, 0x0);
+    connack.send();
 }
 
 void pmq::client_handler::visit(pmq::mqtt_publish *msg) {
@@ -128,6 +152,7 @@ void pmq::client_handler::visit(pmq::mqtt_pubrel *msg) {
 }
 
 void pmq::client_handler::visit(pmq::mqtt_connack *msg) {
+
 
 }
 

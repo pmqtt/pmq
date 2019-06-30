@@ -352,6 +352,33 @@ src/http_rest_server.cpp.s:
 	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/http_rest_server.cpp.s
 .PHONY : src/http_rest_server.cpp.s
 
+src/in_memory_storage.o: src/in_memory_storage.cpp.o
+
+.PHONY : src/in_memory_storage.o
+
+# target to build an object file
+src/in_memory_storage.cpp.o:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/in_memory_storage.cpp.o
+.PHONY : src/in_memory_storage.cpp.o
+
+src/in_memory_storage.i: src/in_memory_storage.cpp.i
+
+.PHONY : src/in_memory_storage.i
+
+# target to preprocess a source file
+src/in_memory_storage.cpp.i:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/in_memory_storage.cpp.i
+.PHONY : src/in_memory_storage.cpp.i
+
+src/in_memory_storage.s: src/in_memory_storage.cpp.s
+
+.PHONY : src/in_memory_storage.s
+
+# target to generate assembly for a file
+src/in_memory_storage.cpp.s:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/in_memory_storage.cpp.s
+.PHONY : src/in_memory_storage.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -494,6 +521,9 @@ help:
 	@echo "... src/http_rest_server.o"
 	@echo "... src/http_rest_server.i"
 	@echo "... src/http_rest_server.s"
+	@echo "... src/in_memory_storage.o"
+	@echo "... src/in_memory_storage.i"
+	@echo "... src/in_memory_storage.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

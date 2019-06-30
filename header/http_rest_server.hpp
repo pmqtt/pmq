@@ -10,6 +10,9 @@
 #include "cpprest/json.h"
 #include "cpprest/uri.h"
 
+#include "header/storage.hpp"
+
+
 using namespace web;
 using namespace http;
 using namespace utility;
@@ -20,7 +23,7 @@ namespace pmq {
     public:
         http_rest_server() {}
 
-        http_rest_server(utility::string_t url);
+        http_rest_server(utility::string_t url,const std::shared_ptr<pmq::storage> & storage_service);
 
         pplx::task<void> open() { return listener.open(); }
 
@@ -36,9 +39,10 @@ namespace pmq {
         void handle_delete(http_request message);
 
         http_listener listener;
+        std::shared_ptr<pmq::storage> storage_service;
     };
 
-    void on_initialize(const string_t& address);
+    void on_initialize(const string_t& address,std::shared_ptr<pmq::storage> & storage_service);
     void on_shutdown();
 
 }

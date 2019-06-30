@@ -1,6 +1,8 @@
 
 #ifndef PMQ_STARTUP_CONFIGURATION_HPP
 #define PMQ_STARTUP_CONFIGURATION_HPP
+
+#include <array>
 #include <cstdio>
 #include <string>
 #include "config_exception.hpp"
@@ -84,6 +86,10 @@ namespace pmq{
         std::string cert_file="";
         std::string private_key_file="";
         std::string dh_file="";
+        bool allow_anonymous_login = true;
+    public:
+
+
     public:
         config() : port(1883),rest_port(1884) { }
         config(const config & rhs):
@@ -92,7 +98,7 @@ namespace pmq{
             use_tls(rhs.use_tls),
             cert_file(rhs.cert_file),
             private_key_file(rhs.private_key_file),
-            dh_file(rhs.dh_file){
+            dh_file(rhs.dh_file),allow_anonymous_login(rhs.allow_anonymous_login){
         }
         config & operator=(const config &rhs){
             if(this != &rhs) {
@@ -102,6 +108,7 @@ namespace pmq{
                 this->cert_file = rhs.cert_file;
                 this->private_key_file = rhs.private_key_file;
                 this->dh_file = rhs.dh_file;
+                this->allow_anonymous_login = rhs.allow_anonymous_login;
             }
             return *this;
         }
@@ -144,6 +151,13 @@ namespace pmq{
             }
             create_tls_config_exception(use_tls);
             return false; //should never call
+        }
+        bool is_allow_anonymous_login() const {
+            return allow_anonymous_login;
+        }
+
+        void set_allow_anonymous_login(bool allowAnonymousLogin) {
+            allow_anonymous_login = allowAnonymousLogin;
         }
 
     };
