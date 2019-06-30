@@ -17,6 +17,10 @@ PMQ implements the MQTT 3.1 and 3.1.1 specifiaction with qualaty of service 1.
 ### Contribution
 Everybody is welcome!
 
+### Releated projects
+* eclipse mosquitto https://github.com/eclipse/mosquitto
+* vernemq https://github.com/vernemq/vernemq
+
 ### Building PMQ
 
 Note: PMQ requires 
