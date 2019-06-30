@@ -46,7 +46,7 @@ add_executable(PMQ
                 header/client_handler.hpp
                 src/client_handler.cpp
                 header/storage.hpp
-                header/in_memory_storage.hpp src/in_memory_storage.cpp header/bad_connection_exception.hpp)
+                header/in_memory_storage.hpp src/in_memory_storage.cpp header/bad_connection_exception.hpp header/rest_api.hpp)
 
 target_link_libraries(PMQ ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)
 
