@@ -2,7 +2,6 @@
 #include <boost/log/common.hpp>
 #include <boost/log/sinks.hpp>
 #include <boost/log/sources/logger.hpp>
-#include <boost/program_options.hpp>
 #include <boost/shared_ptr.hpp>
 #include <iostream>
 
@@ -21,53 +20,6 @@
 
 
 
-pmq::config parse_program_options(int argc,char **argv){
-    boost::program_options::options_description desc{"Options"};
-    desc.add_options()
-            ("help,h", "Help screen")
-            ("version,v", "print version")
-            ("port,p", boost::program_options::value<int>()->default_value(1883) ,"MQTT Broker port")
-            ("rest-port,rp",boost::program_options::value<int>()->default_value(1884) ,"REST Interface port")
-            ("tls-certificate",boost::program_options::value<std::string>(),"TLS certificate file")
-            ("tls-private-key",boost::program_options::value<std::string>(),"TLS private key")
-            ("tls-dh-file",boost::program_options::value<std::string>(),"Diffie-Hellman file")
-            ("anonymous-login",boost::program_options::value<bool>()->default_value(true),"Allow or permit anoymous connection. Default is true")
-            ;
-
-    boost::program_options::variables_map vm;
-    store(parse_command_line(argc, argv, desc), vm);
-    notify(vm);
-
-    if (vm.count("help")) {
-        std::cout << desc << '\n';
-        exit(0);
-    }
-    if (vm.count("version")) {
-        std::cout << "PMQ 2019 - v" << VERSION <<" - " <<std::endl;
-        exit(0);
-    }
-    pmq::config conf;
-    if(vm.count("port")){
-        conf.set_port(vm["port"].as<int>());
-    }
-    if(vm.count("rest-port")){
-        conf.set_rest_port(vm["rest-port"].as<int>());
-    }
-    if(vm.count("tls-certificate")){
-        conf.set_tls_cert_path(vm["tls-certificate"].as<std::string>());
-    }
-    if(vm.count("tls-private-key")){
-        conf.set_tls_private_key(vm["tls-private-key"].as<std::string>());
-    }
-    if(vm.count("tls-dh-file")){
-        conf.set_tls_dh_file(vm["tls-dh-file"].as<std::string>());
-    }
-    if(vm.count("anonymous-login")){
-        conf.set_allow_anonymous_login(vm["anonymous-login"].as<bool>());
-    }
-
-    return conf;
-}
 
 void init_rest_api(pmq::server & server,pmq::config & conf,std::shared_ptr<pmq::storage> & storage_service){
     BOOST_LOG_TRIVIAL(info)<< "START REST API: "<<"http://localhost:"+std::to_string(conf.get_rest_port());

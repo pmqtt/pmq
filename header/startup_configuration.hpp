@@ -163,4 +163,6 @@ namespace pmq{
     };
 }
 
+pmq::config parse_program_options(int argc,char **argv);
+
 #endif //PMQ_STARTUP_CONFIGURATION_HPP
