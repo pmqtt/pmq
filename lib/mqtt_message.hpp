@@ -12,7 +12,7 @@ namespace pmq {
     class mqtt_package;
     class mqtt_message {
     public:
-        mqtt_message(std::shared_ptr<pmq::socket> & client_socket) : client_socket(client_socket){
+        explicit mqtt_message(std::shared_ptr<pmq::socket> & client_socket) : client_socket(client_socket){
 
         }
 
@@ -21,7 +21,7 @@ namespace pmq {
         unsigned int read_length();
 
 
-        virtual ~mqtt_message(){}
+        virtual ~mqtt_message() = default;
     private:
         std::shared_ptr<pmq::socket> client_socket;
     };

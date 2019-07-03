@@ -4,8 +4,12 @@
 
 #ifndef PMQ_SSL_CLIENT_FACTORY_HPP
 #define PMQ_SSL_CLIENT_FACTORY_HPP
+
+#include <lib/tls_socket.hpp>
+
 #include "client_factory.hpp"
 #include "startup_configuration.hpp"
+
 namespace pmq{
     class ssl_client_factory : public client_factory{
     public:

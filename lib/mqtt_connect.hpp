@@ -12,7 +12,7 @@ namespace pmq {
     class mqtt_connect : public mqtt_package{
     public:
         mqtt_connect(std::shared_ptr<pmq::socket> & client_socket, std::size_t payload_length);
-        virtual ~mqtt_connect(){}
+        virtual ~mqtt_connect() = default;
 
         std::size_t get_payload_length() const override {
             return this->payload_length;
