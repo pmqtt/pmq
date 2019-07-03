@@ -47,7 +47,7 @@ namespace {
 
 
         // c | k | d
-        // 0  0  0 not used
+        // 0  0  0  not used
         // 0  0  1  Missing certificate and private key     ok ok
         // 0  1  0  Missing certificate and diffie hellman  ok ok
         // 0  1  1  Missing certificate                     ok ok

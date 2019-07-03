@@ -1,5 +1,5 @@
 //
-// Created by Michael Burzan on 2019-07-03.
+// Created by pmqtt on 2019-07-03.
 //
 
 #ifndef PMQ_TLS_SOCKET_HPP

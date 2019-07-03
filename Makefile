@@ -460,6 +460,33 @@ src/ssl_client_factory.cpp.s:
 	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/ssl_client_factory.cpp.s
 .PHONY : src/ssl_client_factory.cpp.s
 
+src/startup_configuration.o: src/startup_configuration.cpp.o
+
+.PHONY : src/startup_configuration.o
+
+# target to build an object file
+src/startup_configuration.cpp.o:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/startup_configuration.cpp.o
+.PHONY : src/startup_configuration.cpp.o
+
+src/startup_configuration.i: src/startup_configuration.cpp.i
+
+.PHONY : src/startup_configuration.i
+
+# target to preprocess a source file
+src/startup_configuration.cpp.i:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/startup_configuration.cpp.i
+.PHONY : src/startup_configuration.cpp.i
+
+src/startup_configuration.s: src/startup_configuration.cpp.s
+
+.PHONY : src/startup_configuration.s
+
+# target to generate assembly for a file
+src/startup_configuration.cpp.s:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/startup_configuration.cpp.s
+.PHONY : src/startup_configuration.cpp.s
+
 src/tcp_client_factory.o: src/tcp_client_factory.cpp.o
 
 .PHONY : src/tcp_client_factory.o
@@ -533,6 +560,9 @@ help:
 	@echo "... src/ssl_client_factory.o"
 	@echo "... src/ssl_client_factory.i"
 	@echo "... src/ssl_client_factory.s"
+	@echo "... src/startup_configuration.o"
+	@echo "... src/startup_configuration.i"
+	@echo "... src/startup_configuration.s"
 	@echo "... src/tcp_client_factory.o"
 	@echo "... src/tcp_client_factory.i"
 	@echo "... src/tcp_client_factory.s"
