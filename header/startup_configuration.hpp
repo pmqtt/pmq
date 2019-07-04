@@ -137,6 +137,12 @@ namespace pmq{
         std::string get_tls_private_key()const { return this->private_key_file; }
         std::string get_tls_dh_file()    const { return this->dh_file; }
 
+        std::string get_connection_type()const {
+            if(should_use_tls()){
+                return "TLS";
+            }
+            return "TCP";
+        }
 
         bool should_use_tls()const{
             int k = 0;

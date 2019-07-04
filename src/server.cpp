@@ -21,14 +21,14 @@ pmq::server::~server() {
     clean_up();
 }
 
-void pmq::server::run(pmq::client_factory & socket_factory){
+void pmq::server::run(std::shared_ptr<pmq::client_factory> & socket_factory){
 
     while(this->should_service_run){
         try {
             std::function<void(std::shared_ptr<pmq::socket> &)> f([&](std::shared_ptr<pmq::socket> &socket) {
                 this->process(socket);
             });
-            auto client = socket_factory.create_client_thread(f);
+            auto client = socket_factory->create_client_thread(f);
             this->client_threads.emplace_back(client);
         }catch ( const std::exception & e){
             BOOST_LOG_TRIVIAL(error) << e.what();
