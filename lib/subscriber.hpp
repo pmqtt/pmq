@@ -4,6 +4,7 @@
 
 #ifndef PMQ_SUBSCRIBER_HPP
 #define PMQ_SUBSCRIBER_HPP
+#include "mqtt_types.hpp"
 namespace pmq{
     class subscriber{
     public:
