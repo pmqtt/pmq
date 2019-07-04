@@ -37,4 +37,12 @@ bool pmq::in_memory_storage::exist_user(const std::string &name) {
     return user_password_map.count(name) > 0;
 }
 
+void pmq::in_memory_storage::add_client(const std::string & client_id) {
 
+}
+
+void pmq::in_memory_storage::add_client_subscription(const std::string & clientId,
+                             const std::string & topic,
+                             pmq::subscriber & sub){
+
+}

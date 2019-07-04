@@ -29,6 +29,12 @@ namespace pmq{
 
         bool exist_user(const std::string &name) override;
 
+        void add_client(const std::string & client_id) override;
+
+        void add_client_subscription(const std::string & clientId,
+                                             const std::string & topic,
+                                             pmq::subscriber & sub) override ;
+
     private:
         std::map<std::string,std::string> user_password_map;
         boost::mutex mutex;

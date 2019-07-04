@@ -20,11 +20,10 @@
 
 
 
-
 void init_rest_api(pmq::server & server,pmq::config & conf,std::shared_ptr<pmq::storage> & storage_service){
-    BOOST_LOG_TRIVIAL(info)<< "START REST API: "<<"http://localhost:"+std::to_string(conf.get_rest_port());
-    pmq::on_initialize("http://localhost:"+std::to_string(conf.get_rest_port()),storage_service);
-
+    const std::string rest_api_address = "http://localhost:"+std::to_string(conf.get_rest_port());
+    BOOST_LOG_TRIVIAL(info)<< "START REST API: "<< rest_api_address;
+    pmq::on_initialize(rest_api_address,storage_service);
 }
 
 int main(int argc,char **argv,char **envp){
@@ -42,6 +41,7 @@ int main(int argc,char **argv,char **envp){
     auto rest_api_func = std::bind(&init_rest_api, std::ref(server), std::ref(conf), std::ref(storage_service));
     boost::thread rest_api_thread(rest_api_func);
     try {
+
         if (conf.should_use_tls()) {
             auto client_factory = pmq::ssl_client_factory(conf);
             server.run(client_factory);
@@ -49,6 +49,7 @@ int main(int argc,char **argv,char **envp){
             auto client_factory = pmq::tcp_client_factory(conf);
             server.run(client_factory);
         }
+
 
     }catch (const pmq::exception::config_exception & e){
         std::cout<<e.what()<<std::endl;
