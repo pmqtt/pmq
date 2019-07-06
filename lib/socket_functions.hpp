@@ -1,0 +1,45 @@
+//
+// Created by PMQTT on 2019-07-06.
+//
+
+#ifndef PMQ_SOCKET_FUNCTIONS_HPP
+#define PMQ_SOCKET_FUNCTIONS_HPP
+
+
+#include <boost/asio.hpp>
+#include <boost/thread.hpp>
+#include <string>
+
+#include "header/socket_exception.hpp"
+
+namespace pmq{
+    namespace detail{
+        template<class SOCKET>
+        std::string read(SOCKET * inner_socket,std::size_t size){
+            try {
+                boost::asio::streambuf stream_buffer;
+
+                std::size_t x = boost::asio::read(*inner_socket, stream_buffer,
+                                                  boost::asio::transfer_exactly(size));
+                std::string res = {buffers_begin(stream_buffer.data()), buffers_begin(stream_buffer.data()) + x};
+                stream_buffer.consume(x);
+                if (x - size != 0)
+                    throw pmq::exception::socket_exception("Not enoght data in socket stream");
+
+                return res;
+            }catch(boost::system::system_error & e){
+                throw pmq::exception::socket_exception("socket is disconnected");
+            }
+        }
+
+        template<class SOCKET>
+        void write(SOCKET * inner_socket,boost::mutex & mutex,const std::string & msg){
+            boost::unique_lock<boost::mutex> lock(mutex);
+            boost::system::error_code ignored_error;
+            std::size_t x = boost::asio::write(*inner_socket,boost::asio::buffer(msg),ignored_error);
+
+        }
+    }
+}
+
+#endif //PMQ_SOCKET_FUNCTIONS_HPP

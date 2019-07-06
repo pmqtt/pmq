@@ -11,51 +11,24 @@
 #include <iostream>
 #include <vector>
 
+#include "socket_functions.hpp"
 #include "header/socket_exception.hpp"
 
 using boost::asio::ip::tcp;
 typedef boost::asio::ssl::stream<boost::asio::ip::tcp::socket> ssl_socket;
 
-namespace {
-    std::size_t read(boost::asio::ip::tcp::socket & socket,std::size_t size,boost::asio::streambuf &stream_buffer){
-        return boost::asio::read(socket, stream_buffer,
-                          boost::asio::transfer_exactly(size));
-    }
-    std::size_t read(ssl_socket & socket,std::size_t size,boost::asio::streambuf &stream_buffer){
-        return boost::asio::read(socket, stream_buffer,
-                                 boost::asio::transfer_exactly(size));
-    }
-
-
-}
 
 namespace pmq{
 
     class socket{
     public:
         virtual std::string read(std::size_t size){
-            try {
-                boost::asio::streambuf stream_buffer;
-
-                std::size_t x = boost::asio::read(*inner_socket, stream_buffer,
-                                                  boost::asio::transfer_exactly(size));
-                std::string res = {buffers_begin(stream_buffer.data()), buffers_begin(stream_buffer.data()) + x};
-                stream_buffer.consume(x);
-                if (x - size != 0)
-                    throw pmq::exception::socket_exception("Not enoght data in socket stream");
-
-                return res;
-            }catch(boost::system::system_error & e){
-                throw pmq::exception::socket_exception("socket is disconnected");
-            }
+            return pmq::detail::read<boost::asio::ip::tcp::socket>(inner_socket,size);
         }
 
 
         virtual void write(const std::string & msg){
-            boost::unique_lock<boost::mutex> lock(mutex);
-            boost::system::error_code ignored_error;
-            std::size_t x = boost::asio::write(*inner_socket,boost::asio::buffer(msg),ignored_error);
-            BOOST_LOG_TRIVIAL(debug)<<"Sended: "<< x << " | "<<msg.length()<< " | " << ignored_error.message();
+            pmq::detail::write<boost::asio::ip::tcp::socket>(inner_socket,mutex,msg);
         }
 
         virtual std::string_view get_address()const{

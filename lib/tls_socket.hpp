@@ -12,47 +12,32 @@
 #include <vector>
 
 #include <header/socket_exception.hpp>
+#include "socket_functions.hpp"
 #include "socket.hpp"
 
 namespace pmq {
 
     class tls_socket : public socket {
     public:
-        virtual std::string read(std::size_t size) {
-            try {
-                boost::asio::streambuf stream_buffer;
-
-                std::size_t x = boost::asio::read(*inner_socket, stream_buffer,
-                                                  boost::asio::transfer_exactly(size));
-                std::string res = {buffers_begin(stream_buffer.data()), buffers_begin(stream_buffer.data()) + x};
-                stream_buffer.consume(x);
-                if (x - size != 0)
-                    throw pmq::exception::socket_exception("Not enough data in socket stream");
-
-                return res;
-            } catch (boost::system::system_error &e) {
-                throw pmq::exception::socket_exception("socket is disconnected");
-            }
+        virtual std::string read(std::size_t size) override {
+            return pmq::detail::read<ssl_socket>(inner_socket,size);
         }
 
 
-        virtual void write(const std::string &msg) {
-            boost::unique_lock<boost::mutex> lock(mutex);
-            boost::system::error_code ignored_error;
-            std::size_t x = boost::asio::write(*inner_socket, boost::asio::buffer(msg), ignored_error);
-            BOOST_LOG_TRIVIAL(debug) << "Sended: " << x << " | " << msg.length() << " | " << ignored_error.message();
+        virtual void write(const std::string &msg) override {
+           pmq::detail::write<ssl_socket>(inner_socket,mutex,msg);
         }
 
-        virtual std::string_view get_address() const {
+        virtual std::string_view get_address() const override {
             return this->inner_socket->lowest_layer().local_endpoint().address().to_string();
         }
 
-        virtual void close() {
+        virtual void close() override {
             if (this->is_connected())
                 this->inner_socket->lowest_layer().close();
         }
 
-        virtual bool is_connected() const {
+        virtual bool is_connected() const override {
             return this->inner_socket->lowest_layer().is_open();
         }
 

@@ -1,18 +1,17 @@
 //
 // Created by PMQTT on 2019-03-03.
 //
-#include "header/bad_connection_exception.hpp"
-#include "header/client_factory.hpp"
-#include "header/tcp_client_factory.hpp"
-#include "header/server.hpp"
-#include "header/ssl_client_factory.hpp"
-
 #include <functional>
 #include <list>
 #include <map>
 #include <string>
-#include <header/acceptor_exception.hpp>
-#include <header/tls_handshake_exception.hpp>
+
+
+#include "header/acceptor_exception.hpp"
+#include "header/bad_connection_exception.hpp"
+#include "header/client_factory.hpp"
+#include "header/server.hpp"
+#include "header/tls_handshake_exception.hpp"
 
 
 

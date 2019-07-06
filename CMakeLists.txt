@@ -20,7 +20,7 @@ add_library(pmqtt STATIC lib/control_packet_type.hpp
         lib/mqtt_publish.cpp lib/mqtt_publish.hpp lib/mqtt_static_package.hpp
         lib/mqtt_subscribe.cpp lib/mqtt_subscribe.hpp lib/pmqtt.hpp lib/mqtt_exception.hpp
         lib/mqtt_connection_info.hpp lib/mqtt_bad_header_exception.hpp lib/mqtt_visitor.hpp
-        lib/subscriber.cpp lib/subscriber.hpp lib/connector.hpp lib/connector_mqtt311.hpp lib/connection_parameter.hpp lib/tls_socket.hpp)
+        lib/subscriber.cpp lib/subscriber.hpp lib/connector.hpp lib/connector_mqtt311.hpp lib/connection_parameter.hpp lib/tls_socket.hpp lib/socket_functions.hpp)
 
 
 add_executable(PMQ

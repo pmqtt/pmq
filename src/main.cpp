@@ -1,23 +1,26 @@
-#include <boost/log/trivial.hpp>
+#include <boost/shared_ptr.hpp>
 #include <boost/log/common.hpp>
 #include <boost/log/sinks.hpp>
 #include <boost/log/sources/logger.hpp>
-#include <boost/shared_ptr.hpp>
+#include <boost/log/trivial.hpp>
 #include <iostream>
 
 
+#include "header/client_creator.hpp"
 #include "header/client_handler.hpp"
-#include "header/tcp_client_factory.hpp"
-#include "header/ssl_client_factory.hpp"
+#include "header/http_rest_server.hpp"
+#include "header/in_memory_storage.hpp"
 #include "header/null_deleter.hpp"
 #include "header/PMQConfigure.hpp"
-#include "header/http_rest_server.hpp"
 #include "header/security.hpp"
 #include "header/server.hpp"
 #include "header/startup_configuration.hpp"
 #include "header/storage.hpp"
-#include "header/in_memory_storage.hpp"
-#include "header/client_creator.hpp"
+#include "header/ssl_client_factory.hpp"
+#include "header/tcp_client_factory.hpp"
+
+
+
 
 std::shared_ptr<pmq::client_factory>  create_ssl_client_factory(const pmq::config & cfg){
     return std::make_shared<pmq::ssl_client_factory>(cfg);
