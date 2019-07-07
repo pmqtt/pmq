@@ -53,7 +53,22 @@ void pmq::in_memory_storage::save_qos_two_message_id(const pmq::u_int16 &id, std
 
 std::shared_ptr<pmq::mqtt_publish> pmq::in_memory_storage::restore_qos_two_publish_msg(const pmq::u_int16 &id) {
     if(this->message_storage.count(id) > 0){
-        return this->message_storage[id];
+        auto result =  this->message_storage[id];
+        this->message_storage.erase(id);
+        return result;
+    }
+    throw std::runtime_error("message id doesn't exists");
+}
+
+void pmq::in_memory_storage::save_qos_two_message_id(const std::string &id, const std::string &client_id) {
+    message_ids[client_id] = id;
+}
+
+std::string pmq::in_memory_storage::restore_qos_two_publish_msg(const std::string &client_id) {
+    if(this->message_ids.count(client_id) > 0){
+        auto result =  this->message_ids[client_id];
+        this->message_ids.erase(client_id);
+        return result;
     }
     throw std::runtime_error("message id doesn't exists");
 }

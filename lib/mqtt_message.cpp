@@ -30,7 +30,7 @@ unsigned int pmq::mqtt_message::read_length(){
 }
 
 
-std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package(std::shared_ptr<pmq::mqtt_connection_info> & connection_info){
+std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package( std::shared_ptr<pmq::mqtt_connection_info> & connection_info){
     BOOST_LOG_TRIVIAL(debug)<<"[std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package] read";
     std::string msg = this->client_socket->read(1);
     pmq::u_int8 first_byte   = msg[0];

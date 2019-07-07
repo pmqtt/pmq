@@ -62,3 +62,11 @@ void pmq::mqtt_publish::send(std::shared_ptr<pmq::socket> & socket)const{
     socket->write(msg);
 
 }
+
+const std::string &pmq::mqtt_publish::get_client_id() const {
+    return client_id;
+}
+
+void pmq::mqtt_publish::set_client_id(const std::string &clientId) {
+    client_id = clientId;
+}

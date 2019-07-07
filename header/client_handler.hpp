@@ -27,6 +27,7 @@ namespace pmq{
         std::shared_ptr<pmq::qos_handler_factory>  qos_factory;
         std::shared_ptr<pmq::storage> storage_service;
         pmq::config config;
+        std::string client_id;
     public:
         client_handler(const std::shared_ptr<pmq::qos_handler_factory> & qos_factory,const std::shared_ptr<pmq::storage> & storage_service,const pmq::config & cfg)
             : qos_factory(qos_factory),storage_service(storage_service),config(cfg){

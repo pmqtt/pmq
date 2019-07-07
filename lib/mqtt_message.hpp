@@ -12,7 +12,7 @@ namespace pmq {
     class mqtt_package;
     class mqtt_message {
     public:
-        explicit mqtt_message(std::shared_ptr<pmq::socket> & client_socket) : client_socket(client_socket){
+        explicit mqtt_message(std::shared_ptr<pmq::socket> client_socket) : client_socket(client_socket){
 
         }
 

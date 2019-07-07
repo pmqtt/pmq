@@ -29,6 +29,9 @@ namespace pmq{
 
         virtual void save_qos_two_message_id(const pmq::u_int16  & id , std::shared_ptr<pmq::mqtt_publish> & msg ) = 0;
         virtual std::shared_ptr<pmq::mqtt_publish> restore_qos_two_publish_msg(const pmq::u_int16 & id) = 0;
+        virtual void save_qos_two_message_id(const std::string & id , const std::string &client_id ) = 0;
+        virtual std::string  restore_qos_two_publish_msg(const std::string & client_id ) = 0;
+
     };
 
 }

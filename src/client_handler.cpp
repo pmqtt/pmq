@@ -33,6 +33,7 @@ void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
     if(!config.is_allow_anonymous_login() && !hasEntrance){
         throw pmq::exception::bad_connection_exception("User name or password are wrong");
     }
+    this->client_id = msg->get_client_id();
     auto socket = msg->get_socket();
     pmq::mqtt_connack connack( socket,0x0, 0x0);
     connack.send();
@@ -40,6 +41,7 @@ void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
 
 void pmq::client_handler::visit(pmq::mqtt_publish *msg) {
     BOOST_LOG_TRIVIAL(debug) << "[visit publish] ";
+    msg->set_client_id(client_id);
     qos_factory->create(msg->get_qos())->handle(storage_service,msg);
 
     const std::string topic = msg->get_topic();
@@ -90,7 +92,8 @@ void pmq::client_handler::visit(pmq::mqtt_ping_response * msg) {
 }
 
 void pmq::client_handler::visit(pmq::mqtt_disconnect *msg) {
-
+    BOOST_LOG_TRIVIAL(info)<<"RECV: disconnect";
+    msg->get_socket()->close();
 }
 
 void pmq::client_handler::visit(pmq::mqtt_pubcomp *msg) {
@@ -113,21 +116,13 @@ void pmq::client_handler::visit(pmq::mqtt_pubrec *msg) {
 void pmq::client_handler::visit(pmq::mqtt_pubrel *msg) {
     BOOST_LOG_TRIVIAL(info)<<"RECEIVED PUBREL";
     pmq::u_int16 message_id = msg->get_message_id();
-    std::shared_ptr<mqtt_publish> pubMsg = storage_service->restore_qos_two_publish_msg(message_id);
-
-    if(message_storage.count(message_id) == 1 ){
-        try {
-
-            std::shared_ptr<mqtt_publish> pubMsg =  message_storage[message_id];
-            std::string mid;
-            mid += pubMsg->get_message_id();
-            auto client_socket = msg->get_socket();
-            pmq::mqtt_pubcomp pubcomp(client_socket);
-            pubcomp.send(mid);
-
-        }catch(std::exception & e){
-            BOOST_LOG_TRIVIAL(error)<<e.what();
-        }
+    try {
+        std::string mid = storage_service->restore_qos_two_publish_msg(this->client_id);
+        auto client_socket = msg->get_socket();
+        pmq::mqtt_pubcomp pubcomp(client_socket);
+        pubcomp.send(mid);
+    }catch(std::exception & e){
+        BOOST_LOG_TRIVIAL(error)<<e.what();
     }
 
 }

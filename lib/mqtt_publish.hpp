@@ -42,7 +42,13 @@ namespace pmq {
         }
         void send(std::shared_ptr<pmq::socket> & socket)const;
 
+        const std::string &get_client_id() const;
+
+        void set_client_id(const std::string &clientId);
+
     private:
+        std::string client_id;
+
         std::string topic;
         std::string message;
         std::string message_id;
