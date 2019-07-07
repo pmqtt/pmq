@@ -64,7 +64,7 @@ $ ./PMQ  --tls-certificat [server certificat] --tls-private-key [private key fil
 
 ### Starting PMQ with permited anonymous connection
 ```
-$ ./PMQ --anyonymous-login false
+$ ./PMQ --anonymous-login false
 ```
 Now the server allows only connection with user name and password.
 To set a user and password, you have to use the REST interface.
