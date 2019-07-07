@@ -8,7 +8,6 @@
 namespace {
     typedef std::map<std::string,std::list<std::shared_ptr<pmq::socket>>> SubscriptionContainer;
     std::map<std::string,std::list<pmq::subscriber>> subscripted_clients;
-    std::map<pmq::u_int16 , std::shared_ptr<pmq::mqtt_publish> > message_storage;
 }
 
 
