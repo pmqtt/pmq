@@ -487,6 +487,87 @@ src/in_memory_storage.cpp.s:
 	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/in_memory_storage.cpp.s
 .PHONY : src/in_memory_storage.cpp.s
 
+src/login_allow_anonymous_handler.o: src/login_allow_anonymous_handler.cpp.o
+
+.PHONY : src/login_allow_anonymous_handler.o
+
+# target to build an object file
+src/login_allow_anonymous_handler.cpp.o:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/login_allow_anonymous_handler.cpp.o
+.PHONY : src/login_allow_anonymous_handler.cpp.o
+
+src/login_allow_anonymous_handler.i: src/login_allow_anonymous_handler.cpp.i
+
+.PHONY : src/login_allow_anonymous_handler.i
+
+# target to preprocess a source file
+src/login_allow_anonymous_handler.cpp.i:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/login_allow_anonymous_handler.cpp.i
+.PHONY : src/login_allow_anonymous_handler.cpp.i
+
+src/login_allow_anonymous_handler.s: src/login_allow_anonymous_handler.cpp.s
+
+.PHONY : src/login_allow_anonymous_handler.s
+
+# target to generate assembly for a file
+src/login_allow_anonymous_handler.cpp.s:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/login_allow_anonymous_handler.cpp.s
+.PHONY : src/login_allow_anonymous_handler.cpp.s
+
+src/login_factory.o: src/login_factory.cpp.o
+
+.PHONY : src/login_factory.o
+
+# target to build an object file
+src/login_factory.cpp.o:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/login_factory.cpp.o
+.PHONY : src/login_factory.cpp.o
+
+src/login_factory.i: src/login_factory.cpp.i
+
+.PHONY : src/login_factory.i
+
+# target to preprocess a source file
+src/login_factory.cpp.i:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/login_factory.cpp.i
+.PHONY : src/login_factory.cpp.i
+
+src/login_factory.s: src/login_factory.cpp.s
+
+.PHONY : src/login_factory.s
+
+# target to generate assembly for a file
+src/login_factory.cpp.s:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/login_factory.cpp.s
+.PHONY : src/login_factory.cpp.s
+
+src/login_handler.o: src/login_handler.cpp.o
+
+.PHONY : src/login_handler.o
+
+# target to build an object file
+src/login_handler.cpp.o:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/login_handler.cpp.o
+.PHONY : src/login_handler.cpp.o
+
+src/login_handler.i: src/login_handler.cpp.i
+
+.PHONY : src/login_handler.i
+
+# target to preprocess a source file
+src/login_handler.cpp.i:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/login_handler.cpp.i
+.PHONY : src/login_handler.cpp.i
+
+src/login_handler.s: src/login_handler.cpp.s
+
+.PHONY : src/login_handler.s
+
+# target to generate assembly for a file
+src/login_handler.cpp.s:
+	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/login_handler.cpp.s
+.PHONY : src/login_handler.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -671,6 +752,15 @@ help:
 	@echo "... src/in_memory_storage.o"
 	@echo "... src/in_memory_storage.i"
 	@echo "... src/in_memory_storage.s"
+	@echo "... src/login_allow_anonymous_handler.o"
+	@echo "... src/login_allow_anonymous_handler.i"
+	@echo "... src/login_allow_anonymous_handler.s"
+	@echo "... src/login_factory.o"
+	@echo "... src/login_factory.i"
+	@echo "... src/login_factory.s"
+	@echo "... src/login_handler.o"
+	@echo "... src/login_handler.i"
+	@echo "... src/login_handler.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

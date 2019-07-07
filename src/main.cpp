@@ -50,10 +50,15 @@ int main(int argc,char **argv,char **envp){
     creator.bind_creator("TLS",create_ssl_client_factory);
 
 
-
+    std::shared_ptr<pmq::login_factory> login_creator = std::make_shared<pmq::login_factory>();
     std::shared_ptr<pmq::storage> storage_service = std::make_shared<pmq::in_memory_storage>();
     std::shared_ptr<pmq::qos_handler_factory> qos_factory = std::make_shared<pmq::qos_handler_factory>();
-    std::shared_ptr<pmq::mqtt_visitor> handler = std::make_shared<pmq::client_handler>(qos_factory,storage_service,conf);
+    std::shared_ptr<pmq::mqtt_visitor> handler = std::make_shared<pmq::client_handler>(
+            login_creator,
+            qos_factory,
+            storage_service,
+            conf
+            );
 
 
     pmq::server server(handler);

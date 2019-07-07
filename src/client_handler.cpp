@@ -14,24 +14,8 @@ namespace {
 
 void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
     BOOST_LOG_TRIVIAL(debug)<<"Handle connection";
-    bool hasEntrance = true;
+    login_creator->create(config.is_allow_anonymous_login())->handle(storage_service,msg);
 
-    if(msg->is_user_name_flag()){
-        if(this->storage_service->exist_user(msg->get_user_name())){
-            if(this->storage_service->check_user_password(msg->get_user_name(),msg->get_password())){
-                hasEntrance = true;
-            }else{
-                BOOST_LOG_TRIVIAL(debug)<<"password wrong";
-                hasEntrance = false;
-            }
-        }else{
-            BOOST_LOG_TRIVIAL(debug)<<"user name doesn't exist";
-            hasEntrance = false;
-        }
-    }
-    if(!config.is_allow_anonymous_login() && !hasEntrance){
-        throw pmq::exception::bad_connection_exception("User name or password are wrong");
-    }
     this->client_id = msg->get_client_id();
     auto socket = msg->get_socket();
     pmq::mqtt_connack connack( socket,0x0, 0x0);
