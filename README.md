@@ -62,4 +62,16 @@ $ cd $PMQ/
 $ ./PMQ  --tls-certificat [server certificat] --tls-private-key [private key file] --tls-dh-file [Diffie file]
 ```
 
+### Starting PMQ with permited anonymous connection
+```
+$ ./PMQ --anyonymous-login false
+```
+Now the server allows only connection with user name and password.
+To set a user and password, you have to use the REST interface.
+The REST interface is callable for example by curl with this command
+```
+curl -d '{"user":"pmqtt", "password":"test1"}' -H 'Content-Type: application/json' -X POST http://localhost:1884/rest/api/v0.1/create_user
+```
+
+
 
