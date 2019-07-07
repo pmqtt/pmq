@@ -46,7 +46,7 @@ namespace pmq{
         void visit(mqtt_controll_package<98, 2> *msg) override;
         void visit(mqtt_controll_package<32, 2> *msg) override;
         void visit(mqtt_controll_package<176, 2> *msg) override;
-        void visit(mqtt_controll_package<144, 2> *msg) override;
+        void visit(mqtt_controll_package<144, 3> *msg) override;
         void visit(pmq::mqtt_puback *msg) override;
 
     };

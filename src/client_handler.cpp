@@ -61,21 +61,8 @@ void pmq::client_handler::visit(pmq::mqtt_subscribe *msg) {
     pmq::subscriber subscriber(socket,topic,msg->get_qos());
     subscripted_clients[topic].emplace_back(subscriber);
 
-    pmq::u_int8 header = 144;
-    pmq::u_int8 length = 3;
-    pmq::u_int8 return_code = 2;
-    std::string send_msg;
-    send_msg += header;
-    send_msg += length;
-    send_msg += msg->get_msg_msb();
-    send_msg += msg->get_msg_lsb();
-    send_msg += return_code;
-
-    pmq::u_int16 msg_id = msg->get_msg_id();
-    pmq::u_int8 msb = msg_id & 0xFF00 >> 8;
-    pmq::u_int8 lsb = msg_id & 0xFF;
-
-    socket->write(send_msg);
+    pmq::mqtt_suback suback(socket,msg->get_msg_msb(),msg->get_msg_lsb(),2);
+    suback.send();
 }
 
 void pmq::client_handler::visit(pmq::mqtt_ping_request *msg) {

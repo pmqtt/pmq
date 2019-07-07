@@ -31,7 +31,7 @@ namespace pmq{
         virtual void visit(mqtt_controll_package<98,2> * msg) = 0;
         virtual void visit(mqtt_controll_package<32,2> * msg) = 0;
         virtual void visit(mqtt_controll_package<176,2> * msg) = 0;
-        virtual void visit(mqtt_controll_package<144,2> * msg) = 0;
+        virtual void visit(mqtt_controll_package<144,3> * msg) = 0;
         virtual void visit(mqtt_controll_package<64,2> * msg) = 0;
 
     };
