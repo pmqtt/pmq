@@ -35,8 +35,12 @@ namespace pmq{
                                              const std::string & topic,
                                              pmq::subscriber & sub) override ;
 
+        void save_qos_two_message_id(const pmq::u_int16  & id , std::shared_ptr<pmq::mqtt_publish> & msg ) override;
+        std::shared_ptr<pmq::mqtt_publish> restore_qos_two_publish_msg(const pmq::u_int16 & id) override;
+
     private:
         std::map<std::string,std::string> user_password_map;
+        std::map<pmq::u_int16 , std::shared_ptr<pmq::mqtt_publish> > message_storage;
         boost::mutex mutex;
     };
 }

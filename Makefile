@@ -271,6 +271,114 @@ lib/mqtt_subscribe.cpp.s:
 	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/mqtt_subscribe.cpp.s
 .PHONY : lib/mqtt_subscribe.cpp.s
 
+lib/qos_handler_factory.o: lib/qos_handler_factory.cpp.o
+
+.PHONY : lib/qos_handler_factory.o
+
+# target to build an object file
+lib/qos_handler_factory.cpp.o:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/qos_handler_factory.cpp.o
+.PHONY : lib/qos_handler_factory.cpp.o
+
+lib/qos_handler_factory.i: lib/qos_handler_factory.cpp.i
+
+.PHONY : lib/qos_handler_factory.i
+
+# target to preprocess a source file
+lib/qos_handler_factory.cpp.i:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/qos_handler_factory.cpp.i
+.PHONY : lib/qos_handler_factory.cpp.i
+
+lib/qos_handler_factory.s: lib/qos_handler_factory.cpp.s
+
+.PHONY : lib/qos_handler_factory.s
+
+# target to generate assembly for a file
+lib/qos_handler_factory.cpp.s:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/qos_handler_factory.cpp.s
+.PHONY : lib/qos_handler_factory.cpp.s
+
+lib/qos_one_handler.o: lib/qos_one_handler.cpp.o
+
+.PHONY : lib/qos_one_handler.o
+
+# target to build an object file
+lib/qos_one_handler.cpp.o:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/qos_one_handler.cpp.o
+.PHONY : lib/qos_one_handler.cpp.o
+
+lib/qos_one_handler.i: lib/qos_one_handler.cpp.i
+
+.PHONY : lib/qos_one_handler.i
+
+# target to preprocess a source file
+lib/qos_one_handler.cpp.i:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/qos_one_handler.cpp.i
+.PHONY : lib/qos_one_handler.cpp.i
+
+lib/qos_one_handler.s: lib/qos_one_handler.cpp.s
+
+.PHONY : lib/qos_one_handler.s
+
+# target to generate assembly for a file
+lib/qos_one_handler.cpp.s:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/qos_one_handler.cpp.s
+.PHONY : lib/qos_one_handler.cpp.s
+
+lib/qos_two_handler.o: lib/qos_two_handler.cpp.o
+
+.PHONY : lib/qos_two_handler.o
+
+# target to build an object file
+lib/qos_two_handler.cpp.o:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/qos_two_handler.cpp.o
+.PHONY : lib/qos_two_handler.cpp.o
+
+lib/qos_two_handler.i: lib/qos_two_handler.cpp.i
+
+.PHONY : lib/qos_two_handler.i
+
+# target to preprocess a source file
+lib/qos_two_handler.cpp.i:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/qos_two_handler.cpp.i
+.PHONY : lib/qos_two_handler.cpp.i
+
+lib/qos_two_handler.s: lib/qos_two_handler.cpp.s
+
+.PHONY : lib/qos_two_handler.s
+
+# target to generate assembly for a file
+lib/qos_two_handler.cpp.s:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/qos_two_handler.cpp.s
+.PHONY : lib/qos_two_handler.cpp.s
+
+lib/qos_zero_handler.o: lib/qos_zero_handler.cpp.o
+
+.PHONY : lib/qos_zero_handler.o
+
+# target to build an object file
+lib/qos_zero_handler.cpp.o:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/qos_zero_handler.cpp.o
+.PHONY : lib/qos_zero_handler.cpp.o
+
+lib/qos_zero_handler.i: lib/qos_zero_handler.cpp.i
+
+.PHONY : lib/qos_zero_handler.i
+
+# target to preprocess a source file
+lib/qos_zero_handler.cpp.i:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/qos_zero_handler.cpp.i
+.PHONY : lib/qos_zero_handler.cpp.i
+
+lib/qos_zero_handler.s: lib/qos_zero_handler.cpp.s
+
+.PHONY : lib/qos_zero_handler.s
+
+# target to generate assembly for a file
+lib/qos_zero_handler.cpp.s:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/qos_zero_handler.cpp.s
+.PHONY : lib/qos_zero_handler.cpp.s
+
 lib/subscriber.o: lib/subscriber.cpp.o
 
 .PHONY : lib/subscriber.o
@@ -539,6 +647,18 @@ help:
 	@echo "... lib/mqtt_subscribe.o"
 	@echo "... lib/mqtt_subscribe.i"
 	@echo "... lib/mqtt_subscribe.s"
+	@echo "... lib/qos_handler_factory.o"
+	@echo "... lib/qos_handler_factory.i"
+	@echo "... lib/qos_handler_factory.s"
+	@echo "... lib/qos_one_handler.o"
+	@echo "... lib/qos_one_handler.i"
+	@echo "... lib/qos_one_handler.s"
+	@echo "... lib/qos_two_handler.o"
+	@echo "... lib/qos_two_handler.i"
+	@echo "... lib/qos_two_handler.s"
+	@echo "... lib/qos_zero_handler.o"
+	@echo "... lib/qos_zero_handler.i"
+	@echo "... lib/qos_zero_handler.s"
 	@echo "... lib/subscriber.o"
 	@echo "... lib/subscriber.i"
 	@echo "... lib/subscriber.s"

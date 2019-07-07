@@ -5,6 +5,8 @@
 #ifndef PMQ_STORAGE_HPP
 #define PMQ_STORAGE_HPP
 #include <string>
+#include <lib/mqtt_package.hpp>
+#include <lib/mqtt_publish.hpp>
 #include <lib/socket.hpp>
 #include <lib/subscriber.hpp>
 namespace pmq{
@@ -25,6 +27,8 @@ namespace pmq{
                                                 const std::string & topic,
                                                 pmq::subscriber & sub) = 0;
 
+        virtual void save_qos_two_message_id(const pmq::u_int16  & id , std::shared_ptr<pmq::mqtt_publish> & msg ) = 0;
+        virtual std::shared_ptr<pmq::mqtt_publish> restore_qos_two_publish_msg(const pmq::u_int16 & id) = 0;
     };
 
 }

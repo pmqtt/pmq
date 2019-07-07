@@ -18,8 +18,6 @@ void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
     bool hasEntrance = true;
 
     if(msg->is_user_name_flag()){
-        BOOST_LOG_TRIVIAL(debug)<<"USERNAME:'"<<msg->get_user_name()<<"'";
-        BOOST_LOG_TRIVIAL(debug)<<"PASSWORD:'"<<msg->get_password()<<"'";
         if(this->storage_service->exist_user(msg->get_user_name())){
             if(this->storage_service->check_user_password(msg->get_user_name(),msg->get_password())){
                 hasEntrance = true;
