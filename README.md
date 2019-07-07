@@ -1,4 +1,3 @@
-[![PMQ](https://raw.githubusercontent.com/pmqtt/pmq/master/logo/logo.png)]
 
 # PMQ: MQTT Message Broker and Message bus
 
