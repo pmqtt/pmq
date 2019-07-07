@@ -40,27 +40,8 @@ void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
 
 void pmq::client_handler::visit(pmq::mqtt_publish *msg) {
     BOOST_LOG_TRIVIAL(debug) << "[visit publish] ";
-    switch (msg->get_qos()){
-        case pmq::QOS::QOS_0 :
-            break;
-        case pmq::QOS::QOS_1: {
-            auto socket = msg->get_socket();
-            pmq::mqtt_puback ack(socket);
-            ack.send(msg->get_message_id());
-        }
-            break;
-        case pmq::QOS::QOS_2: {
-            std::shared_ptr<pmq::mqtt_publish> msg_shared(msg);
-            message_storage[msg->get_message_id_as_int()] = msg_shared;
-            auto socket = msg->get_socket();
+    qos_factory->create(msg->get_qos())->handle(storage_service,msg);
 
-            pmq::mqtt_pubrec pubrec(socket);
-            pubrec.send(msg->get_message_id());
-        }
-            break;
-        default:
-            break;
-    }
     const std::string topic = msg->get_topic();
     if(subscripted_clients.count(topic) > 0){
         for( auto subscriber : subscripted_clients[topic]){
@@ -132,6 +113,8 @@ void pmq::client_handler::visit(pmq::mqtt_pubrec *msg) {
 void pmq::client_handler::visit(pmq::mqtt_pubrel *msg) {
     BOOST_LOG_TRIVIAL(info)<<"RECEIVED PUBREL";
     pmq::u_int16 message_id = msg->get_message_id();
+    std::shared_ptr<mqtt_publish> pubMsg = storage_service->restore_qos_two_publish_msg(message_id);
+
     if(message_storage.count(message_id) == 1 ){
         try {
 

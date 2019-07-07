@@ -10,7 +10,7 @@ namespace pmq {
     class qos_two_handler : public qos_handler {
     public:
         qos_two_handler() = default;
-        virtual ~qos_two_handler() = defualt;
+        virtual ~qos_two_handler() = default;
 
         void handle(std::shared_ptr<pmq::storage> & storage,pmq::mqtt_publish *msg) override;
     };

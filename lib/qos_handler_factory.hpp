@@ -12,7 +12,7 @@ namespace pmq {
     public:
         qos_handler_factory() = default;
         virtual ~qos_handler_factory() = default;
-        virtual std::shared_ptr<pmq::qos_handler> create(pmq::QOS qos);
+        virtual std::shared_ptr<pmq::qos_handler> create(const pmq::u_int16 & qos);
 
     };
 }

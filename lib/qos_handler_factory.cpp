@@ -7,7 +7,7 @@
 #include "qos_one_handler.hpp"
 #include "qos_two_handler.hpp"
 
-std::shared_ptr<pmq::qos_handler> pmq::qos_handler_factory::create(pmq::QOS qos) {
+std::shared_ptr<pmq::qos_handler> pmq::qos_handler_factory::create(const pmq::u_int16 &qos) {
     if(qos == pmq::QOS_0)
         return std::make_shared<pmq::qos_zero_handler>();
     if(qos == pmq::QOS_1)
