@@ -18,16 +18,18 @@
 #include "lib/mqtt_publish.hpp"
 #include "lib/mqtt_subscribe.hpp"
 #include "lib/socket.hpp"
+#include "lib/qos_handler_factory.hpp"
 
 namespace pmq{
 
     class client_handler : public pmq::mqtt_visitor{
     private:
+        std::shared_ptr<pmq::qos_handler_factory>  qos_factory;
         std::shared_ptr<pmq::storage> storage_service;
         pmq::config config;
     public:
-        client_handler(const std::shared_ptr<pmq::storage> & storage_service,const pmq::config & cfg)
-            : storage_service(storage_service),config(cfg){
+        client_handler(const std::shared_ptr<pmq::qos_handler_factory> & qos_factory,const std::shared_ptr<pmq::storage> & storage_service,const pmq::config & cfg)
+            : qos_factory(qos_factory),storage_service(storage_service),config(cfg){
 
         }
         virtual ~client_handler(){}
