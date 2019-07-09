@@ -18,7 +18,17 @@ PMQ implements the MQTT 3.1 and 3.1.1 specifiaction with qualaty of service 1.
 
 ### Contribution
 Everybody is welcome!
-
+If you want to start develop for this project. You can use the development 
+docker container. 
+To generate the image use follow command
+```
+$ cd dockerfiles/dev_image
+$ docker build -t pmqtt/dev_test .
+```
+After generation you can use the container
+```
+$ docker run --it -v[path to pmq]:/pmq pmqtt/dev_test /bin/bash
+```
 ### Releated projects
 * eclipse mosquitto https://github.com/eclipse/mosquitto
 * vernemq https://github.com/vernemq/vernemq

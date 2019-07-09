@@ -22,31 +22,47 @@ add_library(pmqtt STATIC lib/control_packet_type.hpp
         lib/mqtt_connection_info.hpp lib/mqtt_bad_header_exception.hpp lib/mqtt_visitor.hpp
         lib/subscriber.cpp lib/subscriber.hpp lib/connector.hpp lib/connector_mqtt311.hpp lib/connection_parameter.hpp lib/tls_socket.hpp lib/socket_functions.hpp lib/qos_handler.hpp lib/qos_zero_handler.cpp lib/qos_zero_handler.hpp lib/qos_one_handler.cpp lib/qos_one_handler.hpp lib/qos_two_handler.cpp lib/qos_two_handler.hpp lib/qos_handler_factory.cpp lib/qos_handler_factory.hpp)
 
+add_library(pmq_obj_lib OBJECT  header/acceptor_exception.hpp
+        header/bad_connection_exception.hpp
+        header/config_exception.hpp
+        src/server.cpp
+        header/server.hpp
+        header/null_deleter.hpp
+        header/PMQConfigure.hpp
+        header/security.hpp
+        header/startup_configuration.hpp
+        lib/socket.hpp
+        header/socket_exception.hpp
+        header/http_rest_server.hpp
+        src/http_rest_server.cpp
+        header/client_factory.hpp
+        header/tcp_client_factory.hpp
+        src/tcp_client_factory.cpp
+        header/ssl_client_factory.hpp
+        src/ssl_client_factory.cpp
+        header/client_handler.hpp
+        src/client_handler.cpp
+        header/storage.hpp
+        header/in_memory_storage.hpp
+        src/in_memory_storage.cpp
+        header/bad_connection_exception.hpp
+        header/rest_api.hpp src/startup_configuration.cpp
+        header/client_creator.hpp
+        header/login_handler.hpp
+        header/login_allow_anonymous_handler.hpp
+        src/login_allow_anonymous_handler.cpp
+        src/login_handler.cpp
+        header/login_factory.hpp
+        src/login_factory.cpp)
 
-add_executable(PMQ
-                header/acceptor_exception.hpp
-                header/bad_connection_exception.hpp
-                header/config_exception.hpp
-                src/main.cpp
-                src/server.cpp
-                header/server.hpp
-                header/null_deleter.hpp
-                header/PMQConfigure.hpp
-                header/security.hpp
-                header/startup_configuration.hpp
-                lib/socket.hpp
-                header/socket_exception.hpp
-                header/http_rest_server.hpp
-                src/http_rest_server.cpp
-                header/client_factory.hpp
-                header/tcp_client_factory.hpp
-                src/tcp_client_factory.cpp
-                header/ssl_client_factory.hpp
-                src/ssl_client_factory.cpp
-                header/client_handler.hpp
-                src/client_handler.cpp
-                header/storage.hpp
-                header/in_memory_storage.hpp src/in_memory_storage.cpp header/bad_connection_exception.hpp header/rest_api.hpp src/startup_configuration.cpp header/client_creator.hpp header/login_handler.hpp header/login_allow_anonymous_handler.hpp src/login_allow_anonymous_handler.cpp src/login_handler.cpp header/login_factory.hpp src/login_factory.cpp)
-
+add_executable(PMQ src/main.cpp $<TARGET_OBJECTS:pmq_obj_lib>)
 target_link_libraries(PMQ ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)
 
+### TEST
+add_executable(test_server test/test_server.cpp $<TARGET_OBJECTS:pmq_obj_lib>)
+target_link_libraries(test_server ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)
+
+set_target_properties( test_server
+        PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "test/bin"
+        )
