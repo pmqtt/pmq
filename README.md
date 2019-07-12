@@ -18,9 +18,9 @@ PMQ implements the MQTT 3.1 and 3.1.1 specifiaction with qualaty of service 1.
 
 ### Contribution
 Everybody is welcome!
-If you want to start develop for this project. You can use the development 
+If you want to start developing for this project, you can use the development 
 docker container. 
-To generate the image use follow command
+To generate the image, use follow command
 ```
 $ cd dockerfiles/dev_image
 $ docker build -t pmqtt/dev_test .
@@ -29,7 +29,7 @@ After generation you can use the container
 ```
 $ docker run --it -v[path to pmq]:/pmq pmqtt/dev_test /bin/bash
 ```
-or you the docker image from https://hub.docker.com
+or use the docker image from https://hub.docker.com
 ```
 $ docker pull pmqtt/dev
 $ docker run -it -v[path to pmq]:/pmq pmqtt/dev /bin/bash
@@ -52,7 +52,7 @@ $ cmake .
 $ make
 ```
 #### Troubleshooting
-On MAC OS X I have discovered, that buiding PMQ with cpprestsdk is a little bit difficult.
+On MAC OS X I have recognized that building PMQ with cpprestsdk is a little bit difficult.
 If you see this error message from cmake
 ```shell
 Could NOT find OpenSSL, try to set the path to OpenSSL root folder in the
