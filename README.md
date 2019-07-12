@@ -29,6 +29,13 @@ After generation you can use the container
 ```
 $ docker run --it -v[path to pmq]:/pmq pmqtt/dev_test /bin/bash
 ```
+or you the docker image from https://hub.docker.com
+```
+$ docker pull pmqtt/dev
+$ docker run -it -v[path to pmq]:/pmq pmqtt/dev /bin/bash
+```
+
+
 ### Releated projects
 * eclipse mosquitto https://github.com/eclipse/mosquitto
 * vernemq https://github.com/vernemq/vernemq
