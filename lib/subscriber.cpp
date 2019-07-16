@@ -75,6 +75,7 @@ namespace pmq{
                                               variable_header_length );
 
 
+
         first_byte = first_byte | qos<<1;
 
         msg += first_byte;
@@ -90,7 +91,6 @@ namespace pmq{
         }
         msg += message_length;
         msg += publish_message;
-
         this->socket->write(msg);
     }
 

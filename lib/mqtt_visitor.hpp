@@ -34,6 +34,8 @@ namespace pmq{
         virtual void visit(mqtt_controll_package<144,3> * msg) = 0;
         virtual void visit(mqtt_controll_package<64,2> * msg) = 0;
 
+        virtual void handleDisconnect() {};
+
     };
 }
 

@@ -3,7 +3,7 @@
 //
 
 #include <header/in_memory_storage.hpp>
-
+#include <lib/message.hpp>
 
 pmq::in_memory_storage::in_memory_storage() {
 
@@ -47,6 +47,19 @@ void pmq::in_memory_storage::add_client_subscription(const std::string & clientI
 
 }
 
+
+void pmq::in_memory_storage::add_will_message(const std::string & client_id,const pmq::message & message){
+
+}
+
+
+pmq::message pmq::in_memory_storage::get_will_message(const std::string & client_id) {
+    if(this->will_messages.count(client_id) > 0){
+        return this->will_messages[client_id];
+    }
+    return pmq::message(" "," ",QOS_0);
+}
+
 void pmq::in_memory_storage::save_qos_two_message_id(const pmq::u_int16 &id, std::shared_ptr<pmq::mqtt_publish> &msg) {
     this->message_storage[id] = msg;
 }
@@ -71,4 +84,31 @@ std::string pmq::in_memory_storage::restore_qos_two_publish_msg(const std::strin
         return result;
     }
     throw std::runtime_error("message id doesn't exists");
+}
+
+void pmq::in_memory_storage::add_client(std::shared_ptr<pmq::mqtt_connect> &client_connection) {
+    if(client_connection){
+        std::string client_id = client_connection->get_client_id();
+        if(client_connection->is_will_flag()){
+            if(will_messages.count(client_id) < 1){
+                pmq::QOS qos = pmq::create_qos_from_int(client_connection->get_will_qos());
+                will_messages[client_id] = pmq::message(client_connection->get_will_topic(),
+                        client_connection->get_will_payload(),qos);
+            }else{
+
+            }
+        }
+        if(client_connections.count(client_id) < 1) {
+            client_connections[client_id] = client_connection;
+        }
+    }
+
+}
+
+void pmq::in_memory_storage::add_subscriber(const std::string topic, const pmq::subscriber &subscriber) {
+    this->subscripted_clients[topic].emplace_back(subscriber);
+}
+
+std::vector<pmq::subscriber> pmq::in_memory_storage::get_subscriber(const std::string &topic) {
+    return this->subscripted_clients[topic];
 }

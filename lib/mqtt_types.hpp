@@ -9,10 +9,13 @@ namespace pmq{
     typedef unsigned short u_int16;
 
     enum QOS{
+        INVALID_QOS = -1,
         QOS_0 = 0,
         QOS_1 = 1,
         QOS_2 = 2,
     };
+
+    pmq::QOS create_qos_from_int(unsigned int q);
 
 }
 #endif //PMQ_MQTT_TYPES_HPP

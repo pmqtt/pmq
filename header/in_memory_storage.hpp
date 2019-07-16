@@ -24,6 +24,11 @@ namespace pmq{
 
         void remove_subcriber(const std::string &client_id, std::string &topic) override;
 
+        void add_will_message(const std::string & client_id,const pmq::message & message) override ;
+
+
+        pmq::message get_will_message(const std::string & client_id) override ;
+
         bool check_user_password(const std::string &name, const std::string &pwd) override;
 
 
@@ -40,13 +45,20 @@ namespace pmq{
 
         void save_qos_two_message_id(const std::string  & id , const std::string &client_id ) override;
         std::string restore_qos_two_publish_msg(const std::string & client_id ) override ;
+        void add_client(std::shared_ptr<pmq::mqtt_connect> & client_connection) override ;
 
+        void add_subscriber(const std::string topic,const pmq::subscriber & subscriber) override ;
+
+        std::vector<pmq::subscriber> get_subscriber(const std::string & topic) override;
 
 
     private:
         std::map<std::string,std::string> user_password_map;
         std::map<pmq::u_int16 , std::shared_ptr<pmq::mqtt_publish> > message_storage;
         std::map<std::string, std::string > message_ids;
+        std::map<std::string,pmq::message> will_messages;
+        std::map<std::string,std::shared_ptr<pmq::mqtt_connect>> client_connections;
+        std::map<std::string,std::vector<pmq::subscriber>> subscripted_clients;
 
         boost::mutex mutex;
     };

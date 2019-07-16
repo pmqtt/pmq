@@ -55,6 +55,8 @@ namespace pmq{
         void visit(mqtt_controll_package<144, 3> *msg) override;
         void visit(pmq::mqtt_puback *msg) override;
 
+        void handleDisconnect() override ;
+
     };
 
 }

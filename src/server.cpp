@@ -38,8 +38,8 @@ void pmq::server::run(std::shared_ptr<pmq::client_factory> & socket_factory){
 
 
 void pmq::server::process(std::shared_ptr<pmq::socket> & socket) {
+    auto client_info = this->server_info->add_new_client_info();
     try {
-        auto client_info = this->server_info->add_new_client_info();
         client_info->connection_info->connection_socket = socket;
 
         pmq::mqtt_message message(socket);
@@ -58,6 +58,7 @@ void pmq::server::process(std::shared_ptr<pmq::socket> & socket) {
     }
     catch (pmq::exception::socket_exception &e) {
         BOOST_LOG_TRIVIAL(info) << "Client closed the connection: " << e.what();
+        handler->handleDisconnect();
     }
 }
 

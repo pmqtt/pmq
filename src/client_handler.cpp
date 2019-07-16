@@ -2,20 +2,16 @@
 // Created by pmqtt on 2019-06-29.
 //
 #include "header/client_handler.hpp"
+#include "lib/message.hpp"
 #include "lib/mqtt_connect.hpp"
 #include "lib/subscriber.hpp"
-
-namespace {
-    typedef std::map<std::string,std::list<std::shared_ptr<pmq::socket>>> SubscriptionContainer;
-    std::map<std::string,std::list<pmq::subscriber>> subscripted_clients;
-}
-
 
 
 void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
     BOOST_LOG_TRIVIAL(debug)<<"Handle connection";
     login_creator->create(config.is_allow_anonymous_login())->handle(storage_service,msg);
-
+    std::shared_ptr<pmq::mqtt_connect> client_connection(msg);
+    storage_service->add_client(client_connection);
     this->client_id = msg->get_client_id();
     auto socket = msg->get_socket();
     pmq::mqtt_connack connack( socket,0x0, 0x0);
@@ -28,11 +24,9 @@ void pmq::client_handler::visit(pmq::mqtt_publish *msg) {
     qos_factory->create(msg->get_qos())->handle(storage_service,msg);
 
     const std::string topic = msg->get_topic();
-    if(subscripted_clients.count(topic) > 0){
-        for( auto subscriber : subscripted_clients[topic]){
-            subscriber << msg->get_message();
+    for( auto subscriber : storage_service->get_subscriber(topic)) {
+        subscriber << msg->get_message();
 
-        }
     }
 
 }
@@ -42,7 +36,7 @@ void pmq::client_handler::visit(pmq::mqtt_subscribe *msg) {
     auto socket = msg->get_socket();
     BOOST_LOG_TRIVIAL(debug)<<"SUBSCRIBED WITH QOS:"<<msg->get_qos();
     pmq::subscriber subscriber(socket,topic,msg->get_qos());
-    subscripted_clients[topic].emplace_back(subscriber);
+    storage_service->add_subscriber(topic,subscriber);
 
     pmq::mqtt_suback suback(socket,msg->get_msg_msb(),msg->get_msg_lsb(),2);
     suback.send();
@@ -111,5 +105,16 @@ void pmq::client_handler::visit(pmq::mqtt_suback *msg) {
 }
 
 void pmq::client_handler::visit(pmq::mqtt_puback *msg) {
+
+}
+
+void pmq::client_handler::handleDisconnect() {
+    pmq::message msg = storage_service->get_will_message(client_id);
+    auto subscribers = storage_service->get_subscriber(msg.get_topic());
+    for(auto subscriber : subscribers){
+        std::string will_msg = msg.get_payload();
+        BOOST_LOG_TRIVIAL(debug)<< "WILL PAYLOAD:"<< will_msg;
+        subscriber<<will_msg;
+    }
 
 }
