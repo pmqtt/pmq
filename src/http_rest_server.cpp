@@ -9,39 +9,48 @@
 
 
 namespace pmq{
-    json::value create_json_object_from_will_messages(const std::shared_ptr<pmq::storage> & storage_service){
-        std::string client_id_str = "\"client_id\"";
-        std::string topic_str = "\"topic\"";
-        std::string message_str = "\"message\"";
+    std::string doube_quote(const std::string &str){
+        std::string res = "\"";
+        res += str;
+        res += "\"";
+        return res;
+    }
 
-        std::string array = "{ \"clients\": [";
+    std::string create_json_client_will_message(const std::string & client_id, pmq::message & message){
+        std::string client_id_str = doube_quote("client_id");
+        std::string topic_str = doube_quote("topic");
+        std::string message_str = doube_quote("message");
+
+        std::string res = "";
+        res += client_id_str +" : ";
+        res += doube_quote(client_id) + ",";
+        res += topic_str +" : ";
+        res += doube_quote(message.get_topic()) +",";
+        res += message_str +" : ";
+        res += doube_quote(message.get_payload()) +" }";
+        return res;
+    }
+
+
+    json::value create_json_object_from_will_messages(const std::shared_ptr<pmq::storage> & storage_service){
+        std::string obj = "{ " + doube_quote("clients") +": [";
         std::map<std::string,pmq::message> will_message_map = storage_service->get_all_will_messages();
         std::size_t index = 0;
         for(auto p : will_message_map){
-                array += "{";
-                if(index == will_message_map.size()-1){
-                    array += client_id_str +" : ";
-                    array += "\"" + p.first +"\",";
-                    array += topic_str +" : ";
-                    array += "\"" + p.second.get_topic()+"\",";
-                    array += message_str +" : ";
-                    array += "\"" +p.second.get_payload() +"\" }";
-                }else{
-                    array += client_id_str +" : ";
-                    array += "\"" + p.first +"\",";
-                    array += topic_str +" : ";
-                    array += "\"" + p.second.get_topic()+"\",";
-                    array += message_str +" : ";
-                    array += "\"" +p.second.get_payload() +"\" },";
-                }
-                index++;
+            obj += "{";
+            if(index == will_message_map.size()-1){
+                obj += create_json_client_will_message(p.first,p.second);
+            }else{
+                obj += create_json_client_will_message(p.first,p.second) +",";
+            }
+            index++;
         }
-        array += "]}";
+        obj += "]}";
         try {
-            return json::value::parse(array);
+            return json::value::parse(obj);
         }catch(...){
             BOOST_LOG_TRIVIAL(debug)<<"parsing error";
-            return json::value::string(array);
+            return json::value::string(obj);
         }
     }
 
