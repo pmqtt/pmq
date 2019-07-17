@@ -88,8 +88,14 @@ Now the server allows only connection with user name and password.
 To set a user and password, you have to use the REST interface.
 The REST interface is callable for example by curl with this command
 ```
-curl -d '{"user":"pmqtt", "password":"test1"}' -H 'Content-Type: application/json' -X POST http://localhost:1884/rest/api/v0.1/create_user
+$ curl -d '{"user":"pmqtt", "password":"test1"}' -H 'Content-Type: application/json' -X POST http://localhost:1884/rest/api/v0.1/create_user
 ```
-
+### Show all connected clients with will messages
+To see all clients with it's will messages and will topics, 
+use the REST API of PMQ. For example, to show the clients
+with curl, use the following command
+```
+$ curl http://localhost:1884/rest/api/v0.1/get_will_messages
+```
 
 

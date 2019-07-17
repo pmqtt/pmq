@@ -6,7 +6,44 @@
 #include "header/rest_api.hpp"
 #include "header/http_rest_server.hpp"
 
+
+
 namespace pmq{
+    json::value create_json_object_from_will_messages(const std::shared_ptr<pmq::storage> & storage_service){
+        std::string client_id_str = "\"client_id\"";
+        std::string topic_str = "\"topic\"";
+        std::string message_str = "\"message\"";
+
+        std::string array = "{ \"clients\": [";
+        std::map<std::string,pmq::message> will_message_map = storage_service->get_all_will_messages();
+        std::size_t index = 0;
+        for(auto p : will_message_map){
+                array += "{";
+                if(index == will_message_map.size()-1){
+                    array += client_id_str +" : ";
+                    array += "\"" + p.first +"\",";
+                    array += topic_str +" : ";
+                    array += "\"" + p.second.get_topic()+"\",";
+                    array += message_str +" : ";
+                    array += "\"" +p.second.get_payload() +"\" }";
+                }else{
+                    array += client_id_str +" : ";
+                    array += "\"" + p.first +"\",";
+                    array += topic_str +" : ";
+                    array += "\"" + p.second.get_topic()+"\",";
+                    array += message_str +" : ";
+                    array += "\"" +p.second.get_payload() +"\" },";
+                }
+                index++;
+        }
+        array += "]}";
+        try {
+            return json::value::parse(array);
+        }catch(...){
+            BOOST_LOG_TRIVIAL(debug)<<"parsing error";
+            return json::value::string(array);
+        }
+    }
 
     http_rest_server::http_rest_server(utility::string_t url,const std::shared_ptr<pmq::storage> & storage_service)
         : listener(url), storage_service(storage_service)
@@ -26,6 +63,12 @@ namespace pmq{
         {
             message.reply(status_codes::OK, json::value::string(U("PMQ is running")));
             return;
+        }else{
+
+            if(paths[0] == pmq::rest::GET_WILL_MESSAGES){
+                BOOST_LOG_TRIVIAL(debug)<<"PARSE WILL MESSAGE";
+                message.reply(status_codes::OK,create_json_object_from_will_messages(storage_service));
+            }
         }
 
     }

@@ -50,7 +50,9 @@ namespace pmq{
         void add_subscriber(const std::string topic,const pmq::subscriber & subscriber) override ;
 
         std::vector<pmq::subscriber> get_subscriber(const std::string & topic) override;
-
+        std::map<std::string,pmq::message> get_all_will_messages()const override {
+            return this->will_messages;
+        }
 
     private:
         std::map<std::string,std::string> user_password_map;
