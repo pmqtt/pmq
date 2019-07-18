@@ -61,10 +61,8 @@ add_executable(PMQ src/main.cpp $<TARGET_OBJECTS:pmq_obj_lib>)
 target_link_libraries(PMQ ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)
 
 ### TEST
-add_executable(test_server test/test_server.cpp $<TARGET_OBJECTS:pmq_obj_lib>)
-target_link_libraries(test_server ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)
+include(CMakeFunctions/add_test_executable.txt)
 
-set_target_properties( test_server
-        PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY "test/bin"
-        )
+add_test_executable(test_server test/test_server.cpp)
+add_test_executable(test_login_handler test/test_login_handler.cpp)
+

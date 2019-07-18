@@ -11,6 +11,7 @@ namespace pmq {
 
     class mqtt_connect : public mqtt_package{
     public:
+        mqtt_connect() = default;
         mqtt_connect(std::shared_ptr<pmq::socket> & client_socket, std::size_t payload_length);
         virtual ~mqtt_connect() = default;
 
@@ -31,6 +32,9 @@ namespace pmq {
 
         unsigned int get_keep_alive() const {
             return keep_alive;
+        }
+        void set_user_name_flag(){
+            user_name_flag = true;
         }
 
         bool is_user_name_flag() const {
@@ -88,8 +92,8 @@ namespace pmq {
         pmq::u_int8 lsb;
         unsigned int version;
         unsigned int keep_alive;
-        bool user_name_flag;
-        bool password_flag;
+        bool user_name_flag = false;
+        bool password_flag = false;
         bool will_retain;
         std::size_t will_qos;
 
@@ -101,6 +105,24 @@ namespace pmq {
 
     private:
         std::string will_topic;
+    public:
+        void set_will_topic(const std::string &willTopic) {
+            will_topic = willTopic;
+        }
+
+        void set_will_payload(const std::string &willPayload) {
+            will_payload = willPayload;
+        }
+
+        void set_user_name(const std::string &userName) {
+            user_name = userName;
+        }
+
+        void set_password(const std::string &password) {
+            mqtt_connect::password = password;
+        }
+
+    private:
         std::string will_payload;
         std::string user_name;
         std::string password;

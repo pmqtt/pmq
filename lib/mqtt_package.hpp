@@ -15,6 +15,7 @@
 namespace pmq {
     class mqtt_package {
     public:
+        mqtt_package() = default;
         mqtt_package(std::shared_ptr<pmq::socket> & client_socket) : client_socket(client_socket){}
         virtual ~mqtt_package(){}
         virtual std::size_t get_payload_length() const = 0;

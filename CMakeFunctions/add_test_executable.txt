@@ -1,0 +1,9 @@
+function( add_test_executable TEST_NAME TEST_FILE)
+    add_executable(${TEST_NAME} ${TEST_FILE} $<TARGET_OBJECTS:pmq_obj_lib>)
+    target_link_libraries(${TEST_NAME} ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)
+
+    set_target_properties( ${TEST_NAME}
+            PROPERTIES
+            RUNTIME_OUTPUT_DIRECTORY "test/bin"
+            )
+endfunction()
