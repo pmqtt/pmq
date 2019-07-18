@@ -45,9 +45,7 @@ void pmq::mqtt_publish::send(std::shared_ptr<pmq::socket> & socket)const{
     std::string msg;
     pmq::u_int8 first_byte = pmq::CONTROL_PACKET_TYPE::PUBLISH <<4;
     std::string topic_length = encode(topic.length());
-    std::string message_length = encode(message.length());
     std::string remaining_length = encode(1+topic_length.length()+
-            message_length.length()+
             this->message.length()+
             this->topic.length());
     pmq::u_int8 variable_header = 0;
@@ -56,7 +54,6 @@ void pmq::mqtt_publish::send(std::shared_ptr<pmq::socket> & socket)const{
     msg += variable_header;
     msg += topic_length;
     msg += topic;
-    msg += message_length;
     msg += message;
     BOOST_LOG_TRIVIAL(debug)<<"msg: "<<message <<" | "<<" topic: "<<topic;
     socket->write(msg);

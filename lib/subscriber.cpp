@@ -69,7 +69,6 @@ namespace pmq{
         std::string topic_length     = calculate_msb_lsb(topic.length());
         std::string message_length   = encode(publish_message.length());
         std::string remaining_length = encode(topic_length.length()    +
-                                              message_length.length()  +
                                               publish_message.length() +
                                               topic.length()           +
                                               variable_header_length );
@@ -89,7 +88,7 @@ namespace pmq{
             msg += msb;
             msg += lsb;
         }
-        msg += message_length;
+        //msg += message_length;
         msg += publish_message;
         this->socket->write(msg);
     }
