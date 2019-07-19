@@ -1,7 +1,11 @@
+
+file(REMOVE test_args.txt)
+
 function( add_test_executable TEST_NAME TEST_FILE)
     add_executable(${TEST_NAME} ${TEST_FILE} $<TARGET_OBJECTS:pmq_obj_lib>)
     target_link_libraries(${TEST_NAME} ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)
 
+    file(APPEND test_args.txt "${TEST_NAME}\n")
     set_target_properties( ${TEST_NAME}
             PROPERTIES
             RUNTIME_OUTPUT_DIRECTORY "test/bin"
