@@ -57,6 +57,7 @@ namespace pmq{
     http_rest_server::http_rest_server(utility::string_t url,const std::shared_ptr<pmq::storage> & storage_service)
         : listener(url), storage_service(storage_service)
     {
+
         listener.support(methods::GET, std::bind(&http_rest_server::handle_get, this, std::placeholders::_1));
         listener.support(methods::PUT, std::bind(&http_rest_server::handle_put, this, std::placeholders::_1));
         listener.support(methods::POST, std::bind(&http_rest_server::handle_post, this, std::placeholders::_1));

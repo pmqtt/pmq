@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named test_login_factory
+
+# Build rule for target.
+test_login_factory: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_login_factory
+.PHONY : test_login_factory
+
+# fast build rule for target.
+test_login_factory/fast:
+	$(MAKE) -f CMakeFiles/test_login_factory.dir/build.make CMakeFiles/test_login_factory.dir/build
+.PHONY : test_login_factory/fast
+
+#=============================================================================
 # Target rules for targets named PMQ
 
 # Build rule for target.
@@ -796,6 +809,33 @@ src/tcp_client_factory.cpp.s:
 	$(MAKE) -f CMakeFiles/pmq_obj_lib.dir/build.make CMakeFiles/pmq_obj_lib.dir/src/tcp_client_factory.cpp.s
 .PHONY : src/tcp_client_factory.cpp.s
 
+test/test_login_factory.o: test/test_login_factory.cpp.o
+
+.PHONY : test/test_login_factory.o
+
+# target to build an object file
+test/test_login_factory.cpp.o:
+	$(MAKE) -f CMakeFiles/test_login_factory.dir/build.make CMakeFiles/test_login_factory.dir/test/test_login_factory.cpp.o
+.PHONY : test/test_login_factory.cpp.o
+
+test/test_login_factory.i: test/test_login_factory.cpp.i
+
+.PHONY : test/test_login_factory.i
+
+# target to preprocess a source file
+test/test_login_factory.cpp.i:
+	$(MAKE) -f CMakeFiles/test_login_factory.dir/build.make CMakeFiles/test_login_factory.dir/test/test_login_factory.cpp.i
+.PHONY : test/test_login_factory.cpp.i
+
+test/test_login_factory.s: test/test_login_factory.cpp.s
+
+.PHONY : test/test_login_factory.s
+
+# target to generate assembly for a file
+test/test_login_factory.cpp.s:
+	$(MAKE) -f CMakeFiles/test_login_factory.dir/build.make CMakeFiles/test_login_factory.dir/test/test_login_factory.cpp.s
+.PHONY : test/test_login_factory.cpp.s
+
 test/test_login_handler.o: test/test_login_handler.cpp.o
 
 .PHONY : test/test_login_handler.o
@@ -857,6 +897,7 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... test_login_factory"
 	@echo "... PMQ"
 	@echo "... pmq_obj_lib"
 	@echo "... test_login_handler"
@@ -932,6 +973,9 @@ help:
 	@echo "... src/tcp_client_factory.o"
 	@echo "... src/tcp_client_factory.i"
 	@echo "... src/tcp_client_factory.s"
+	@echo "... test/test_login_factory.o"
+	@echo "... test/test_login_factory.i"
+	@echo "... test/test_login_factory.s"
 	@echo "... test/test_login_handler.o"
 	@echo "... test/test_login_handler.i"
 	@echo "... test/test_login_handler.s"

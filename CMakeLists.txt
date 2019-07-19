@@ -24,7 +24,7 @@ add_library(pmqtt STATIC lib/control_packet_type.hpp
         lib/qos_zero_handler.hpp lib/qos_one_handler.cpp lib/qos_one_handler.hpp lib/qos_two_handler.cpp
         lib/qos_two_handler.hpp lib/qos_handler_factory.cpp lib/qos_handler_factory.hpp lib/message.hpp lib/message.cpp lib/mqtt_types.cpp)
 
-add_library(pmq_obj_lib OBJECT  header/acceptor_exception.hpp
+add_library(pmq_obj_lib OBJECT header/acceptor_exception.hpp
         header/bad_connection_exception.hpp
         header/config_exception.hpp
         src/server.cpp
@@ -65,4 +65,4 @@ include(CMakeFunctions/add_test_executable.txt)
 
 add_test_executable(test_server test/test_server.cpp)
 add_test_executable(test_login_handler test/test_login_handler.cpp)
-
+add_test_executable(test_login_factory test/test_login_factory.cpp)
