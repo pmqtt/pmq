@@ -105,10 +105,10 @@ void pmq::in_memory_storage::add_client(std::shared_ptr<pmq::mqtt_connect> &clie
 
 }
 
-void pmq::in_memory_storage::add_subscriber(const std::string topic, const pmq::subscriber &subscriber) {
-    this->subscripted_clients[topic].emplace_back(subscriber);
+void pmq::in_memory_storage::add_subscriber(const std::string topic, const std::shared_ptr<pmq::subscriber> &subscriber) {
+    this->subscripted_clients.insert_subscriber(subscriber,topic);
 }
 
-std::vector<pmq::subscriber> pmq::in_memory_storage::get_subscriber(const std::string &topic) {
-    return this->subscripted_clients[topic];
+std::vector<std::shared_ptr<pmq::subscriber>> pmq::in_memory_storage::get_subscriber(const std::string &topic) {
+    return this->subscripted_clients.get_subscriber(topic);
 }

@@ -7,6 +7,7 @@
 #include <boost/thread.hpp>
 #include<map>
 
+#include "subscriber_container.hpp"
 #include "storage.hpp"
 
 namespace pmq{
@@ -47,9 +48,9 @@ namespace pmq{
         std::string restore_qos_two_publish_msg(const std::string & client_id ) override ;
         void add_client(std::shared_ptr<pmq::mqtt_connect> & client_connection) override ;
 
-        void add_subscriber(const std::string topic,const pmq::subscriber & subscriber) override ;
+        void add_subscriber(const std::string topic,const std::shared_ptr<pmq::subscriber> & subscriber) override ;
 
-        std::vector<pmq::subscriber> get_subscriber(const std::string & topic) override;
+        std::vector<std::shared_ptr<pmq::subscriber>> get_subscriber(const std::string & topic) override;
         std::map<std::string,pmq::message> get_all_will_messages()const override {
             return this->will_messages;
         }
@@ -60,8 +61,8 @@ namespace pmq{
         std::map<std::string, std::string > message_ids;
         std::map<std::string,pmq::message> will_messages;
         std::map<std::string,std::shared_ptr<pmq::mqtt_connect>> client_connections;
-        std::map<std::string,std::vector<pmq::subscriber>> subscripted_clients;
-
+        //std::map<std::string,std::vector<pmq::subscriber>> subscripted_clients;
+        pmq::detail::subscriber_container subscripted_clients;
         boost::mutex mutex;
     };
 }

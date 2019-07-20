@@ -63,11 +63,11 @@ public:
     std::string restore_qos_two_publish_msg(const std::string &client_id) override {
         return std::string();
     }
-    void add_subscriber(const std::string topic, const pmq::subscriber &subscriber) override {
+    void add_subscriber(const std::string topic, const std::shared_ptr<pmq::subscriber> &subscriber) override {
 
     }
-    std::vector<pmq::subscriber> get_subscriber(const std::string &topic) override {
-        return std::vector<pmq::subscriber>();
+    std::vector<std::shared_ptr<pmq::subscriber>> get_subscriber(const std::string &topic) override {
+        return std::vector<std::shared_ptr<pmq::subscriber>>();
     }
     std::map<std::string, pmq::message> get_all_will_messages() const override {
         return std::map<std::string, pmq::message>();

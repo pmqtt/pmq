@@ -25,7 +25,7 @@ void pmq::client_handler::visit(pmq::mqtt_publish *msg) {
 
     const std::string topic = msg->get_topic();
     for( auto subscriber : storage_service->get_subscriber(topic)) {
-        subscriber << msg->get_message();
+        *subscriber << msg->get_message();
 
     }
 
@@ -35,7 +35,7 @@ void pmq::client_handler::visit(pmq::mqtt_subscribe *msg) {
     const std::string topic = msg->get_topic();
     auto socket = msg->get_socket();
     BOOST_LOG_TRIVIAL(debug)<<"SUBSCRIBED WITH QOS:"<<msg->get_qos();
-    pmq::subscriber subscriber(socket,topic,msg->get_qos());
+    std::shared_ptr<pmq::subscriber> subscriber = std::make_shared<pmq::subscriber>(socket,topic,msg->get_qos());
     storage_service->add_subscriber(topic,subscriber);
 
     pmq::mqtt_suback suback(socket,msg->get_msg_msb(),msg->get_msg_lsb(),2);
@@ -114,7 +114,7 @@ void pmq::client_handler::handleDisconnect() {
     for(auto subscriber : subscribers){
         std::string will_msg = msg.get_payload();
         BOOST_LOG_TRIVIAL(debug)<< "WILL PAYLOAD:"<< will_msg;
-        subscriber<<will_msg;
+        *subscriber<<will_msg;
     }
 
 }

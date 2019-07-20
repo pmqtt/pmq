@@ -55,7 +55,7 @@ add_library(pmq_obj_lib OBJECT header/acceptor_exception.hpp
         src/login_allow_anonymous_handler.cpp
         src/login_handler.cpp
         header/login_factory.hpp
-        src/login_factory.cpp)
+        src/login_factory.cpp src/subscriber_container.cpp header/subscriber_container.hpp)
 
 add_executable(PMQ src/main.cpp $<TARGET_OBJECTS:pmq_obj_lib>)
 target_link_libraries(PMQ ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)
@@ -66,3 +66,5 @@ include(CMakeFunctions/add_test_executable.txt)
 add_test_executable(test_server test/test_server.cpp)
 add_test_executable(test_login_handler test/test_login_handler.cpp)
 add_test_executable(test_login_factory test/test_login_factory.cpp)
+add_test_executable(test_subscriber_container test/test_subscriber_container.cpp)
+
