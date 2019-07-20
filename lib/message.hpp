@@ -30,8 +30,8 @@ namespace pmq{
         }
 
     private:
-        std::string topic;
-        std::string msg;
+        std::string topic="";
+        std::string msg="";
         pmq::QOS qos;
 
     };

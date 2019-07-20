@@ -110,7 +110,11 @@ std::vector<std::shared_ptr<pmq::subscriber>> pmq::detail::subscriber_container:
 
         }
         iter = iter->get_child(sub_topics[0]);
-        return iter->get_subscribers();
+        if(iter) {
+            return iter->get_subscribers();
+        }else{
+            return root->get_subscribers();
+        }
     }
     for(std::size_t i =0; i< sub_topics.size()-1;++i){
         auto vec = iter->get_all_wildcard_subscriber();

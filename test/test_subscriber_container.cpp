@@ -117,6 +117,25 @@ BOOST_AUTO_TEST_CASE( subscriber_container_toplevel_wildcard_test)
     BOOST_CHECK(result[2].get() == sub3.get());
 }
 
+BOOST_AUTO_TEST_CASE( subscriber_container_toplevel_wildcard_two_test)
+{
+    pmq::detail::subscriber_container container;
+    std::shared_ptr<pmq::socket> socket;
+
+    auto sub1 = std::make_shared<pmq::subscriber>(socket,"#",0);
+    auto sub2 = std::make_shared<pmq::subscriber>(socket,"#",0);
+    auto sub3 = std::make_shared<pmq::subscriber>(socket,"#",0);
+    container.insert_subscriber(sub1,"#");
+    container.insert_subscriber(sub2,"#");
+    container.insert_subscriber(sub3,"#");
+    std::vector<std::shared_ptr<pmq::subscriber>> result = container.get_subscriber("a");
+    BOOST_CHECK(result.size() == 3);
+    BOOST_CHECK(result[0].get() == sub1.get());
+    BOOST_CHECK(result[1].get() == sub2.get());
+    BOOST_CHECK(result[2].get() == sub3.get());
+}
+
+
 BOOST_AUTO_TEST_CASE( subscriber_container_one_level_test)
 {
     pmq::detail::subscriber_container container;
@@ -272,3 +291,4 @@ BOOST_AUTO_TEST_CASE( subscriber_container_multi_level_wildcard_predeccor_level_
     BOOST_CHECK(result[0].get() == sub4.get());
 
 }
+
