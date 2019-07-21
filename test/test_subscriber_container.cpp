@@ -292,3 +292,53 @@ BOOST_AUTO_TEST_CASE( subscriber_container_multi_level_wildcard_predeccor_level_
 
 }
 
+BOOST_AUTO_TEST_CASE( subscriber_container_single_level_test)
+{
+    std::cout<<"Test subscriber container single level test"<<std::endl;
+    pmq::detail::subscriber_container container;
+    std::shared_ptr<pmq::socket> socket;
+
+    auto sub1 = std::make_shared<pmq::subscriber>(socket,"a/b/c",0);
+    auto sub2 = std::make_shared<pmq::subscriber>(socket,"a/b/d",0);
+    auto sub3 = std::make_shared<pmq::subscriber>(socket,"a/b/e",0);
+    auto sub4 = std::make_shared<pmq::subscriber>(socket,"a/+/e",0);
+    container.insert_subscriber(sub1,"a/b/c");
+    container.insert_subscriber(sub2,"a/b/d");
+    container.insert_subscriber(sub3,"a/b/e");
+    std::cout<<"START"<<std::endl;
+    container.insert_subscriber(sub4,"a/+/e");
+
+    auto result = container.get_subscriber("a/b/e");
+    std::cout<<"size:"<<result.size()<<std::endl;
+    BOOST_CHECK(result.size() == 2);
+    BOOST_CHECK(result[0].get() == sub3.get());
+    BOOST_CHECK(result[1].get() == sub4.get());
+
+}
+
+BOOST_AUTO_TEST_CASE( subscriber_container_single_level_deep_test)
+{
+    std::cout<<"Test subscriber container single level test"<<std::endl;
+    pmq::detail::subscriber_container container;
+    std::shared_ptr<pmq::socket> socket;
+
+    auto sub1 = std::make_shared<pmq::subscriber>(socket,"a/u/e",0);
+    auto sub2 = std::make_shared<pmq::subscriber>(socket,"a/i/e",0);
+    auto sub3 = std::make_shared<pmq::subscriber>(socket,"a/g/e",0);
+    auto sub4 = std::make_shared<pmq::subscriber>(socket,"a/+/e",0);
+
+    auto sub5 = std::make_shared<pmq::subscriber>(socket,"a/+/e/f/g/h/i",0);
+    container.insert_subscriber(sub1,"a/u/e");
+    container.insert_subscriber(sub2,"a/i/e");
+    container.insert_subscriber(sub3,"a/g/e");
+    container.insert_subscriber(sub5,"a/b/e/f/g/h/i");
+
+    container.insert_subscriber(sub4,"a/+/e/f/g/h/i");
+
+    auto result = container.get_subscriber("a/c/e/f/g/h/i");
+    std::cout<<"size:"<<result.size()<<std::endl;
+    BOOST_CHECK(result.size() == 1);
+    BOOST_CHECK(result[0].get() == sub4.get());
+
+}
+

@@ -13,9 +13,9 @@ PMQ implements the MQTT 3.1 and 3.1.1 specifiaction with qualaty of service 1.
     * [ ] QOS 2 sender case
 * Support MQTT 5
 * Support WILL messages **Finished**
-* Support Wildcard subscriptions
+* Support Wildcard subscriptions **Finished**
     * [x] \# Wildcard (Multi level Wildcard) 
-    * [ ] \+ Wildcard (Single level Wildcard)
+    * [x] \+ Wildcard (Single level Wildcard)
 * Support Authentification -  **Finished!**
 * Support TLS - **Finished!**
 * Support for Websockets

@@ -51,6 +51,8 @@ namespace pmq::detail{
         std::vector<std::shared_ptr<pmq::subscriber>> get_subscriber(const std::string & topic);
         std::size_t get_size()const;
 
+    private:
+       static std::vector<std::shared_ptr<pmq::subscriber>> tree_down(const node_ptr & root,const std::vector<std::string>& sub_topics);
 
     private:
         node_ptr root; // is always '#'
