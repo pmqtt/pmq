@@ -52,7 +52,9 @@ Note: PMQ requires
 $ cd $PMQ
 $ cmake .
 $ make
+$ sh run_test.sh
 ```
+
 #### Troubleshooting
 On MAC OS X I have recognized that building PMQ with cpprestsdk is a little bit difficult.
 If you see this error message from cmake
