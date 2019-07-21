@@ -22,7 +22,9 @@ void pmq::client_handler::visit(pmq::mqtt_publish *msg) {
     BOOST_LOG_TRIVIAL(debug) << "[visit publish] ";
     msg->set_client_id(client_id);
     qos_factory->create(msg->get_qos())->handle(storage_service,msg);
+    if(msg->is_retained()){
 
+    }
     const std::string topic = msg->get_topic();
     for( auto subscriber : storage_service->get_subscriber(topic)) {
         *subscriber << msg->get_message();

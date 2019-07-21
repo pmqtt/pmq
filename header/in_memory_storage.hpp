@@ -64,8 +64,9 @@ namespace pmq{
         std::map<std::string, std::string > message_ids;
         std::map<std::string,pmq::message> will_messages;
         std::map<std::string,std::shared_ptr<pmq::mqtt_connect>> client_connections;
-        //std::map<std::string,std::vector<pmq::subscriber>> subscripted_clients;
         pmq::detail::subscriber_container subscripted_clients;
+        std::map<std::string,pmq::detail::subscriber_container> shared_subscripted_clients;
+
         boost::mutex mutex;
     };
 }

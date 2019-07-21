@@ -72,6 +72,10 @@ public:
     std::map<std::string, pmq::message> get_all_will_messages() const override {
         return std::map<std::string, pmq::message>();
     }
+
+    void add_retained_message(const pmq::message &msg) override {
+
+    }
 };
 
 pmq::mqtt_connect * create_fake_mqtt_connect(){

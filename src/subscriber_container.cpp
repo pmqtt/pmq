@@ -1,20 +1,12 @@
 //
 // Created by pmqtt on 2019-07-19.
 //
+
 #include<algorithm>
-#include <boost/algorithm/string/classification.hpp>
-#include <boost/algorithm/string/split.hpp>
-#include <header/subscriber_container.hpp>
+#include "header/string.hpp"
+#include "header/subscriber_container.hpp"
 
-#include <stack>
 
-namespace pmq::string{
-    std::vector <std::string> split(const std::string &str, const char *delim) {
-        std::vector<std::string> splitted;
-        boost::split(splitted, str, boost::is_any_of(delim));
-        return splitted;
-    }
-}
 
 std::vector<std::string> create_sub_topic_vec(const std::vector<std::string> & vec,std::size_t pos){
     std::vector<std::string> result;
@@ -48,7 +40,7 @@ void pmq::detail::subscriber_container::insert_subscriber(const std::shared_ptr<
 
     while(sub_topics.size() > 0) {
         if (iter->exist_child(sub_topics[0])) {
-            if (sub_topics.size() > 0) {
+            if (sub_topics.size() > 1) {
                 if (sub_topics[1] == "#") {
                     iter = iter->get_child(sub_topics[0]);
                     iter->add_subscriber(sub, true);
@@ -58,6 +50,7 @@ void pmq::detail::subscriber_container::insert_subscriber(const std::shared_ptr<
                     sub_topics.erase(sub_topics.begin());
                 }
             } else {
+                iter = iter->get_child(sub_topics[0]);
                 iter->add_subscriber(sub, true);
                 break;
             }
@@ -75,7 +68,6 @@ void pmq::detail::subscriber_container::insert_subscriber(const std::shared_ptr<
                 }
 
             }
-
             iter->add_subscriber(sub,is_last_sub_topic_wild_card);
             break;
         }
@@ -105,7 +97,6 @@ pmq::detail::subscriber_container::tree_down(const pmq::detail::node_ptr &root,
                                              const std::vector<std::string>& sub_topics) {
 
 
-    std::stack<std::pair<node_ptr,std::vector<std::string>>> iter_stack;
     std::vector<std::shared_ptr<pmq::subscriber>> result;
     node_ptr iter = root;
 
@@ -127,10 +118,8 @@ pmq::detail::subscriber_container::tree_down(const pmq::detail::node_ptr &root,
         auto vec = iter->get_all_wildcard_subscriber();
         std::copy(vec.begin(),vec.end(),std::back_inserter(result));
 
-        std::cout<<"search for child:"<<sub_topics[i]<<"\n";
         parent = iter;
         if(iter->exist_child(sub_topics[i])) {
-            iter_stack.push(std::pair(iter,create_sub_topic_vec(sub_topics,i)));
             iter = iter->get_child(sub_topics[i]);
             if(i+1 >= sub_topics.size()-1){
                 auto vec = iter->get_all_wildcard_subscriber();
@@ -227,19 +216,4 @@ std::shared_ptr<pmq::detail::subscriber_node> pmq::detail::subscriber_node::get_
 }
 
 
-std::vector<std::string> pmq::detail::split_topic(const std::string &topic) {
-    if(topic.length() == 0){ return std::vector<std::string>(); }
-    bool is_first_sign_a_slash = false;
-    if(topic[0] == '/'){
-        is_first_sign_a_slash = true;
-    }
-    std::vector<std::string> splited = pmq::string::split(topic,"/");
-    if( is_first_sign_a_slash ){
-        splited.erase(splited.begin());
-        splited[0] = "/"+splited[0];
-    }
-    if(splited[splited.size()-1].length() == 0){
-        splited.pop_back();
-    }
-    return splited;
-}
+

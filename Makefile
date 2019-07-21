@@ -795,6 +795,33 @@ src/startup_configuration.cpp.s:
 	$(MAKE) -f CMakeFiles/pmq_obj_lib.dir/build.make CMakeFiles/pmq_obj_lib.dir/src/startup_configuration.cpp.s
 .PHONY : src/startup_configuration.cpp.s
 
+src/string.o: src/string.cpp.o
+
+.PHONY : src/string.o
+
+# target to build an object file
+src/string.cpp.o:
+	$(MAKE) -f CMakeFiles/pmq_obj_lib.dir/build.make CMakeFiles/pmq_obj_lib.dir/src/string.cpp.o
+.PHONY : src/string.cpp.o
+
+src/string.i: src/string.cpp.i
+
+.PHONY : src/string.i
+
+# target to preprocess a source file
+src/string.cpp.i:
+	$(MAKE) -f CMakeFiles/pmq_obj_lib.dir/build.make CMakeFiles/pmq_obj_lib.dir/src/string.cpp.i
+.PHONY : src/string.cpp.i
+
+src/string.s: src/string.cpp.s
+
+.PHONY : src/string.s
+
+# target to generate assembly for a file
+src/string.cpp.s:
+	$(MAKE) -f CMakeFiles/pmq_obj_lib.dir/build.make CMakeFiles/pmq_obj_lib.dir/src/string.cpp.s
+.PHONY : src/string.cpp.s
+
 src/subscriber_container.o: src/subscriber_container.cpp.o
 
 .PHONY : src/subscriber_container.o
@@ -1038,6 +1065,9 @@ help:
 	@echo "... src/startup_configuration.o"
 	@echo "... src/startup_configuration.i"
 	@echo "... src/startup_configuration.s"
+	@echo "... src/string.o"
+	@echo "... src/string.i"
+	@echo "... src/string.s"
 	@echo "... src/subscriber_container.o"
 	@echo "... src/subscriber_container.i"
 	@echo "... src/subscriber_container.s"

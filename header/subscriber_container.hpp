@@ -11,7 +11,6 @@
 #include <vector>
 namespace pmq::detail{
 
-    std::vector<std::string> split_topic(const std::string & topic);
 
     typedef std::pair<std::shared_ptr<pmq::subscriber>,bool> subscriber_item;
 

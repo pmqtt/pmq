@@ -1,9 +1,15 @@
 //
 // Created by pmqtt on 2019-06-29.
 //
-
+#include <algorithm>
 #include <header/in_memory_storage.hpp>
+#include <header/string.hpp>
 #include <lib/message.hpp>
+#include <random>
+std::random_device dev;
+std::mt19937 rng(dev());
+std::uniform_int_distribution<std::mt19937::result_type> dist(0,1000);
+
 
 pmq::in_memory_storage::in_memory_storage() {
 
@@ -106,11 +112,38 @@ void pmq::in_memory_storage::add_client(std::shared_ptr<pmq::mqtt_connect> &clie
 }
 
 void pmq::in_memory_storage::add_subscriber(const std::string topic, const std::shared_ptr<pmq::subscriber> &subscriber) {
+    std::vector<std::string> topics = pmq::detail::split_topic(topic);
+    if(topics.size() > 2){
+        if(topics[0] == "$share"){
+            std::string group = topics[1];
+            std::vector<std::string> sub_topic;
+            std::string shared_topic ="";
+            for(int i = 2; i < topics.size();++i){
+                shared_topic += topics[i]+"/";
+            }
+            std::cout<<"insert:" <<group <<" ... "<<shared_topic<<std::endl;
+            this->shared_subscripted_clients[group].insert_subscriber(subscriber,shared_topic);
+            return;
+        }
+    }
+
     this->subscripted_clients.insert_subscriber(subscriber,topic);
 }
 
 std::vector<std::shared_ptr<pmq::subscriber>> pmq::in_memory_storage::get_subscriber(const std::string &topic) {
-    return this->subscripted_clients.get_subscriber(topic);
+    std::vector<std::shared_ptr<pmq::subscriber>> vec = this->subscripted_clients.get_subscriber(topic);
+    for(auto x : this->shared_subscripted_clients){
+        auto tmp = x.second.get_subscriber(topic);
+        if(tmp.size() > 0) {
+            std::cout<<"sz:"<<tmp.size()<<std::endl;
+            int pos = dist(rng) % tmp.size();
+            std::cout << "pos: " << pos << std::endl;
+            if (pos < tmp.size()) {
+                vec.push_back(tmp[pos]);
+            }
+        }
+    }
+    return vec;
 }
 
 void pmq::in_memory_storage::add_retained_message(const pmq::message &msg) {

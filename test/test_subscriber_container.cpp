@@ -8,6 +8,7 @@
 #include <iostream>
 #include <lib/socket.hpp>
 #include <lib/subscriber.hpp>
+#include "../header/string.hpp"
 #include "../header/subscriber_container.hpp"
 
 BOOST_AUTO_TEST_CASE( split_topic_test)
@@ -154,6 +155,22 @@ BOOST_AUTO_TEST_CASE( subscriber_container_one_level_test)
     result = container.get_subscriber("c");
     BOOST_CHECK(result[0].get() == sub3.get());
 }
+
+BOOST_AUTO_TEST_CASE( subscriber_container_same_level_test)
+{
+    pmq::detail::subscriber_container container;
+    std::shared_ptr<pmq::socket> socket;
+
+    auto sub1 = std::make_shared<pmq::subscriber>(socket,"a",0);
+    auto sub2 = std::make_shared<pmq::subscriber>(socket,"b",0);
+    auto sub3 = std::make_shared<pmq::subscriber>(socket,"c",0);
+    container.insert_subscriber(sub1,"a");
+    container.insert_subscriber(sub2,"a");
+    container.insert_subscriber(sub3,"a");
+    std::vector<std::shared_ptr<pmq::subscriber>> result = container.get_subscriber("a");
+    BOOST_CHECK(result.size() == 3);
+}
+
 
 BOOST_AUTO_TEST_CASE( subscriber_container_multi_level_test)
 {
