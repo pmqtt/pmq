@@ -9,6 +9,8 @@ PMQ implements the MQTT 3.1 and 3.1.1 specifiaction with qualaty of service 1.
 ### Roadmap
 * REST API to configure and manage PMQ Message Broker
 * Support QOS 2
+    * [x] QOS 2 receiver case
+    * [ ] QOS 2 sender case
 * Support MQTT 5
 * Support WILL messages **Finished**
 * Support Wildcard subscriptions
