@@ -45,7 +45,9 @@ namespace pmq {
         const std::string &get_client_id() const;
 
         void set_client_id(const std::string &clientId);
-
+        bool is_retained()const{
+            return this->retain;
+        }
     private:
         std::string client_id;
 

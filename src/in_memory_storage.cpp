@@ -112,3 +112,7 @@ void pmq::in_memory_storage::add_subscriber(const std::string topic, const std::
 std::vector<std::shared_ptr<pmq::subscriber>> pmq::in_memory_storage::get_subscriber(const std::string &topic) {
     return this->subscripted_clients.get_subscriber(topic);
 }
+
+void pmq::in_memory_storage::add_retained_message(const pmq::message &msg) {
+
+}

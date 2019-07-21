@@ -26,7 +26,6 @@ void pmq::client_handler::visit(pmq::mqtt_publish *msg) {
     const std::string topic = msg->get_topic();
     for( auto subscriber : storage_service->get_subscriber(topic)) {
         *subscriber << msg->get_message();
-
     }
 
 }
