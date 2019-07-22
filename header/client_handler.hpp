@@ -39,7 +39,7 @@ namespace pmq{
             :login_creator(login_fac),qos_factory(qos_factory),storage_service(storage_service),config(cfg){
 
         }
-        virtual ~client_handler(){}
+        ~client_handler() override = default;
 
         void visit(mqtt_connect *msg) override;
         void visit(mqtt_publish *msg) override;
