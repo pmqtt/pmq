@@ -849,6 +849,33 @@ src/subscriber_container.cpp.s:
 	$(MAKE) -f CMakeFiles/pmq_obj_lib.dir/build.make CMakeFiles/pmq_obj_lib.dir/src/subscriber_container.cpp.s
 .PHONY : src/subscriber_container.cpp.s
 
+src/subscriber_node.o: src/subscriber_node.cpp.o
+
+.PHONY : src/subscriber_node.o
+
+# target to build an object file
+src/subscriber_node.cpp.o:
+	$(MAKE) -f CMakeFiles/pmq_obj_lib.dir/build.make CMakeFiles/pmq_obj_lib.dir/src/subscriber_node.cpp.o
+.PHONY : src/subscriber_node.cpp.o
+
+src/subscriber_node.i: src/subscriber_node.cpp.i
+
+.PHONY : src/subscriber_node.i
+
+# target to preprocess a source file
+src/subscriber_node.cpp.i:
+	$(MAKE) -f CMakeFiles/pmq_obj_lib.dir/build.make CMakeFiles/pmq_obj_lib.dir/src/subscriber_node.cpp.i
+.PHONY : src/subscriber_node.cpp.i
+
+src/subscriber_node.s: src/subscriber_node.cpp.s
+
+.PHONY : src/subscriber_node.s
+
+# target to generate assembly for a file
+src/subscriber_node.cpp.s:
+	$(MAKE) -f CMakeFiles/pmq_obj_lib.dir/build.make CMakeFiles/pmq_obj_lib.dir/src/subscriber_node.cpp.s
+.PHONY : src/subscriber_node.cpp.s
+
 src/tcp_client_factory.o: src/tcp_client_factory.cpp.o
 
 .PHONY : src/tcp_client_factory.o
@@ -1071,6 +1098,9 @@ help:
 	@echo "... src/subscriber_container.o"
 	@echo "... src/subscriber_container.i"
 	@echo "... src/subscriber_container.s"
+	@echo "... src/subscriber_node.o"
+	@echo "... src/subscriber_node.i"
+	@echo "... src/subscriber_node.s"
 	@echo "... src/tcp_client_factory.o"
 	@echo "... src/tcp_client_factory.i"
 	@echo "... src/tcp_client_factory.s"

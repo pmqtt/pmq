@@ -55,7 +55,7 @@ add_library(pmq_obj_lib OBJECT header/acceptor_exception.hpp
         src/login_allow_anonymous_handler.cpp
         src/login_handler.cpp
         header/login_factory.hpp
-        src/login_factory.cpp src/subscriber_container.cpp header/subscriber_container.hpp src/string.cpp)
+        src/login_factory.cpp src/subscriber_container.cpp header/subscriber_container.hpp src/string.cpp header/subscriber_node.hpp src/subscriber_node.cpp)
 
 add_executable(PMQ src/main.cpp $<TARGET_OBJECTS:pmq_obj_lib> header/string.hpp)
 target_link_libraries(PMQ ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)
