@@ -23,7 +23,8 @@ void pmq::client_handler::visit(pmq::mqtt_publish *msg) {
     msg->set_client_id(client_id);
     qos_factory->create(msg->get_qos())->handle(storage_service,msg);
     if(msg->is_retained()){
-
+        std::shared_ptr<pmq::message> message = std::make_shared<pmq::message>(msg->get_topic(),
+                msg->get_message(),pmq::create_qos_from_int(msg->get_qos()));
     }
     const std::string topic = msg->get_topic();
     for( auto subscriber : storage_service->get_subscriber(topic)) {
@@ -38,9 +39,20 @@ void pmq::client_handler::visit(pmq::mqtt_subscribe *msg) {
     BOOST_LOG_TRIVIAL(debug)<<"SUBSCRIBED WITH QOS:"<<msg->get_qos();
     std::shared_ptr<pmq::subscriber> subscriber = std::make_shared<pmq::subscriber>(socket,topic,msg->get_qos());
     storage_service->add_subscriber(topic,subscriber);
-
     pmq::mqtt_suback suback(socket,msg->get_msg_msb(),msg->get_msg_lsb(),2);
     suback.send();
+    std::vector<std::shared_ptr<pmq::message>> retained_messages = storage_service->get_retained_messages();
+    for(const auto & x : retained_messages){
+        std::vector<std::shared_ptr<pmq::subscriber>> subscribers = storage_service->get_subscriber(x->get_topic());
+        for(int i = 0; i < subscribers.size(); ++i){
+            if(subscribers[i].get() == subscriber.get()){
+                *subscriber<<x->get_payload();
+            }
+        }
+    }
+
+
+
 }
 
 void pmq::client_handler::visit(pmq::mqtt_ping_request *msg) {

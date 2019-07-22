@@ -146,6 +146,8 @@ std::vector<std::shared_ptr<pmq::subscriber>> pmq::in_memory_storage::get_subscr
     return vec;
 }
 
-void pmq::in_memory_storage::add_retained_message(const pmq::message &msg) {
-
+void pmq::in_memory_storage::add_retained_message(const std::shared_ptr<pmq::message> &msg) {
+    this->retained_messages.emplace_back( msg );
 }
+
+

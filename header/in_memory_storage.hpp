@@ -50,7 +50,11 @@ namespace pmq{
 
         void add_subscriber(const std::string topic,const std::shared_ptr<pmq::subscriber> & subscriber) override ;
 
-        void add_retained_message(const pmq::message & msg) override;
+        void add_retained_message(const std::shared_ptr<pmq::message> & msg) override;
+        std::vector<std::shared_ptr<pmq::message>> get_retained_messages()const override{
+            return this->retained_messages;
+        }
+
 
         std::vector<std::shared_ptr<pmq::subscriber>> get_subscriber(const std::string & topic) override;
         std::map<std::string,pmq::message> get_all_will_messages()const override {
@@ -66,7 +70,7 @@ namespace pmq{
         std::map<std::string,std::shared_ptr<pmq::mqtt_connect>> client_connections;
         pmq::detail::subscriber_container subscripted_clients;
         std::map<std::string,pmq::detail::subscriber_container> shared_subscripted_clients;
-
+        std::vector<std::shared_ptr<pmq::message>> retained_messages;
         boost::mutex mutex;
     };
 }

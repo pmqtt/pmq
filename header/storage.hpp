@@ -25,8 +25,8 @@ namespace pmq{
         virtual bool check_user_password(const std::string & name,const std::string & pwd) = 0;
         virtual bool exist_user(const std::string & name) = 0;
 
-        virtual void add_retained_message(const pmq::message & msg) = 0;
-
+        virtual void add_retained_message(const std::shared_ptr<pmq::message> & msg) = 0;
+        virtual std::vector<std::shared_ptr<pmq::message>> get_retained_messages()const = 0;
         virtual void add_client(const std::string & client_id) = 0;
         virtual void add_client_subscription(const std::string & clientId,
                                                 const std::string & topic,

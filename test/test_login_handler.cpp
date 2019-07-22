@@ -73,8 +73,11 @@ public:
         return std::map<std::string, pmq::message>();
     }
 
-    void add_retained_message(const pmq::message &msg) override {
+    void add_retained_message(const std::shared_ptr<pmq::message> &msg) override {
 
+    }
+    std::vector<std::shared_ptr<pmq::message>> get_retained_messages()const override {
+        return  std::vector<std::shared_ptr<pmq::message>>();
     }
 };
 
