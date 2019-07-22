@@ -8,13 +8,9 @@
 namespace pmq::exception{
     class acceptor_exception : public std::exception{
     public:
-        acceptor_exception(const std::string & msg) :msg(msg) {
-
-        }
-        virtual ~acceptor_exception() {
-
-        }
-        virtual const char* what() const noexcept {
+        explicit acceptor_exception(std::string && msg) :msg(std::move(msg)) { }
+        ~acceptor_exception() override = default;
+        const char* what() const noexcept override {
             return msg.c_str();
         }
     private:
