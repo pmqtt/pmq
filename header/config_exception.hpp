@@ -7,13 +7,9 @@
 namespace pmq::exception{
     class config_exception : public std::exception{
     public:
-        config_exception(const std::string & msg) :msg(msg) {
-
-        }
-        virtual ~config_exception() {
-
-        }
-        virtual const char* what() const noexcept {
+        explicit  config_exception(const std::string & msg) :msg(msg) {}
+        ~config_exception() override = default;
+        const char* what() const noexcept override {
             return msg.c_str();
         }
     private:
