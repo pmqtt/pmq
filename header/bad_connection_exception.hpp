@@ -9,13 +9,11 @@
 namespace pmq::exception{
     class bad_connection_exception : public std::exception{
     public:
-        bad_connection_exception(const std::string & msg) :msg(msg) {
+        explicit bad_connection_exception(std::string && msg) :msg(std::move(msg)) {
 
         }
-        virtual ~bad_connection_exception() {
-
-        }
-        virtual const char* what() const noexcept {
+        ~bad_connection_exception() override = default;
+        const char* what() const noexcept override {
             return msg.c_str();
         }
     private:
