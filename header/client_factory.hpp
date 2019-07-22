@@ -10,8 +10,8 @@
 namespace pmq{
     class client_factory{
     public:
-        client_factory(){}
-        virtual ~client_factory(){}
+        client_factory() = default;
+        virtual ~client_factory() = default;
         virtual std::shared_ptr<boost::thread> create_client_thread( std::function< void(std::shared_ptr<socket>&)> &  process)= 0;
     private:
     };

@@ -9,9 +9,7 @@
 namespace pmq::exception{
     class bad_connection_exception : public std::exception{
     public:
-        explicit bad_connection_exception(std::string && msg) :msg(std::move(msg)) {
-
-        }
+        explicit bad_connection_exception(std::string && msg) :msg(std::move(msg)) {}
         ~bad_connection_exception() override = default;
         const char* what() const noexcept override {
             return msg.c_str();
