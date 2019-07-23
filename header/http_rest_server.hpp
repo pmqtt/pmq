@@ -21,7 +21,7 @@ using namespace http::experimental::listener;
 namespace pmq {
     class http_rest_server {
     public:
-        http_rest_server() {}
+        http_rest_server() = default;
 
         http_rest_server(utility::string_t url,const std::shared_ptr<pmq::storage> & storage_service);
 
