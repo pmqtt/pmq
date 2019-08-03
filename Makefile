@@ -39,10 +39,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = "/Users/cefour/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/191.7479.33/CLion.app/Contents/bin/cmake/mac/bin/cmake"
+CMAKE_COMMAND = "/Users/cefour/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/192.5728.100/CLion.app/Contents/bin/cmake/mac/bin/cmake"
 
 # The command to remove a file.
-RM = "/Users/cefour/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/191.7479.33/CLion.app/Contents/bin/cmake/mac/bin/cmake" -E remove -f
+RM = "/Users/cefour/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/192.5728.100/CLion.app/Contents/bin/cmake/mac/bin/cmake" -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /Users/cefour/Projects/pmq
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	"/Users/cefour/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/191.7479.33/CLion.app/Contents/bin/cmake/mac/bin/cmake" -E echo No\ interactive\ CMake\ dialog\ available.
+	"/Users/cefour/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/192.5728.100/CLion.app/Contents/bin/cmake/mac/bin/cmake" -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -70,7 +70,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	"/Users/cefour/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/191.7479.33/CLion.app/Contents/bin/cmake/mac/bin/cmake" -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	"/Users/cefour/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/192.5728.100/CLion.app/Contents/bin/cmake/mac/bin/cmake" -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -163,19 +163,6 @@ pmq_obj_lib/fast:
 .PHONY : pmq_obj_lib/fast
 
 #=============================================================================
-# Target rules for targets named test_login_handler
-
-# Build rule for target.
-test_login_handler: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test_login_handler
-.PHONY : test_login_handler
-
-# fast build rule for target.
-test_login_handler/fast:
-	$(MAKE) -f CMakeFiles/test_login_handler.dir/build.make CMakeFiles/test_login_handler.dir/build
-.PHONY : test_login_handler/fast
-
-#=============================================================================
 # Target rules for targets named test_server
 
 # Build rule for target.
@@ -200,6 +187,59 @@ pmqtt: cmake_check_build_system
 pmqtt/fast:
 	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/build
 .PHONY : pmqtt/fast
+
+#=============================================================================
+# Target rules for targets named test_login_handler
+
+# Build rule for target.
+test_login_handler: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_login_handler
+.PHONY : test_login_handler
+
+# fast build rule for target.
+test_login_handler/fast:
+	$(MAKE) -f CMakeFiles/test_login_handler.dir/build.make CMakeFiles/test_login_handler.dir/build
+.PHONY : test_login_handler/fast
+
+#=============================================================================
+# Target rules for targets named pmqttclient
+
+# Build rule for target.
+pmqttclient: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pmqttclient
+.PHONY : pmqttclient
+
+# fast build rule for target.
+pmqttclient/fast:
+	$(MAKE) -f CMakeFiles/pmqttclient.dir/build.make CMakeFiles/pmqttclient.dir/build
+.PHONY : pmqttclient/fast
+
+client/messenger.o: client/messenger.cpp.o
+
+.PHONY : client/messenger.o
+
+# target to build an object file
+client/messenger.cpp.o:
+	$(MAKE) -f CMakeFiles/pmqttclient.dir/build.make CMakeFiles/pmqttclient.dir/client/messenger.cpp.o
+.PHONY : client/messenger.cpp.o
+
+client/messenger.i: client/messenger.cpp.i
+
+.PHONY : client/messenger.i
+
+# target to preprocess a source file
+client/messenger.cpp.i:
+	$(MAKE) -f CMakeFiles/pmqttclient.dir/build.make CMakeFiles/pmqttclient.dir/client/messenger.cpp.i
+.PHONY : client/messenger.cpp.i
+
+client/messenger.s: client/messenger.cpp.s
+
+.PHONY : client/messenger.s
+
+# target to generate assembly for a file
+client/messenger.cpp.s:
+	$(MAKE) -f CMakeFiles/pmqttclient.dir/build.make CMakeFiles/pmqttclient.dir/client/messenger.cpp.s
+.PHONY : client/messenger.cpp.s
 
 lib/message.o: lib/message.cpp.o
 
@@ -1022,10 +1062,14 @@ help:
 	@echo "... test_login_factory"
 	@echo "... PMQ"
 	@echo "... pmq_obj_lib"
-	@echo "... test_login_handler"
 	@echo "... rebuild_cache"
 	@echo "... test_server"
 	@echo "... pmqtt"
+	@echo "... test_login_handler"
+	@echo "... pmqttclient"
+	@echo "... client/messenger.o"
+	@echo "... client/messenger.i"
+	@echo "... client/messenger.s"
 	@echo "... lib/message.o"
 	@echo "... lib/message.i"
 	@echo "... lib/message.s"

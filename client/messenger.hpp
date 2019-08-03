@@ -5,7 +5,7 @@
 #ifndef PMQ_MESSENGER_HPP
 #define PMQ_MESSENGER_HPP
 #include <string>
-#include <pair>
+#include <iostream>
 namespace pmq::client{
 
     /*HOW TO USE
@@ -33,6 +33,7 @@ namespace pmq::client{
     class messenger{
     public:
         messenger();
+        ~messenger();
 
         //Fluent interface
         /*====================*/
@@ -61,9 +62,20 @@ namespace pmq::client{
         messenger & set_keep_alive(std::size_t sec);
         messenger & set_clean_session(bool clean);
 
+
+        void connect();
+        void connect(const std::string &host,std::size_t port);
+        void connect_infinity();
+
         void subscribe(const std::string & topic);
         void publish(const std::string & topic,const std::string & payload);
         std::pair<std::string,std::string> get_message();
+    private:
+        std::size_t qos;
+        std::size_t pos;
+        std::string address;
+        std::size_t keep_alive_interval;
+        bool clean_session;
 
     };
 }

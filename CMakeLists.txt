@@ -12,6 +12,7 @@ add_definitions(-DBOOST_LOG_DYN_LINK)
 
 include_directories(${PROJECT_BINARY_DIR} ${Boost_INCLUDE_DIRS} ${OPENSSL_INCLUDE_DIR} )
 
+add_library(pmqttclient STATIC client/messenger.cpp client/messenger.hpp)
 
 add_library(pmqtt STATIC lib/control_packet_type.hpp
         lib/mqtt_message.hpp lib/mqtt_types.hpp lib/mqtt_message.cpp
@@ -22,7 +23,8 @@ add_library(pmqtt STATIC lib/control_packet_type.hpp
         lib/subscriber.cpp lib/subscriber.hpp lib/connector.hpp lib/connector_mqtt311.hpp lib/connection_parameter.hpp
         lib/tls_socket.hpp lib/socket_functions.hpp lib/qos_handler.hpp lib/qos_zero_handler.cpp
         lib/qos_zero_handler.hpp lib/qos_one_handler.cpp lib/qos_one_handler.hpp lib/qos_two_handler.cpp
-        lib/qos_two_handler.hpp lib/qos_handler_factory.cpp lib/qos_handler_factory.hpp lib/message.hpp lib/message.cpp lib/mqtt_types.cpp)
+        lib/qos_two_handler.hpp lib/qos_handler_factory.cpp lib/qos_handler_factory.hpp lib/message.hpp
+        lib/message.cpp lib/mqtt_types.cpp)
 
 
 
@@ -57,9 +59,14 @@ add_library(pmq_obj_lib OBJECT header/acceptor_exception.hpp
         src/login_allow_anonymous_handler.cpp
         src/login_handler.cpp
         header/login_factory.hpp
-        src/login_factory.cpp src/subscriber_container.cpp header/subscriber_container.hpp src/string.cpp header/subscriber_node.hpp src/subscriber_node.cpp)
+        src/login_factory.cpp src/subscriber_container.cpp
+        header/subscriber_container.hpp src/string.cpp
+        header/subscriber_node.hpp
+        src/subscriber_node.cpp
+        header/string.hpp
+        )
 
-add_executable(PMQ src/main.cpp $<TARGET_OBJECTS:pmq_obj_lib> header/string.hpp)
+add_executable(PMQ src/main.cpp $<TARGET_OBJECTS:pmq_obj_lib> )
 target_link_libraries(PMQ ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)
 
 ### TEST

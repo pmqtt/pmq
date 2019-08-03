@@ -58,7 +58,7 @@ int main(int argc,char **argv,char **envp){
             qos_factory,
             storage_service,
             conf
-            );
+    );
 
 
     pmq::server server(handler);
