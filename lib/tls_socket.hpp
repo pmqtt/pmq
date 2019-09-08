@@ -7,8 +7,8 @@
 #include <boost/asio.hpp>
 #include <boost/asio/ssl.hpp>
 #include <boost/log/trivial.hpp>
-#include <boost/thread.hpp>
 #include <iostream>
+#include <thread>
 #include <vector>
 
 #include <header/socket_exception.hpp>
@@ -70,7 +70,7 @@ namespace pmq {
 
     private:
         ssl_socket *inner_socket;
-        boost::mutex mutex;
+        std::mutex mutex;
     };
 }
 #endif //PMQ_TLS_SOCKET_HPP

@@ -6,7 +6,7 @@
 #define PMQ_SERVER_HPP
 #include <chrono>
 #include <boost/asio.hpp>
-#include <boost/thread.hpp>
+#include <thread>
 #include <boost/log/trivial.hpp>
 #include <vector>
 
@@ -90,10 +90,11 @@ namespace pmq{
         void clean_up();
 
     private:
-        std::shared_ptr<server_information> server_info;
-        std::vector<std::shared_ptr<boost::thread>> client_threads;
         std::atomic_bool should_service_run;
         std::shared_ptr< pmq::mqtt_visitor> handler;
+        std::shared_ptr<server_information> server_info;
+        std::vector<std::shared_ptr<std::thread>> client_threads;
+
 
     };
 }

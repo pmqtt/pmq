@@ -13,7 +13,7 @@ unsigned int pmq::mqtt_package::read_length(){
     do{
         encoded_byte = this->client_socket->read(1)[0];
         value += (encoded_byte & static_cast<unsigned int>(127)) * multiplier;
-        multiplier *= 128;
+        multiplier *= static_cast<unsigned int>(128);
     }while((encoded_byte & static_cast<unsigned int>(128)) !=0);
     return value;
 }
@@ -25,7 +25,7 @@ std::string pmq::mqtt_package::encode(unsigned int length)const{
         length = length / 128;
         // if there are more data to encode, set the top bit of this byte
         if (length > 0)
-            encoded_byte = encoded_byte | 128;
+            encoded_byte = encoded_byte | static_cast<unsigned int>(128);
         res += encoded_byte;
     }while (length > 0);
     return res;

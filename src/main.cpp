@@ -1,17 +1,14 @@
-#include <boost/shared_ptr.hpp>
-#include <boost/log/common.hpp>
-#include <boost/log/sinks.hpp>
 #include <boost/log/sources/logger.hpp>
 #include <boost/log/trivial.hpp>
 #include <iostream>
 #include <lib/qos_handler_factory.hpp>
+#include <thread>
 
 
 #include "header/client_creator.hpp"
 #include "header/client_handler.hpp"
 #include "header/http_rest_server.hpp"
 #include "header/in_memory_storage.hpp"
-#include "header/null_deleter.hpp"
 #include "header/PMQConfigure.hpp"
 #include "header/security.hpp"
 #include "header/server.hpp"
@@ -63,7 +60,7 @@ int main(int argc,char **argv,char **envp){
 
     pmq::server server(handler);
     auto rest_api_func = std::bind(&init_rest_api, std::ref(server), std::ref(conf), std::ref(storage_service));
-    boost::thread rest_api_thread(rest_api_func);
+    std::thread rest_api_thread(rest_api_func);
     try {
         std::shared_ptr<pmq::client_factory> client_factory = creator.get(conf.get_connection_type())(conf);
         server.run(client_factory);

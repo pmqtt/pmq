@@ -4,7 +4,7 @@
 
 #ifndef PMQ_IN_MEMORY_STORAGE_HPP
 #define PMQ_IN_MEMORY_STORAGE_HPP
-#include <boost/thread.hpp>
+#include <thread>
 #include<map>
 
 #include "subscriber_container.hpp"
@@ -71,7 +71,7 @@ namespace pmq{
         pmq::detail::subscriber_container subscripted_clients;
         std::map<std::string,pmq::detail::subscriber_container> shared_subscripted_clients;
         std::vector<std::shared_ptr<pmq::message>> retained_messages;
-        boost::mutex mutex;
+        std::mutex mutex;
     };
 }
 

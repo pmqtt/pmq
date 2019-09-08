@@ -7,7 +7,7 @@
 
 
 #include <boost/asio.hpp>
-#include <boost/thread.hpp>
+#include <thread>
 #include <string>
 
 #include "header/socket_exception.hpp"
@@ -33,8 +33,8 @@ namespace pmq{
         }
 
         template<class SOCKET>
-        void write(SOCKET * inner_socket,boost::mutex & mutex,const std::string & msg){
-            boost::unique_lock<boost::mutex> lock(mutex);
+        void write(SOCKET * inner_socket,std::mutex & mutex,const std::string & msg){
+            std::unique_lock<std::mutex> lock(mutex);
             boost::system::error_code ignored_error;
             std::size_t x = boost::asio::write(*inner_socket,boost::asio::buffer(msg),ignored_error);
 

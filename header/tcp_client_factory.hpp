@@ -15,7 +15,7 @@ namespace pmq{
         tcp_client_factory(const pmq::config & cfg);
 
         virtual ~tcp_client_factory();
-        std::shared_ptr<boost::thread> create_client_thread( std::function< void(std::shared_ptr<socket>&)> & process) override;
+        std::shared_ptr<std::thread> create_client_thread( std::function< void(std::shared_ptr<socket>&)> & process) override;
 
     private:
         void create_acceptor(std::shared_ptr<pmq::socket> & socket){

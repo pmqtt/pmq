@@ -7,9 +7,10 @@
 #include <boost/asio.hpp>
 #include <boost/asio/ssl.hpp>
 #include <boost/log/trivial.hpp>
-#include <boost/thread.hpp>
 #include <iostream>
+#include <thread>
 #include <vector>
+
 
 #include "socket_functions.hpp"
 #include "header/socket_exception.hpp"
@@ -67,7 +68,7 @@ namespace pmq{
 
     private:
         boost::asio::ip::tcp::socket * inner_socket;
-        boost::mutex mutex;
+        std::mutex mutex;
     };
 
 

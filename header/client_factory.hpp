@@ -4,7 +4,7 @@
 
 #ifndef PMQ_CLIENT_FACTORY_HPP
 #define PMQ_CLIENT_FACTORY_HPP
-#include <boost/thread.hpp>
+#include <thread>
 #include <functional>
 #include <lib/socket.hpp>
 namespace pmq{
@@ -12,7 +12,7 @@ namespace pmq{
     public:
         client_factory() = default;
         virtual ~client_factory() = default;
-        virtual std::shared_ptr<boost::thread> create_client_thread( std::function< void(std::shared_ptr<socket>&)> &  process)= 0;
+        virtual std::shared_ptr<std::thread> create_client_thread( std::function< void(std::shared_ptr<socket>&)> &  process)= 0;
     private:
     };
 
