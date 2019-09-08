@@ -12,9 +12,9 @@ unsigned int pmq::mqtt_package::read_length(){
     unsigned char encoded_byte = 0;
     do{
         encoded_byte = this->client_socket->read(1)[0];
-        value += (encoded_byte & 127) * multiplier;
+        value += (encoded_byte & static_cast<unsigned int>(127)) * multiplier;
         multiplier *= 128;
-    }while((encoded_byte & 128) !=0);
+    }while((encoded_byte & static_cast<unsigned int>(128)) !=0);
     return value;
 }
 

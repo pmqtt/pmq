@@ -12,6 +12,8 @@
 
 #include "header/storage.hpp"
 
+#include <map>
+
 
 using namespace web;
 using namespace http;
@@ -37,6 +39,8 @@ namespace pmq {
         void handle_post(http_request message);
 
         void handle_delete(http_request message);
+
+    private:
 
         http_listener listener;
         std::shared_ptr<pmq::storage> storage_service;

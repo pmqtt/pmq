@@ -15,6 +15,8 @@ namespace pmq{
         virtual std::shared_ptr<boost::thread> create_client_thread( std::function< void(std::shared_ptr<socket>&)> &  process)= 0;
     private:
     };
+
+
 }
 
 
