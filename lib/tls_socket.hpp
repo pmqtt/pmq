@@ -19,25 +19,25 @@ namespace pmq {
 
     class tls_socket : public socket {
     public:
-        virtual std::string read(std::size_t size) override {
+        std::string read(std::size_t size) override {
             return pmq::detail::read<ssl_socket>(inner_socket,size);
         }
 
 
-        virtual void write(const std::string &msg) override {
+        void write(const std::string &msg) override {
            pmq::detail::write<ssl_socket>(inner_socket,mutex,msg);
         }
 
-        virtual std::string_view get_address() const override {
+        std::string_view get_address() const override {
             return this->inner_socket->lowest_layer().local_endpoint().address().to_string();
         }
 
-        virtual void close() override {
+        void close() override {
             if (this->is_connected())
                 this->inner_socket->lowest_layer().close();
         }
 
-        virtual bool is_connected() const override {
+        bool is_connected() const override {
             return this->inner_socket->lowest_layer().is_open();
         }
 

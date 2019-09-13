@@ -10,21 +10,17 @@
 
 #include "lib/mqtt_exception.hpp"
 
-namespace pmq{
-namespace exception{
+namespace pmq::exception{
 class mqtt_version_exception : public mqtt_exception{
     public:
-        mqtt_version_exception(const std::string_view & msg) :mqtt_exception(msg) {
+        explicit mqtt_version_exception(const std::string_view & msg) :mqtt_exception(msg) {
 
         }
-        virtual ~mqtt_version_exception() {
-
-        }
+        ~mqtt_version_exception() override = default;
 
     private:
 
     };
-}
 }
 
 

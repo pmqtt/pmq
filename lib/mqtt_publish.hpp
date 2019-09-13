@@ -11,27 +11,27 @@ namespace pmq {
     class mqtt_publish : public mqtt_package{
     public:
         mqtt_publish(std::shared_ptr<pmq::socket> & client_socket, std::size_t payload_length, pmq::u_int8 header);
-        virtual ~mqtt_publish(){}
+        ~mqtt_publish() override= default;
 
-        std::size_t get_payload_length() const override {
+        [[nodiscard]] std::size_t get_payload_length() const override {
             return this->payload_length;
         }
         void parse(const std::string & payload) override ;
 
         void accept(mqtt_visitor & v) override ;
-        const std::string & get_topic()const{
+        [[nodiscard]] const std::string & get_topic()const{
             return this->topic;
         }
-        const std::string & get_message()const{
+        [[nodiscard]] const std::string & get_message()const{
             return this->message;
         }
-        const std::string & get_message_id()const{
+        [[nodiscard]] const std::string & get_message_id()const{
             return this->message_id;
         }
-        constexpr pmq::u_int16 get_message_id_as_int()const{
+        [[nodiscard]] constexpr pmq::u_int16 get_message_id_as_int()const{
             return this->message_id_as_int;
         }
-        constexpr pmq::u_int16 get_qos()const{
+        [[nodiscard]] constexpr pmq::u_int16 get_qos()const{
             return qos;
         }
         pmq::mqtt_publish create(std::shared_ptr<pmq::socket> & socket)const{
@@ -42,10 +42,10 @@ namespace pmq {
         }
         void send(std::shared_ptr<pmq::socket> & socket)const;
 
-        const std::string &get_client_id() const;
+        [[nodiscard]] const std::string &get_client_id() const;
 
         void set_client_id(const std::string &clientId);
-        bool is_retained()const{
+        [[nodiscard]] bool is_retained()const{
             return this->retain;
         }
     private:

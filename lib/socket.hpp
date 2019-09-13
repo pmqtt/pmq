@@ -62,7 +62,7 @@ namespace pmq{
             delete this->inner_socket;
         }
 
-        boost::asio::ip::tcp::socket * get_inner_socket(){
+        virtual boost::asio::ip::tcp::socket * get_inner_socket(){
             return inner_socket;
         }
 
