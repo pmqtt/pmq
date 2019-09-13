@@ -9,14 +9,10 @@ namespace pmq{
 
     }
 
-    message::~message() {
-
-    }
+    message::~message() = default;
 
     message::message(const pmq::message &rhs)
-        : topic(rhs.topic),msg(rhs.msg),qos(rhs.qos){
-
-    }
+        : topic(rhs.topic),msg(rhs.msg),qos(rhs.qos) {}
 
     message::message(pmq::message &&rhs)
         :topic(std::move(rhs.topic)),msg(std::move(rhs.msg)),qos(rhs.qos){

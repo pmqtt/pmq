@@ -9,6 +9,7 @@
 #include "lib/mqtt_connection_info.hpp"
 #include "lib/mqtt_exception.hpp"
 #include "lib/mqtt_message.hpp"
+#include "lib/mqtt_message.hpp"
 
 #include "lib/mqtt_publish.hpp"
 #include "lib/mqtt_subscribe.hpp"

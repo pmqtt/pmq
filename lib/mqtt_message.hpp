@@ -14,7 +14,7 @@ namespace pmq {
     public:
 
 
-        explicit mqtt_message(std::shared_ptr<pmq::socket> client_socket) : client_socket(client_socket){
+        explicit mqtt_message(std::shared_ptr<pmq::socket> &client_socket) : client_socket(client_socket){
 
         }
 

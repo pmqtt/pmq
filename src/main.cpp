@@ -70,7 +70,5 @@ int main(int argc,char **argv,char **envp){
     }
     rest_api_thread.join();
 
-
-
     return 0;
 }

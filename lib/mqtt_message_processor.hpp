@@ -4,7 +4,7 @@
 
 #ifndef PMQ_MQTT_MESSAGE_PROCESSOR_HPP
 #define PMQ_MQTT_MESSAGE_PROCESSOR_HPP
-/*#include <memory>
+#include <memory>
 #include <string>
 
 namespace pmq::detail {
@@ -34,7 +34,7 @@ namespace pmq::detail {
         return res;
     }
 
-}*/
+}
 
 
 #endif //PMQ_MQTT_MESSAGE_PROCESSOR_HPP

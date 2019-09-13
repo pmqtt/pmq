@@ -142,10 +142,8 @@ std::vector<std::shared_ptr<pmq::subscriber>> pmq::in_memory_storage::get_subscr
     std::vector<std::shared_ptr<pmq::subscriber>> vec = this->subscripted_clients.get_subscriber(topic);
     for(auto x : this->shared_subscripted_clients){
         auto tmp = x.second.get_subscriber(topic);
-        if(tmp.size() > 0) {
-            std::cout<<"sz:"<<tmp.size()<<std::endl;
-            int pos = dist(rng) % tmp.size();
-            std::cout << "pos: " << pos << std::endl;
+        if(!tmp.empty()) {
+            int pos = static_cast<int>(dist(rng) % tmp.size());
             if (pos < tmp.size()) {
                 vec.push_back(tmp[pos]);
             }
