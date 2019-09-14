@@ -21,8 +21,6 @@ namespace pmq {
         virtual std::size_t get_payload_length() const = 0;
         virtual void parse(const std::string &payload) = 0;
         virtual void send(){}
-        unsigned int read_length();
-        std::string encode(unsigned int length)const;
         std::string read_string(const std::string & payload,std::size_t & byte_index);
 
         constexpr pmq::u_int16 calculate_index_from_msb_lsb(pmq::u_int8 msb, pmq::u_int8 lsb)const{

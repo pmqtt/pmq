@@ -4,6 +4,7 @@
 #include "lib/control_packet_type.hpp"
 #include "lib/mqtt_package.hpp"
 #include "lib/mqtt_publish.hpp"
+#include "lib/mqtt_message_processor.hpp"
 #include "socket.hpp"
 
 pmq::mqtt_publish::mqtt_publish(std::shared_ptr<pmq::socket> & client_socket, std::size_t payload_length,pmq::u_int8 header)
@@ -44,8 +45,8 @@ void pmq::mqtt_publish::accept(pmq::mqtt_visitor &v) {
 void pmq::mqtt_publish::send(std::shared_ptr<pmq::socket> & socket)const{
     std::string msg;
     pmq::u_int8 first_byte = pmq::CONTROL_PACKET_TYPE::PUBLISH <<4;
-    std::string topic_length = encode(topic.length());
-    std::string remaining_length = encode(1+topic_length.length()+
+    std::string topic_length = detail::encode(topic.length());
+    std::string remaining_length = detail::encode(1+topic_length.length()+
             this->message.length()+
             this->topic.length());
     pmq::u_int8 variable_header = 0;
