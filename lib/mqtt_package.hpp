@@ -17,13 +17,13 @@ namespace pmq {
     public:
         mqtt_package() = default;
         mqtt_package(std::shared_ptr<pmq::socket> & client_socket) : client_socket(client_socket){}
-        virtual ~mqtt_package(){}
+        virtual ~mqtt_package() = default;
         virtual std::size_t get_payload_length() const = 0;
         virtual void parse(const std::string &payload) = 0;
         virtual void send(){}
         std::string read_string(const std::string & payload,std::size_t & byte_index);
 
-        constexpr pmq::u_int16 calculate_index_from_msb_lsb(pmq::u_int8 msb, pmq::u_int8 lsb)const{
+        [[nodiscard]] constexpr pmq::u_int16 calculate_index_from_msb_lsb(pmq::u_int8 msb, pmq::u_int8 lsb)const{
             pmq::u_int16 res = msb<<8;
             res += lsb;
             return res;
