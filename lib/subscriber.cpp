@@ -7,20 +7,8 @@
 #include "mqtt_types.hpp"
 #include "socket.hpp"
 #include "subscriber.hpp"
+#include "lib/mqtt_message_processor.hpp"
 namespace {
-    std::string encode(unsigned int length){
-        std::string res;
-        do {
-            unsigned char encoded_byte = length % 128;
-            length = length / 128;
-            // if there are more data to encode, set the top bit of this byte
-            if (length > 0)
-                encoded_byte = encoded_byte | 128;
-            res += encoded_byte;
-        }while (length > 0);
-        return res;
-    }
-
     std::string calculate_msb_lsb(std::size_t len){
         pmq::u_int8 msb = len >> 8;
         pmq::u_int8 lsb = len & 0xFF;
@@ -67,8 +55,8 @@ namespace pmq{
         std::string msg;
         pmq::u_int8 first_byte       = pmq::CONTROL_PACKET_TYPE::PUBLISH <<4;
         std::string topic_length     = calculate_msb_lsb(topic.length());
-        std::string message_length   = encode(publish_message.length());
-        std::string remaining_length = encode(topic_length.length()    +
+        std::string message_length   = detail::encode(publish_message.length());
+        std::string remaining_length = detail::encode(topic_length.length()    +
                                               publish_message.length() +
                                               topic.length()           +
                                               variable_header_length );
