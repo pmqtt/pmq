@@ -15,9 +15,9 @@ namespace pmq{
 
     class in_memory_storage : public pmq::storage{
     public:
-        in_memory_storage();
+        in_memory_storage() = default;
 
-        virtual ~in_memory_storage();
+        virtual ~in_memory_storage() = default;
 
         void add_user(const std::string &name, const std::string &pwd) override;
 

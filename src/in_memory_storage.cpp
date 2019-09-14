@@ -6,19 +6,13 @@
 #include <header/string.hpp>
 #include <lib/message.hpp>
 #include <random>
-std::random_device dev;
-std::mt19937 rng(dev());
-std::uniform_int_distribution<std::mt19937::result_type> dist(0,1000);
-
-
-pmq::in_memory_storage::in_memory_storage() {
-
+namespace {
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist(0, 1000);
 }
 
 
-pmq::in_memory_storage::~in_memory_storage() {
-
-}
 
 void pmq::in_memory_storage::add_user(const std::string &name, const std::string &pwd) {
     std::unique_lock<std::mutex> guard(mutex);

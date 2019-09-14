@@ -9,7 +9,7 @@
 #include "lib/mqtt_connection_info.hpp"
 #include "lib/mqtt_exception.hpp"
 #include "lib/mqtt_message.hpp"
-#include "lib/mqtt_message.hpp"
+#include "lib/mqtt_message_processor.hpp"
 
 #include "lib/mqtt_publish.hpp"
 #include "lib/mqtt_subscribe.hpp"
@@ -18,24 +18,12 @@
 
 
 
-unsigned int pmq::mqtt_message::read_length(){
-    unsigned int value =0;
-    unsigned int multiplier = 1;
-    unsigned char encoded_byte = 0;
-    do{
-        encoded_byte = this->client_socket->read(1)[0];
-        value += (encoded_byte & static_cast<unsigned int>(127)) * multiplier;
-        multiplier *= static_cast<unsigned int>(128);
-    }while((encoded_byte & static_cast<unsigned int>(128)) !=0);
-    return value;
-}
-
 
 std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package( std::shared_ptr<pmq::mqtt_connection_info> & connection_info){
     BOOST_LOG_TRIVIAL(debug)<<"[std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package] read";
     std::string msg = this->client_socket->read(1);
     pmq::u_int8 first_byte   = msg[0];
-    unsigned int msg_length  = read_length();
+    unsigned int msg_length  = detail::read_length(this->client_socket);
 
     first_byte = first_byte >> 4;
 
