@@ -39,13 +39,11 @@ namespace pmq{
     public:
         mqtt_controll_package(std::shared_ptr<pmq::socket> & client_socket,pmq::u_int8 msb,pmq::u_int8 lsb)
                 :mqtt_package(client_socket),msb(msb),lsb(lsb){
-
         }
-        mqtt_controll_package( std::shared_ptr<pmq::socket> & client_socket)
-                :mqtt_package(client_socket){
-
+        explicit mqtt_controll_package( std::shared_ptr<pmq::socket> & client_socket)
+                :mqtt_package(client_socket),msb(0),lsb(0){
         }
-        virtual ~mqtt_controll_package(){}
+        ~mqtt_controll_package() override = default;
 
 
         void send() override{
@@ -116,6 +114,7 @@ namespace pmq{
             send_msg += HEADER;
             send_msg += 3;
             send_msg += message_id;
+            send_msg += result;
             client_socket->write(send_msg);
         }
 
