@@ -79,6 +79,7 @@ public:
     std::vector<std::shared_ptr<pmq::message>> get_retained_messages()const override {
         return  std::vector<std::shared_ptr<pmq::message>>();
     }
+    void remove_client(const std::string & client_id) override {}
 };
 
 pmq::mqtt_connect * create_fake_mqtt_connect(){

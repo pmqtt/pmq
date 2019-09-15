@@ -60,6 +60,8 @@ namespace pmq{
         std::map<std::string,pmq::message> get_all_will_messages()const override {
             return this->will_messages;
         }
+        void remove_client(const std::string & client_id) override;
+
 
 
     private:

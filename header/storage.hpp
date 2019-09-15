@@ -36,6 +36,7 @@ namespace pmq{
         virtual pmq::message get_will_message(const std::string & client_id) =0 ;
 
         virtual void add_client(std::shared_ptr<pmq::mqtt_connect> & client_connection) = 0;
+        virtual void remove_client(const std::string & client_id) = 0;
 
         virtual void save_qos_two_message_id(const pmq::u_int16  & id , std::shared_ptr<pmq::mqtt_publish> & msg ) = 0;
         virtual std::shared_ptr<pmq::mqtt_publish> restore_qos_two_publish_msg(const pmq::u_int16 & id) = 0;

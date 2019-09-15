@@ -151,4 +151,11 @@ void pmq::in_memory_storage::add_retained_message(const std::shared_ptr<pmq::mes
     this->retained_messages.emplace_back( msg );
 }
 
+void pmq::in_memory_storage::remove_client(const std::string & client_id){
+    std::unique_lock<std::mutex> guard(mutex);
+    if(client_connections.count(client_id) < 1) {
+        client_connections.erase(client_id);
+    }
+}
+
 

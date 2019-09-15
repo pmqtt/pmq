@@ -10,7 +10,7 @@
 void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
     BOOST_LOG_TRIVIAL(debug)<<"Handle connection";
     login_creator->create(config.is_allow_anonymous_login())->handle(storage_service,msg);
-    std::shared_ptr<pmq::mqtt_connect> client_connection(msg);
+    std::shared_ptr<pmq::mqtt_connect> client_connection(msg,[](pmq::mqtt_connect* p){ });
     storage_service->add_client(client_connection);
     this->client_id = msg->get_client_id();
     auto socket = msg->get_socket();
@@ -129,5 +129,5 @@ void pmq::client_handler::handleDisconnect() {
         BOOST_LOG_TRIVIAL(debug)<< "WILL PAYLOAD:"<< will_msg;
         *subscriber<<will_msg;
     }
-
+    storage_service->remove_client(client_id);
 }
