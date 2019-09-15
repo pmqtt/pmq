@@ -89,7 +89,7 @@ std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package( std::share
 
         }
         break;
-        case pmq::CONTROL_PACKET_TYPE::UNSUBSCRIPE: {
+        case pmq::CONTROL_PACKET_TYPE::UNSUBSCRIBE: {
 
         }
         break;

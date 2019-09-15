@@ -13,7 +13,7 @@ namespace pmq {
     public:
         mqtt_connect() = default;
         mqtt_connect(std::shared_ptr<pmq::socket> & client_socket, std::size_t payload_length);
-        virtual ~mqtt_connect() = default;
+        ~mqtt_connect() override = default;
 
         std::size_t get_payload_length() const override {
             return this->payload_length;
@@ -118,8 +118,8 @@ namespace pmq {
             user_name = userName;
         }
 
-        void set_password(const std::string &password) {
-            mqtt_connect::password = password;
+        void set_password(const std::string &pwd) {
+            this->password = pwd;
         }
 
     private:

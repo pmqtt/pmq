@@ -44,7 +44,7 @@ namespace pmq{
         PUBCOMP,
         SUBSCRIBE,
         SUBACK,
-        UNSUBSCRIPE,
+        UNSUBSCRIBE,
         UNSUBACK,
         PINGRQ,
         PINGRESP,

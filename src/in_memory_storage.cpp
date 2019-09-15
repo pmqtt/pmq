@@ -118,8 +118,8 @@ void pmq::in_memory_storage::add_subscriber(const std::string topic, const std::
         if(topics[0] == "$share"){
             std::string group = topics[1];
             std::vector<std::string> sub_topic;
-            std::string shared_topic ="";
-            for(int i = 2; i < topics.size();++i){
+            std::string shared_topic;
+            for(std::size_t i = 2; i < topics.size();++i){
                 shared_topic += topics[i]+"/";
             }
             std::cout<<"insert:" <<group <<" ... "<<shared_topic<<std::endl;
