@@ -27,41 +27,33 @@ namespace pmq::utf8{
         if(len < 0 || len > MAX_LENGTH){
             return false;
         }
-        std::size_t i;
-        std::size_t j;
 
-        for(i=0; i < len; i++){
+        for(std::size_t i = 0; i < len; i++){
             std::pair<int,int> utf8_code;
             if( is_null(buffer_c_str[i]) ){
                 return false;
             }else if( is_plain_ascii(buffer_c_str[i]) ){
                 utf8_code = std::make_tuple(1,buffer_c_str[i]);
             }else if((buffer_c_str[i] & static_cast<unsigned char>(0xE0)) == 0xC0){
-                /* 110xxxxx - 2 byte sequence */
                 if(buffer_c_str[i] == 0xC0 || buffer_c_str[i] == 0xC1){
                     return false;
                 }
                 utf8_code = std::make_tuple(2,buffer_c_str[i] & static_cast<unsigned char>(0x1F));
 
             }else if((buffer_c_str[i] & static_cast<unsigned char>(0xF0)) == 0xE0){
-                // 1110xxxx - 3 byte sequence
                 utf8_code = std::make_tuple(3,buffer_c_str[i] & static_cast<unsigned char>(0x0F));
             }else if((buffer_c_str[i] & static_cast<unsigned char>(0xF8)) == 0xF0){
-                // 11110xxx - 4 byte sequence
                 if(buffer_c_str[i] > 0xF4){
                     return false;
                 }
                 utf8_code = std::make_tuple(4,buffer_c_str[i] & static_cast<unsigned char>(0x07));
             }else{
-                /* Unexpected continuation byte. */
                 return false;
             }
-
-            /* Reconstruct full code point */
             if(i == len - utf8_code.first +1){
                 return false;
             }
-            for(j=0; j < utf8_code.first - 1; j++){
+            for(std::size_t j=0; j < utf8_code.first - 1; j++){
                 if((buffer_c_str[++i] & static_cast<unsigned char>(0xC0)) != 0x80){
                     /* Not a continuation byte */
                     return false;
@@ -80,14 +72,14 @@ namespace pmq::utf8{
                 return false;
             }
 
-            /* Check for non-characters */
+            // Check for non characters
             if(utf8_code.second >= 0xFDD0 && utf8_code.second <= 0xFDEF){
                 return false;
             }
             if((utf8_code.second & 0xFFFF) == 0xFFFE || (utf8_code.second & 0xFFFF) == 0xFFFF){
                 return false;
             }
-            /* Check for control characters */
+            // Check for control characters
             if(utf8_code.second <= 0x001F || (utf8_code.second >= 0x007F && utf8_code.second <= 0x009F)){
                 return false;
             }
