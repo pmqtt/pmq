@@ -20,8 +20,6 @@ namespace pmq::utf8{
 
     bool validate_utf8(const std::string & buffer){
 
-        int codelen;
-        int codepoint;
         const auto * buffer_c_str = (const unsigned char *)buffer.c_str();
         std::size_t len = buffer.length();
         if(len < 0 || len > MAX_LENGTH){
