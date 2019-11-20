@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9)
 project(PMQ)
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 
 
 
@@ -24,7 +24,7 @@ add_library(pmqtt STATIC lib/control_packet_type.hpp
         lib/tls_socket.hpp lib/socket_functions.hpp lib/qos_handler.hpp lib/qos_zero_handler.cpp
         lib/qos_zero_handler.hpp lib/qos_one_handler.cpp lib/qos_one_handler.hpp lib/qos_two_handler.cpp
         lib/qos_two_handler.hpp lib/qos_handler_factory.cpp lib/qos_handler_factory.hpp lib/message.hpp
-        lib/message.cpp lib/mqtt_types.cpp lib/mqtt_message_processor.hpp lib/mqtt_message_processor.cpp)
+        lib/message.cpp lib/mqtt_types.cpp lib/mqtt_message_processor.hpp lib/mqtt_message_processor.cpp lib/utf8.hpp)
 
 
 
@@ -76,4 +76,4 @@ add_test_executable(test_server test/test_server.cpp)
 add_test_executable(test_login_handler test/test_login_handler.cpp)
 add_test_executable(test_login_factory test/test_login_factory.cpp)
 add_test_executable(test_subscriber_container test/test_subscriber_container.cpp)
-
+add_test_executable(test_utf8 test/test_utf8.cpp)

@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named test_utf8
+
+# Build rule for target.
+test_utf8: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_utf8
+.PHONY : test_utf8
+
+# fast build rule for target.
+test_utf8/fast:
+	$(MAKE) -f CMakeFiles/test_utf8.dir/build.make CMakeFiles/test_utf8.dir/build
+.PHONY : test_utf8/fast
+
+#=============================================================================
 # Target rules for targets named test_subscriber_container
 
 # Build rule for target.
@@ -1078,12 +1091,40 @@ test/test_subscriber_container.cpp.s:
 	$(MAKE) -f CMakeFiles/test_subscriber_container.dir/build.make CMakeFiles/test_subscriber_container.dir/test/test_subscriber_container.cpp.s
 .PHONY : test/test_subscriber_container.cpp.s
 
+test/test_utf8.o: test/test_utf8.cpp.o
+
+.PHONY : test/test_utf8.o
+
+# target to build an object file
+test/test_utf8.cpp.o:
+	$(MAKE) -f CMakeFiles/test_utf8.dir/build.make CMakeFiles/test_utf8.dir/test/test_utf8.cpp.o
+.PHONY : test/test_utf8.cpp.o
+
+test/test_utf8.i: test/test_utf8.cpp.i
+
+.PHONY : test/test_utf8.i
+
+# target to preprocess a source file
+test/test_utf8.cpp.i:
+	$(MAKE) -f CMakeFiles/test_utf8.dir/build.make CMakeFiles/test_utf8.dir/test/test_utf8.cpp.i
+.PHONY : test/test_utf8.cpp.i
+
+test/test_utf8.s: test/test_utf8.cpp.s
+
+.PHONY : test/test_utf8.s
+
+# target to generate assembly for a file
+test/test_utf8.cpp.s:
+	$(MAKE) -f CMakeFiles/test_utf8.dir/build.make CMakeFiles/test_utf8.dir/test/test_utf8.cpp.s
+.PHONY : test/test_utf8.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... test_utf8"
 	@echo "... edit_cache"
 	@echo "... test_subscriber_container"
 	@echo "... test_login_factory"
@@ -1190,6 +1231,9 @@ help:
 	@echo "... test/test_subscriber_container.o"
 	@echo "... test/test_subscriber_container.i"
 	@echo "... test/test_subscriber_container.s"
+	@echo "... test/test_utf8.o"
+	@echo "... test/test_utf8.i"
+	@echo "... test/test_utf8.s"
 .PHONY : help
 
 
