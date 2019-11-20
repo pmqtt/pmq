@@ -21,9 +21,6 @@ pmq::detail::subscriber_container::subscriber_container() {
     root = std::make_shared<subscriber_node>("#");
 }
 
-pmq::detail::subscriber_container::~subscriber_container() {
-
-}
 
 std::size_t pmq::detail::subscriber_container::get_size() const {
     return 0;
@@ -38,7 +35,7 @@ void pmq::detail::subscriber_container::insert_subscriber(const std::shared_ptr<
     std::vector<std::string> sub_topics = detail::split_topic(topic);
 
 
-    while(sub_topics.size() > 0) {
+    while(!sub_topics.empty()) {
         if (iter->exist_child(sub_topics[0])) {
             if (sub_topics.size() > 1) {
                 if (sub_topics[1] == "#") {
@@ -56,9 +53,8 @@ void pmq::detail::subscriber_container::insert_subscriber(const std::shared_ptr<
             }
         }else{
             bool is_last_sub_topic_wild_card = false;
-            for(const std::string sub_topic : sub_topics){
+            for(const std::string & sub_topic : sub_topics){
                 if(sub_topic != "#") {
-                    std::cout<<"sub_topic:"<<sub_topic<<std::endl;
                     node_ptr child = std::make_shared<subscriber_node>(sub_topic);
                     iter->add_child(sub_topic, child);
                     iter = child;
@@ -122,11 +118,10 @@ pmq::detail::subscriber_container::tree_down(const pmq::detail::node_ptr &root,
         if(iter->exist_child(sub_topics[i])) {
             iter = iter->get_child(sub_topics[i]);
             if(i+1 >= sub_topics.size()-1){
-                auto vec = iter->get_all_wildcard_subscriber();
+                vec = iter->get_all_wildcard_subscriber();
                 std::copy(vec.begin(),vec.end(),std::back_inserter(result));
             }
         }else if(parent->exist_child("+")){
-            std::cout<<"+"<<std::endl;
             std::vector<std::shared_ptr<pmq::subscriber>> plus_subscribtors =  tree_down(parent->get_child("+"),create_sub_topic_vec(sub_topics,i));
             std::copy(plus_subscribtors.begin(),plus_subscribtors.end(),std::back_inserter(result));
         }
@@ -142,17 +137,9 @@ pmq::detail::subscriber_container::tree_down(const pmq::detail::node_ptr &root,
         std::copy(vec.begin(), vec.end(), std::back_inserter(result));
     }
     if(parent->exist_child("+")){
-        std::cout<<"Last chance to get"<<std::endl;
-        for(auto x : sub_topics){
-            std::cout<<"sub_t1:"<<x<<std::endl;
-        }
-
         auto vec = create_sub_topic_vec(sub_topics,sub_topics.size()-2);
-        for(auto x : vec){
-            std::cout<<"sub:"<<x<<std::endl;
-        }
-        std::vector<std::shared_ptr<pmq::subscriber>> plus_subscribtors =  tree_down(parent->get_child("+"),vec);
-        std::copy(plus_subscribtors.begin(),plus_subscribtors.end(),std::back_inserter(result));
+        std::vector<std::shared_ptr<pmq::subscriber>> plus_subscribers =  tree_down(parent->get_child("+"),vec);
+        std::copy(plus_subscribers.begin(),plus_subscribers.end(),std::back_inserter(result));
     }
 
     return result;

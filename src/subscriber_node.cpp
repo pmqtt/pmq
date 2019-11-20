@@ -38,7 +38,7 @@ void pmq::detail::subscriber_node::add_child(const std::string &topic,
 }
 
 bool pmq::detail::subscriber_node::exist_child(const std::string &topic) {
-    return childs.count(topic)> 0;
+    return childs.count(topic) > 0;
 }
 
 void pmq::detail::subscriber_node::remove_subsriber(const std::shared_ptr<pmq::subscriber> &sub) {

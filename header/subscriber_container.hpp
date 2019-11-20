@@ -13,9 +13,10 @@ namespace pmq::detail{
     class subscriber_container{
     public:
         subscriber_container();
-        ~subscriber_container();
+        ~subscriber_container() = default;
         void insert_subscriber(const std::shared_ptr<pmq::subscriber> & sub,const std::string & topic);
         std::vector<std::shared_ptr<pmq::subscriber>> get_subscriber(const std::string & topic);
+        [[nodiscard]]
         std::size_t get_size()const;
 
     private:

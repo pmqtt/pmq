@@ -18,15 +18,15 @@ std::vector<std::string> pmq::detail::split_topic(const std::string &topic) {
     if(topic[0] == '/'){
         is_first_sign_a_slash = true;
     }
-    std::vector<std::string> splited = split(topic,"/");
+    std::vector<std::string> splitted = split(topic,"/");
     if( is_first_sign_a_slash ){
-        splited.erase(splited.begin());
-        splited[0] = "/"+splited[0];
+        splitted.erase(splitted.begin());
+        splitted[0] = "/"+splitted[0];
     }
-    if(splited[splited.size()-1].length() == 0){
-        splited.pop_back();
+    if(splitted[splitted.size()-1].length() == 0){
+        splitted.pop_back();
     }
-    return splited;
+    return splitted;
 }
 
 

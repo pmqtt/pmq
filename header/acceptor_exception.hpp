@@ -10,7 +10,7 @@ namespace pmq::exception{
     public:
         explicit acceptor_exception(std::string && msg) :msg(std::move(msg)) { }
         ~acceptor_exception() override = default;
-        const char* what() const noexcept override {
+        [[nodiscard]] const char* what() const noexcept override {
             return msg.c_str();
         }
     private:

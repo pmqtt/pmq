@@ -16,6 +16,8 @@ namespace pmq {
         std::shared_ptr<pmq::mqtt_package> create_package(std::shared_ptr<pmq::mqtt_connection_info> & connection_info);
         virtual ~mqtt_message() = default;
     private:
+        void check_valid_connection(std::shared_ptr<pmq::mqtt_connection_info> & connection_info);
+    private:
         std::shared_ptr<pmq::socket> client_socket;
     };
 }
