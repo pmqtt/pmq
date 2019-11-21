@@ -25,6 +25,7 @@ void pmq::client_handler::visit(pmq::mqtt_publish *msg) {
     if(msg->is_retained()){
         std::shared_ptr<pmq::message> message = std::make_shared<pmq::message>(msg->get_topic(),
                 msg->get_message(),pmq::create_qos_from_int(msg->get_qos()));
+        //storage_service->add_retained_message(message);
     }
     const std::string topic = msg->get_topic();
     for( const auto & subscriber : storage_service->get_subscriber(topic)) {

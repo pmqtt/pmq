@@ -11,6 +11,7 @@
 #include <lib/mqtt_publish.hpp>
 #include <lib/socket.hpp>
 #include <lib/subscriber.hpp>
+#include <header/config_module.hpp>
 
 namespace pmq{
 
@@ -46,6 +47,8 @@ namespace pmq{
         virtual void add_subscriber(const std::string topic,const std::shared_ptr<pmq::subscriber> & subscriber) = 0;
         virtual std::vector<std::shared_ptr<pmq::subscriber>> get_subscriber(const std::string & topic) = 0;
         virtual std::map<std::string,pmq::message> get_all_will_messages()const = 0;
+
+        virtual void insert_configuration_for_subscribers(const pmq::config_module & config)=0;
 
     };
 

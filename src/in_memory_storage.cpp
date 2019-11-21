@@ -158,4 +158,8 @@ void pmq::in_memory_storage::remove_client(const std::string & client_id){
     }
 }
 
+void pmq::in_memory_storage::insert_configuration_for_subscribers(const pmq::config_module & config){
+
+}
+
 

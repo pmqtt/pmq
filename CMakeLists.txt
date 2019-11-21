@@ -64,7 +64,7 @@ add_library(pmq_obj_lib OBJECT header/acceptor_exception.hpp
         header/subscriber_node.hpp
         src/subscriber_node.cpp
         header/string.hpp
-        header/rest_handler.hpp)
+        header/rest_handler.hpp header/config_module.hpp)
 
 add_executable(PMQ src/main.cpp $<TARGET_OBJECTS:pmq_obj_lib> )
 target_link_libraries(PMQ ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)

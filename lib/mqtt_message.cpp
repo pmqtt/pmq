@@ -33,7 +33,8 @@ std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package( std::share
                 auto connect_message = std::make_shared<pmq::mqtt_connect>(this->client_socket, msg_length);
                 std::string payload = this->client_socket->read(msg_length);
                 connect_message->parse(payload);
-                connection_info->client_id = connect_message->get_client_id();
+                connection_info->set_client_id(connect_message->get_client_id());
+
                 return connect_message;
             }
             throw pmq::exception::mqtt_bad_header_exception("Unexpected connect header received, client is already connected" );

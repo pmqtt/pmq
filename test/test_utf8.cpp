@@ -18,5 +18,5 @@ BOOST_AUTO_TEST_CASE( UTF8_VALIDATION_TEST )
     buffer += end;
     buffer += " EIN WEITERER TEXT";
 
-    BOOST_CHECK(pmq::utf8::validate_utf8(buffer));
+    BOOST_CHECK(!pmq::utf8::validate_utf8(buffer));
 }
