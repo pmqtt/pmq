@@ -152,9 +152,7 @@ void pmq::in_memory_storage::add_retained_message(const std::shared_ptr<pmq::mes
             [&](const std::shared_ptr<pmq::message> & item)->bool{
                 return item->get_topic() == msg->get_topic();
         });
-    std::cout<<"CHECK REMOVING =============="<<std::endl;
     if(it != this->retained_messages.end()) {
-        std::cout<<"REMOVE ITEM"<<std::endl;
         this->retained_messages.erase(it);
     }
     this->retained_messages.emplace_back(msg);
