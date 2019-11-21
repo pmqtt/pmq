@@ -29,4 +29,13 @@ std::vector<std::string> pmq::detail::split_topic(const std::string &topic) {
     return splitted;
 }
 
+bool pmq::detail::topic_start_with(const std::string & topic,const std::string & begins){
+    if(topic.length() < begins.length()) return false;
+
+    for(std::size_t i = 0 ; i < begins.length(); ++i){
+        if(topic[i] != begins[i]) return false;
+    }
+    return true;
+}
+
 

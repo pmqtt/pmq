@@ -148,7 +148,17 @@ std::vector<std::shared_ptr<pmq::subscriber>> pmq::in_memory_storage::get_subscr
 
 void pmq::in_memory_storage::add_retained_message(const std::shared_ptr<pmq::message> &msg) {
     std::unique_lock<std::mutex> guard(mutex);
-    this->retained_messages.emplace_back( msg );
+    auto it = std::find_if(this->retained_messages.begin(),this->retained_messages.end(),
+            [&](const std::shared_ptr<pmq::message> & item)->bool{
+                return item->get_topic() == msg->get_topic();
+        });
+    std::cout<<"CHECK REMOVING =============="<<std::endl;
+    if(it != this->retained_messages.end()) {
+        std::cout<<"REMOVE ITEM"<<std::endl;
+        this->retained_messages.erase(it);
+    }
+    this->retained_messages.emplace_back(msg);
+
 }
 
 void pmq::in_memory_storage::remove_client(const std::string & client_id){
@@ -159,7 +169,7 @@ void pmq::in_memory_storage::remove_client(const std::string & client_id){
 }
 
 void pmq::in_memory_storage::insert_configuration_for_subscribers(const pmq::config_module & config){
-
+    cfg = config;
 }
 
 

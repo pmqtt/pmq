@@ -75,6 +75,7 @@ namespace pmq{
         std::map<std::string,pmq::detail::subscriber_container> shared_subscripted_clients;
         std::vector<std::shared_ptr<pmq::message>> retained_messages;
         std::mutex mutex;
+        pmq::config_module cfg;
     };
 }
 
