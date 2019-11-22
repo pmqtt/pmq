@@ -27,7 +27,7 @@ namespace pmq::utf8{
         }
 
         for(std::size_t i = 0; i < len; i++){
-            std::pair<int,int> utf8_code;
+            std::pair<int,unsigned char> utf8_code;
             if( is_null(buffer_c_str[i]) ){
                 return false;
             }else if( is_plain_ascii(buffer_c_str[i]) ){
