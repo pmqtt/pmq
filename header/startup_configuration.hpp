@@ -171,7 +171,7 @@ namespace pmq{
 
         void load_configuration_file(const std::string & filename);
 
-        pmq::config_module get_client_config()const{
+        const pmq::config_module & get_client_config()const{
             return cfg;
         }
 

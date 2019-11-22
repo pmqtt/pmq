@@ -41,12 +41,27 @@ void pmq::client_handler::handle_config_subscription(const std::string & topic){
     if(pmq::detail::topic_start_with(topic,"$CONFIG_MODULE/")){
         auto cfg = storage_service->get_configuration_for_subscribers();
         std::string global_config = cfg.get_global_config();
-        std::string general_config = cfg.get_general_config()[topic];
+        if(global_config.empty()){
+            global_config = detail::quote("");
+        }
+
+        auto splited_topic = detail::split_topic(topic);
+        std::string general_topic = splited_topic[0] +"/"+ splited_topic[1];
+        std::string general_config = cfg.get_general_config()[general_topic];
+
+        if(general_config.empty()){
+            general_config=detail::quote("");
+        }
         std::string specific_config = cfg.get_specific_config()[topic];
+        if(specific_config.empty()){
+            specific_config = detail::quote("");
+        }
+
+
         std::string config_message = "{";
-        config_message += detail::quote("GLOBAL") + ":" + detail::quote(global_config)+",";
-        config_message += detail::quote("GENERAL") + ":" + detail::quote(general_config)+",";
-        config_message += detail::quote("SPECIFIC") + ":" + detail::quote(specific_config)+"}";
+        config_message += detail::quote("GLOBAL")   + ":"  + global_config +  ",";
+        config_message += detail::quote("GENERAL")  + ":"  + general_config + ",";
+        config_message += detail::quote("SPECIFIC") + ":"  + specific_config+ "}";
 
 
         std::vector<std::shared_ptr<pmq::subscriber>> subscribers = storage_service->get_subscriber(topic);

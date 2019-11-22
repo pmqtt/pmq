@@ -46,10 +46,9 @@ int main(int argc,char **argv,char **envp){
     creator.bind_creator("TCP",create_tcp_client_factory);
     creator.bind_creator("TLS",create_ssl_client_factory);
 
-    pmq::config_module cfg;
     std::shared_ptr<pmq::login_factory> login_creator = std::make_shared<pmq::login_factory>();
     std::shared_ptr<pmq::storage> storage_service = std::make_shared<pmq::in_memory_storage>();
-    storage_service->insert_configuration_for_subscribers(cfg);
+    storage_service->insert_configuration_for_subscribers(conf.get_client_config());
 
     std::shared_ptr<pmq::qos_handler_factory> qos_factory = std::make_shared<pmq::qos_handler_factory>();
     std::shared_ptr<pmq::mqtt_visitor> handler = std::make_shared<pmq::client_handler>(
