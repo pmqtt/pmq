@@ -50,6 +50,7 @@ $ docker run -it -v[path to pmq]:/pmq pmqtt/dev /bin/bash
 Note: PMQ requires 
 * BOOST 1.65 or newer 
 * microsofts cpprestsdk
+* yaml-cpp
 
 ```shell
 $ cd $PMQ

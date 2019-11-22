@@ -9,8 +9,16 @@ find_package( cpprestsdk REQUIRED )
 find_package( OpenSSL REQUIRED )
 find_package( yaml-cpp REQUIRED )
 
-include(CMakeFunctions/load_yaml.txt)
-load_yaml()
+if(yaml-cpp_FOUND)
+    if(NOT DEFINED ${YAML_CPP_LIBRARIES})
+        if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+            set(YAML_CPP_LIBRARIES /usr/local/lib/libyaml-cpp.a)
+        endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+        if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+            set(YAML_CPP_LIBRARIES /usr/local/lib64/libyaml-cpp.a)
+        endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    endif(NOT DEFINED ${YAML_CPP_LIBRARIES})
+endif(yaml-cpp_FOUND)
 
 
 add_definitions(-DBOOST_LOG_DYN_LINK)
