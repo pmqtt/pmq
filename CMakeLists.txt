@@ -8,11 +8,13 @@ find_package( Boost REQUIRED COMPONENTS system program_options thread date_time 
 find_package( cpprestsdk REQUIRED )
 find_package( OpenSSL REQUIRED )
 find_package( yaml-cpp REQUIRED )
-
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(MACOSX TRUE)
+endif()
 if(yaml-cpp_FOUND)
     if(NOT DEFINED ${YAML_CPP_LIBRARIES})
         set(YAML_CPP_LIBRARIES /usr/local/lib/libyaml-cpp.a)
-        message(fallback yaml)
+        message(${CMAKE_SYSTEM_NAME})
     endif(NOT DEFINED ${YAML_CPP_LIBRARIES})
 endif(yaml-cpp_FOUND)
 
