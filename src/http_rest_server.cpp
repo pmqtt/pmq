@@ -2,7 +2,8 @@
 // Created by pmqtt on 2019-06-10.
 //
 #include <boost/log/trivial.hpp>
-
+#include <thread>
+#include <chrono>
 #include "header/rest_api.hpp"
 #include "header/http_rest_server.hpp"
 
@@ -119,7 +120,7 @@ namespace pmq{
         if(api_server) {
             api_server->open().wait();
             while (runLoop) {
-                boost::this_thread::sleep_for(boost::chrono::seconds(1));
+                std::this_thread::sleep_for(std::chrono::seconds(1));
             }
             api_server->close().wait();
         }
