@@ -6,8 +6,16 @@ PMQ will be a high-performance, distributed MQTT message broker and message bus.
 
 PMQ implements the MQTT 3.1, 3.1.1 specifiaction with qualaty of service 1 and shared subscription from MQTT 5
 
+### Feature
+#### Client configuration distribution
+With PMQ it is possible to distribute configurations. 
+Imagine that you have to configure many microservices and they do not have a REST interface.
+In this case, the distribution of configurations via PMQ can be helpful. Configurations are transferred in JSON format 
+and defined as YAML.The configuration is organized hierarchically. The hierarchy is three-level Global, General for a client family and Specific for a single client. 
+
 ### Roadmap
 * REST API to configure and manage PMQ Message Broker
+* Distribute configuration to broker clients **Finished** 
 * Support QOS 2
     * [x] QOS 2 receiver case
     * [ ] QOS 2 sender case
@@ -104,6 +112,52 @@ use the REST API of PMQ. For example, to show the clients
 with curl, use the following command
 ```
 $ curl http://localhost:1884/rest/api/v0.1/get_will_messages
+```
+
+### How to, distribute configuration
+```shell
+$ ./PMQ  --client-configuration-file configuration.yaml
+```
+The format of the configuration file must look like this
+````yaml
+# General configuration for all clients
+GLOBAL:
+- PROXY 127.0.0.14:8888
+- NTP 127.0.0.15:8177
+
+# General configuration for a client family
+MACHINE_SERVICE_01:
+- CONNECTION 192.168.0.133
+
+# Specific configuration for a client
+MACHINE_SERVICE_01/02:
+- PORT 2001
+
+MACHINE_SERVICE_01/03:
+- PORT 2002
+````
+To subscribe for the configuration, you have to use the special topic $CONFIG_MODULE/[YAML RULE].
+For example with mosquitto_sub:
+```shell
+$ mosquitto_sub -t '$CONFIG_MODULE/MACHINE_SERVICE_01/02'
+```
+You will received from PMQ this message:
+```JSON
+{
+  "GLOBAL":
+  {
+    "PROXY":"127.0.0.14:8888",
+    "NTP":"127.0.0.15:8177"
+  },
+  "GENERAL":
+  {
+    "CONNECTION":"192.168.0.133"
+  },
+  "SPECIFIC":
+  {
+    "PORT":"2001"
+  }
+}
 ```
 
 
