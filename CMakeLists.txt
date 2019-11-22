@@ -12,6 +12,7 @@ find_package( yaml-cpp REQUIRED )
 if(yaml-cpp_FOUND)
     if(NOT DEFINED ${YAML_CPP_LIBRARIES})
         set(YAML_CPP_LIBRARIES /usr/local/lib/libyaml-cpp.a)
+        message(fallback yaml)
     endif(NOT DEFINED ${YAML_CPP_LIBRARIES})
 endif(yaml-cpp_FOUND)
 
