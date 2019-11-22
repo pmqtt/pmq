@@ -11,7 +11,7 @@ PMQ implements the MQTT 3.1, 3.1.1 specifiaction with qualaty of service 1 and s
 With PMQ it is possible to distribute configurations. 
 Imagine that you have to configure many microservices and they do not have a REST interface.
 In this case, the distribution of configurations via PMQ can be helpful. Configurations are transferred in JSON format 
-and defined as YAML.The configuration is organized hierarchically. The hierarchy is three-level Global, General for a client family and Specific for a single client. 
+and defined as YAML.The configuration is organized hierarchically. The hierarchy is three-level global, General for a client family and Specific for a single client. 
 
 ### Roadmap
 * REST API to configure and manage PMQ Message Broker
