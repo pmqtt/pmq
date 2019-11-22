@@ -18,5 +18,11 @@ RUN apk update \
     && git submodule update --init \
     && cmake . \
     && make -j4 \
+    && make install \
+    && cd /third_party \
+    && git clone https://github.com/jbeder/yaml-cpp.git \
+    && cd /third_prty/yaml-cpp \
+    && cmake . \
+    && make -j4 \
     && make install
 

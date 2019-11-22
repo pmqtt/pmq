@@ -57,6 +57,8 @@ namespace pmq{
 
         void handleDisconnect() override ;
 
+        void handle_config_subscription(const std::string & topic);
+
     };
 
 }

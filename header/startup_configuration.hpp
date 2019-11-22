@@ -5,6 +5,7 @@
 #include <array>
 #include <cstdio>
 #include <string>
+#include <header/config_module.hpp>
 #include "config_exception.hpp"
 
 namespace {
@@ -87,6 +88,7 @@ namespace pmq{
         std::string private_key_file="";
         std::string dh_file="";
         bool allow_anonymous_login = true;
+        pmq::config_module cfg;
     public:
 
 
@@ -167,9 +169,16 @@ namespace pmq{
             allow_anonymous_login = allowAnonymousLogin;
         }
 
+        void load_configuration_file(const std::string & filename);
+
+        pmq::config_module get_client_config()const{
+            return cfg;
+        }
+
     };
 }
 
 pmq::config parse_program_options(int argc,char **argv);
+
 
 #endif //PMQ_STARTUP_CONFIGURATION_HPP

@@ -38,4 +38,12 @@ bool pmq::detail::topic_start_with(const std::string & topic,const std::string &
     return true;
 }
 
+std::string pmq::detail::quote(const std::string & str){
+    std::string s = "\"";
+    s += str;
+    s += "\"";
+    return s;
+}
+
+
 

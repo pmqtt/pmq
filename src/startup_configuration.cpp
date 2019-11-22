@@ -4,9 +4,12 @@
 
 #include <boost/program_options.hpp>
 #include <iostream>
+#include <fstream>
+#include "yaml-cpp/yaml.h"
 
 #include "header/PMQConfigure.hpp"
 #include "header/startup_configuration.hpp"
+
 
 pmq::config parse_program_options(int argc,char **argv){
     boost::program_options::options_description desc{"Options"};
@@ -19,6 +22,7 @@ pmq::config parse_program_options(int argc,char **argv){
             ("tls-private-key",boost::program_options::value<std::string>(),"TLS private key")
             ("tls-dh-file",boost::program_options::value<std::string>(),"Diffie-Hellman file")
             ("anonymous-login",boost::program_options::value<bool>()->default_value(true),"Allow or permit anoymous connection. Default is true")
+            ("client-configuration-file",boost::program_options::value<std::string>(),"Path to client configuration")
             ;
 
     boost::program_options::variables_map vm;
@@ -52,6 +56,15 @@ pmq::config parse_program_options(int argc,char **argv){
     if(vm.count("anonymous-login")){
         conf.set_allow_anonymous_login(vm["anonymous-login"].as<bool>());
     }
+    if(vm.count("client-configuration-file")){
+        conf.load_configuration_file(vm["client-configuration-file"].as<std::string>());
+    }
 
     return conf;
+}
+
+void pmq::config::load_configuration_file(const std::string &filename) {
+    std::ifstream fin(filename);
+    YAML::Parser parser(fin);
+    YAML::Node doc;
 }

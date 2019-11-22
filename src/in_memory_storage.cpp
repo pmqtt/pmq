@@ -148,10 +148,11 @@ std::vector<std::shared_ptr<pmq::subscriber>> pmq::in_memory_storage::get_subscr
 
 void pmq::in_memory_storage::add_retained_message(const std::shared_ptr<pmq::message> &msg) {
     std::unique_lock<std::mutex> guard(mutex);
-    auto it = std::find_if(this->retained_messages.begin(),this->retained_messages.end(),
-            [&](const std::shared_ptr<pmq::message> & item)->bool{
-                return item->get_topic() == msg->get_topic();
-        });
+    auto pred = [&](const std::shared_ptr<pmq::message> & item)->bool{
+        return item->get_topic() == msg->get_topic();
+    };
+
+    auto it = std::find_if(this->retained_messages.begin(),this->retained_messages.end(),pred);
     if(it != this->retained_messages.end()) {
         this->retained_messages.erase(it);
     }

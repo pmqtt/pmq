@@ -63,7 +63,9 @@ namespace pmq{
         void remove_client(const std::string & client_id) override;
 
         void insert_configuration_for_subscribers(const pmq::config_module & config) override;
-
+        const pmq::config_module & get_configuration_for_subscribers()const override {
+            return this->cfg;
+        }
 
     private:
         std::map<std::string,std::string> user_password_map;

@@ -24,7 +24,7 @@ namespace pmq {
             global_config = globalConfig;
         }
 
-        const std::map<std::string, std::string> &get_general_config() const {
+        std::map<std::string, std::string> &get_general_config() {
             return general_config;
         }
 
@@ -32,7 +32,7 @@ namespace pmq {
             general_config = generalConfig;
         }
 
-        const std::map<std::string, std::string> &get_specific_config() const {
+        std::map<std::string, std::string> &get_specific_config()  {
             return specific_config;
         }
 

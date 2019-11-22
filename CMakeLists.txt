@@ -5,12 +5,19 @@ set(CMAKE_CXX_STANDARD 17)
 
 
 find_package( Boost REQUIRED COMPONENTS system program_options thread date_time chrono unit_test_framework fiber log log_setup)
-find_package( cpprestsdk REQUIRED)
-find_package( OpenSSL REQUIRED)
+find_package( cpprestsdk REQUIRED )
+find_package( OpenSSL REQUIRED )
+find_package( yaml-cpp REQUIRED )
+
+if(yaml-cpp_FOUND)
+    if(NOT DEFINED ${YAML_CPP_LIBRARIES})
+        set(YAML_CPP_LIBRARIES /usr/local/lib/libyaml-cpp.a)
+    endif(NOT DEFINED ${YAML_CPP_LIBRARIES})
+endif(yaml-cpp_FOUND)
 
 add_definitions(-DBOOST_LOG_DYN_LINK)
 
-include_directories(${PROJECT_BINARY_DIR} ${Boost_INCLUDE_DIRS} ${OPENSSL_INCLUDE_DIR} )
+include_directories(${PROJECT_BINARY_DIR} ${Boost_INCLUDE_DIRS} ${OPENSSL_INCLUDE_DIR}  )
 
 add_library(pmqttclient STATIC client/messenger.cpp client/messenger.hpp)
 
@@ -67,7 +74,7 @@ add_library(pmq_obj_lib OBJECT header/acceptor_exception.hpp
         header/rest_handler.hpp header/config_module.hpp)
 
 add_executable(PMQ src/main.cpp $<TARGET_OBJECTS:pmq_obj_lib> )
-target_link_libraries(PMQ ${Boost_LIBRARIES} pmqtt cpprestsdk::cpprest)
+target_link_libraries(PMQ ${Boost_LIBRARIES} ${YAML_CPP_LIBRARIES} pmqtt cpprestsdk::cpprest )
 
 ### TEST
 include(CMakeFunctions/add_test_executable.txt)

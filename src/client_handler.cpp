@@ -6,6 +6,8 @@
 #include "lib/mqtt_connect.hpp"
 #include "lib/subscriber.hpp"
 
+#include "header/string.hpp"
+
 
 void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
     BOOST_LOG_TRIVIAL(debug)<<"Handle connection";
@@ -34,6 +36,27 @@ void pmq::client_handler::visit(pmq::mqtt_publish *msg) {
 
 }
 
+
+void pmq::client_handler::handle_config_subscription(const std::string & topic){
+    if(pmq::detail::topic_start_with(topic,"$CONFIG_MODULE/")){
+        auto cfg = storage_service->get_configuration_for_subscribers();
+        std::string global_config = cfg.get_global_config();
+        std::string general_config = cfg.get_general_config()[topic];
+        std::string specific_config = cfg.get_specific_config()[topic];
+        std::string config_message = "{";
+        config_message += detail::quote("GLOBAL") + ":" + detail::quote(global_config)+",";
+        config_message += detail::quote("GENERAL") + ":" + detail::quote(general_config)+",";
+        config_message += detail::quote("SPECIFIC") + ":" + detail::quote(specific_config)+"}";
+
+
+        std::vector<std::shared_ptr<pmq::subscriber>> subscribers = storage_service->get_subscriber(topic);
+        for(const auto & x : subscribers){
+            *x<<config_message;
+        }
+
+    }
+}
+
 void pmq::client_handler::visit(pmq::mqtt_subscribe *msg) {
     const std::string topic = msg->get_topic();
     auto socket = msg->get_socket();
@@ -42,6 +65,7 @@ void pmq::client_handler::visit(pmq::mqtt_subscribe *msg) {
     storage_service->add_subscriber(topic,subscriber);
     pmq::mqtt_suback suback(socket,msg->get_msg_msb(),msg->get_msg_lsb(),2);
     suback.send();
+
     std::vector<std::shared_ptr<pmq::message>> retained_messages = storage_service->get_retained_messages();
     for(const auto & x : retained_messages){
         std::vector<std::shared_ptr<pmq::subscriber>> subscribers = storage_service->get_subscriber(x->get_topic());
@@ -51,7 +75,7 @@ void pmq::client_handler::visit(pmq::mqtt_subscribe *msg) {
             }
         }
     }
-
+    handle_config_subscription(topic);
 
 
 }

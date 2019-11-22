@@ -49,6 +49,8 @@ namespace pmq{
         virtual std::map<std::string,pmq::message> get_all_will_messages()const = 0;
 
         virtual void insert_configuration_for_subscribers(const pmq::config_module & config)=0;
+        virtual const pmq::config_module & get_configuration_for_subscribers()const =0;
+
 
     };
 

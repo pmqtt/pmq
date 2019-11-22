@@ -10,6 +10,7 @@
 namespace pmq::detail {
     std::vector <std::string> split_topic(const std::string &topic);
     bool topic_start_with(const std::string & topic,const std::string & begins);
+    std::string quote(const std::string & str);
 }
 
 #endif //PMQ_STRING_HPP
