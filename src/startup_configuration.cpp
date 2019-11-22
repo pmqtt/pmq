@@ -64,7 +64,8 @@ pmq::config parse_program_options(int argc,char **argv){
 }
 
 void pmq::config::load_configuration_file(const std::string &filename) {
-    std::ifstream fin(filename);
-    YAML::Parser parser(fin);
-    YAML::Node doc;
+    std::cout<<"Load_file"<<std::endl;
+    YAML::Node config = YAML::LoadFile(filename);
+    std::cout<< config["GLOBAL"].Type()<<std::endl;
+
 }
