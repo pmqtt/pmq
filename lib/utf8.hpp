@@ -31,20 +31,20 @@ namespace pmq::utf8{
             if( is_null(buffer_c_str[i]) ){
                 return false;
             }else if( is_plain_ascii(buffer_c_str[i]) ){
-                utf8_code = std::make_tuple(1,buffer_c_str[i]);
+                utf8_code = std::make_pair(1,buffer_c_str[i]);
             }else if((buffer_c_str[i] & static_cast<unsigned char>(0xE0)) == 0xC0){
                 if(buffer_c_str[i] == 0xC0 || buffer_c_str[i] == 0xC1){
                     return false;
                 }
-                utf8_code = std::make_tuple(2,buffer_c_str[i] & static_cast<unsigned char>(0x1F));
+                utf8_code = std::make_pair(2,buffer_c_str[i] & static_cast<unsigned char>(0x1F));
 
             }else if((buffer_c_str[i] & static_cast<unsigned char>(0xF0)) == 0xE0){
-                utf8_code = std::make_tuple(3,buffer_c_str[i] & static_cast<unsigned char>(0x0F));
+                utf8_code = std::make_pair(3,buffer_c_str[i] & static_cast<unsigned char>(0x0F));
             }else if((buffer_c_str[i] & static_cast<unsigned char>(0xF8)) == 0xF0){
                 if(buffer_c_str[i] > 0xF4){
                     return false;
                 }
-                utf8_code = std::make_tuple(4,buffer_c_str[i] & static_cast<unsigned char>(0x07));
+                utf8_code = std::make_pair(4,buffer_c_str[i] & static_cast<unsigned char>(0x07));
             }else{
                 return false;
             }
