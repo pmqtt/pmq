@@ -90,3 +90,6 @@ add_test_executable(test_login_handler test/test_login_handler.cpp)
 add_test_executable(test_login_factory test/test_login_factory.cpp)
 add_test_executable(test_subscriber_container test/test_subscriber_container.cpp)
 add_test_executable(test_utf8 test/test_utf8.cpp)
+
+### install
+install(TARGETS PMQ EXPORT PMQ RUNTIME DESTINATION bin)

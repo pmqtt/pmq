@@ -56,6 +56,28 @@ CMAKE_BINARY_DIR = /Users/cefour/Projects/pmq
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	"/Users/cefour/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/192.7142.39/CLion.app/Contents/bin/cmake/mac/bin/cmake" -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	"/Users/cefour/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/192.7142.39/CLion.app/Contents/bin/cmake/mac/bin/cmake" -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -67,6 +89,18 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	"/Users/cefour/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/192.7142.39/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	"/Users/cefour/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/192.7142.39/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -77,6 +111,18 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	"/Users/cefour/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/192.7142.39/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	"/Users/cefour/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/192.7142.39/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -109,6 +155,19 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+#=============================================================================
+# Target rules for targets named test_server
+
+# Build rule for target.
+test_server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_server
+.PHONY : test_server
+
+# fast build rule for target.
+test_server/fast:
+	$(MAKE) -f CMakeFiles/test_server.dir/build.make CMakeFiles/test_server.dir/build
+.PHONY : test_server/fast
 
 #=============================================================================
 # Target rules for targets named test_utf8
@@ -150,6 +209,19 @@ test_login_factory/fast:
 .PHONY : test_login_factory/fast
 
 #=============================================================================
+# Target rules for targets named pmqttclient
+
+# Build rule for target.
+pmqttclient: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pmqttclient
+.PHONY : pmqttclient
+
+# fast build rule for target.
+pmqttclient/fast:
+	$(MAKE) -f CMakeFiles/pmqttclient.dir/build.make CMakeFiles/pmqttclient.dir/build
+.PHONY : pmqttclient/fast
+
+#=============================================================================
 # Target rules for targets named PMQ
 
 # Build rule for target.
@@ -176,19 +248,6 @@ pmq_obj_lib/fast:
 .PHONY : pmq_obj_lib/fast
 
 #=============================================================================
-# Target rules for targets named test_server
-
-# Build rule for target.
-test_server: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test_server
-.PHONY : test_server
-
-# fast build rule for target.
-test_server/fast:
-	$(MAKE) -f CMakeFiles/test_server.dir/build.make CMakeFiles/test_server.dir/build
-.PHONY : test_server/fast
-
-#=============================================================================
 # Target rules for targets named pmqtt
 
 # Build rule for target.
@@ -213,19 +272,6 @@ test_login_handler: cmake_check_build_system
 test_login_handler/fast:
 	$(MAKE) -f CMakeFiles/test_login_handler.dir/build.make CMakeFiles/test_login_handler.dir/build
 .PHONY : test_login_handler/fast
-
-#=============================================================================
-# Target rules for targets named pmqttclient
-
-# Build rule for target.
-pmqttclient: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 pmqttclient
-.PHONY : pmqttclient
-
-# fast build rule for target.
-pmqttclient/fast:
-	$(MAKE) -f CMakeFiles/pmqttclient.dir/build.make CMakeFiles/pmqttclient.dir/build
-.PHONY : pmqttclient/fast
 
 client/messenger.o: client/messenger.cpp.o
 
@@ -1124,17 +1170,21 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... install"
+	@echo "... list_install_components"
+	@echo "... test_server"
 	@echo "... test_utf8"
 	@echo "... edit_cache"
 	@echo "... test_subscriber_container"
 	@echo "... test_login_factory"
+	@echo "... install/strip"
+	@echo "... pmqttclient"
 	@echo "... PMQ"
 	@echo "... pmq_obj_lib"
 	@echo "... rebuild_cache"
-	@echo "... test_server"
 	@echo "... pmqtt"
+	@echo "... install/local"
 	@echo "... test_login_handler"
-	@echo "... pmqttclient"
 	@echo "... client/messenger.o"
 	@echo "... client/messenger.i"
 	@echo "... client/messenger.s"
