@@ -4,7 +4,7 @@
 #include "message.hpp"
 
 namespace pmq{
-    message::message(const std::string &topic, const std::string msg, pmq::QOS qos)
+    message::message(const std::string &topic, const std::string & msg, pmq::QOS qos)
      : topic(topic),msg(msg),qos(qos){
 
     }

@@ -11,7 +11,7 @@
 namespace pmq{
     class message{
     public:
-        message(const std::string & topic,const std::string msg,pmq::QOS qos);
+        message(const std::string & topic,const std::string &msg,pmq::QOS qos);
         virtual ~message();
         message()= default;
         message(const message & rhs);
