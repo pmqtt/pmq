@@ -2,8 +2,8 @@ FROM pmqtt/dev
 ENV LD_LIBRARY_PATH /usr/local/lib64
 EXPOSE 1883
 RUN git clone https://github.com/pmqtt/pmq.git \
-    &&  cd pmq
-    && cmake .
+    &&  cd pmq \
+    && cmake . \
     && make -j4
     && make install
     && cd .. \
