@@ -7,7 +7,7 @@ PMQ will be a high-performance, distributed MQTT broker (aka. message broker ) a
 PMQ implements the MQTT 3.1, 3.1.1 specifiaction with qualaty of service 1 and shared subscription from MQTT 5
 
 ### Feature
-#### Client configuration distribution
+#### Distributed configuration 
 With PMQ it is possible to distribute configurations. 
 Imagine that you have to configure many microservices and they do not have a REST interface.
 In this case, the distribution of configurations via PMQ can be helpful. Configurations are transferred in JSON format 
