@@ -10,7 +10,7 @@
 #include <thread>
 #include <string>
 
-#include "header/socket_exception.hpp"
+#include "header/exception/socket_exception.hpp"
 
 namespace pmq{
     namespace detail{

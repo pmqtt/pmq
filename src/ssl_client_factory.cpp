@@ -3,7 +3,7 @@
 //
 #include <boost/asio/ssl.hpp>
 #include <boost/bind.hpp>
-#include "header/acceptor_exception.hpp"
+#include "header/exception/acceptor_exception.hpp"
 #include "header/tls_handshake_exception.hpp"
 #include "header/ssl_client_factory.hpp"
 

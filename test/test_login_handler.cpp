@@ -7,7 +7,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "../header/bad_connection_exception.hpp"
+#include "header/exception/bad_connection_exception.hpp"
 #include "../header/login_handler.hpp"
 #include "../lib/mqtt_connect.hpp"
 #include "../lib/socket.hpp"

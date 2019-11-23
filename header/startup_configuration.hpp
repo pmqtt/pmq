@@ -5,8 +5,8 @@
 #include <array>
 #include <cstdio>
 #include <string>
-#include <header/config_module.hpp>
-#include "config_exception.hpp"
+#include <header/module/config_module.hpp>
+#include "header/exception/config_exception.hpp"
 
 namespace {
     void create_tls_config_exception(const std::array<bool,3> & tls_setted_params) {

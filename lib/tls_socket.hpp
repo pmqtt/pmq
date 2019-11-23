@@ -11,7 +11,7 @@
 #include <thread>
 #include <vector>
 
-#include <header/socket_exception.hpp>
+#include <header/exception/socket_exception.hpp>
 #include "socket_functions.hpp"
 #include "socket.hpp"
 
@@ -28,7 +28,7 @@ namespace pmq {
            pmq::detail::write<ssl_socket>(inner_socket,mutex,msg);
         }
 
-        std::string_view get_address() const override {
+        [[nodiscard]] std::string_view get_address() const override {
             return this->inner_socket->lowest_layer().local_endpoint().address().to_string();
         }
 

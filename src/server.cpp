@@ -7,8 +7,8 @@
 #include <string>
 
 
-#include "header/acceptor_exception.hpp"
-#include "header/bad_connection_exception.hpp"
+#include "header/exception/acceptor_exception.hpp"
+#include "header/exception/bad_connection_exception.hpp"
 #include "header/client_factory.hpp"
 #include "header/server.hpp"
 #include "header/tls_handshake_exception.hpp"

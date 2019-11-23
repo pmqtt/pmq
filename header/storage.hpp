@@ -11,7 +11,7 @@
 #include <lib/mqtt_publish.hpp>
 #include <lib/socket.hpp>
 #include <lib/subscriber.hpp>
-#include <header/config_module.hpp>
+#include <header/module/config_module.hpp>
 
 namespace pmq{
 

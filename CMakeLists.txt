@@ -41,9 +41,9 @@ add_library(pmqtt STATIC lib/control_packet_type.hpp
 
 
 
-add_library(pmq_obj_lib OBJECT header/acceptor_exception.hpp
-        header/bad_connection_exception.hpp
-        header/config_exception.hpp
+add_library(pmq_obj_lib OBJECT header/exception/acceptor_exception.hpp
+        header/exception/bad_connection_exception.hpp
+        header/exception/config_exception.hpp
         src/server.cpp
         header/server.hpp
         header/null_deleter.hpp
@@ -51,7 +51,7 @@ add_library(pmq_obj_lib OBJECT header/acceptor_exception.hpp
         header/security.hpp
         header/startup_configuration.hpp
         lib/socket.hpp
-        header/socket_exception.hpp
+        header/exception/socket_exception.hpp
         header/http_rest_server.hpp
         src/http_rest_server.cpp
         header/client_factory.hpp
@@ -64,7 +64,7 @@ add_library(pmq_obj_lib OBJECT header/acceptor_exception.hpp
         header/storage.hpp
         header/in_memory_storage.hpp
         src/in_memory_storage.cpp
-        header/bad_connection_exception.hpp
+        header/exception/bad_connection_exception.hpp
         header/rest_api.hpp src/startup_configuration.cpp
         header/client_creator.hpp
         header/login_handler.hpp
@@ -77,7 +77,7 @@ add_library(pmq_obj_lib OBJECT header/acceptor_exception.hpp
         header/subscriber_node.hpp
         src/subscriber_node.cpp
         header/string.hpp
-        header/rest_handler.hpp header/config_module.hpp)
+        header/rest_handler.hpp header/module/config_module.hpp)
 
 add_executable(PMQ src/main.cpp $<TARGET_OBJECTS:pmq_obj_lib> )
 target_link_libraries(PMQ ${Boost_LIBRARIES} ${YAML_CPP_LIBRARIES} pmqtt cpprestsdk::cpprest )

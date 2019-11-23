@@ -48,7 +48,6 @@ void pmq::mqtt_connect::parse(const std::string &payload) {
 
     if(this->version == 5) {
         int sLength = (int) payload[current_byte_index];
-        BOOST_LOG_TRIVIAL(info) << "Readed length : " << sLength;
     }
     this->client_id = this->read_string(payload,current_byte_index);
 

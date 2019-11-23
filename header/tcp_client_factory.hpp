@@ -4,7 +4,7 @@
 
 #ifndef PMQ_TCP_CLIENT_FACTORY_HPP
 #define PMQ_TCP_CLIENT_FACTORY_HPP
-#include "acceptor_exception.hpp"
+#include "header/exception/acceptor_exception.hpp"
 #include "client_factory.hpp"
 #include "startup_configuration.hpp"
 
@@ -22,6 +22,7 @@ namespace pmq{
          try{
             tcp::acceptor acceptor(context,tcp::endpoint(tcp::v4(),config.get_port()));
             acceptor.accept(*socket->get_inner_socket());
+
          }catch( const boost::system::system_error & e ){
             throw pmq::exception::acceptor_exception("Listening on port "
                                                      + std::to_string(config.get_port())

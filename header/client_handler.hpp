@@ -5,7 +5,7 @@
 #ifndef PMQ_CLIENT_HANDLER_HPP
 #define PMQ_CLIENT_HANDLER_HPP
 
-#include "bad_connection_exception.hpp"
+#include "header/exception/bad_connection_exception.hpp"
 #include "startup_configuration.hpp"
 #include "storage.hpp"
 

@@ -13,7 +13,7 @@
 
 
 #include "socket_functions.hpp"
-#include "header/socket_exception.hpp"
+#include "header/exception/socket_exception.hpp"
 
 using boost::asio::ip::tcp;
 typedef boost::asio::ssl::stream<boost::asio::ip::tcp::socket> ssl_socket;
@@ -46,7 +46,7 @@ namespace pmq{
         socket() : inner_socket(nullptr) {}
         socket(const socket & rhs)= delete;
 
-        socket(boost::asio::ip::tcp::socket * sock)
+        explicit socket(boost::asio::ip::tcp::socket * sock)
             : inner_socket(sock) { }
         socket(socket && rhs) noexcept
             : inner_socket(std::move(rhs.inner_socket)){}
