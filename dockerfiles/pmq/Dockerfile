@@ -4,8 +4,8 @@ EXPOSE 1883
 RUN git clone https://github.com/pmqtt/pmq.git \
     &&  cd pmq \
     && cmake . \
-    && make -j4
-    && make install
+    && make -j4 \
+    && make install \
     && cd .. \
     && apk del bash \
     && apk del git \
