@@ -74,7 +74,7 @@ namespace pmq{
 
     class server {
     public:
-        server(  std::shared_ptr< pmq::mqtt_visitor> & handler ) :
+        explicit server(  std::shared_ptr< pmq::mqtt_visitor> & handler ) :
             should_service_run(true),
             handler(handler){
             this->server_info = std::make_shared<server_information>();

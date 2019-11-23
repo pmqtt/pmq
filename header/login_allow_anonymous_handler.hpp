@@ -10,7 +10,7 @@ namespace pmq{
     class login_allow_anonymous_handler : public login_handler{
     public:
         login_allow_anonymous_handler() = default;
-        virtual ~login_allow_anonymous_handler() = default;
+        ~login_allow_anonymous_handler() override = default;
 
         void handle(const std::shared_ptr<pmq::storage> &storage,const pmq::mqtt_connect * msg) override ;
     };

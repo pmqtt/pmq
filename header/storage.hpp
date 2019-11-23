@@ -44,7 +44,7 @@ namespace pmq{
         virtual void save_qos_two_message_id(const std::string & id , const std::string &client_id ) = 0;
         virtual std::string  restore_qos_two_publish_msg(const std::string & client_id ) = 0;
 
-        virtual void add_subscriber(const std::string topic,const std::shared_ptr<pmq::subscriber> & subscriber) = 0;
+        virtual void add_subscriber(const std::string &topic, const std::shared_ptr<pmq::subscriber> & subscriber) = 0;
         virtual std::vector<std::shared_ptr<pmq::subscriber>> get_subscriber(const std::string & topic) = 0;
         virtual std::map<std::string,pmq::message> get_all_will_messages()const = 0;
 

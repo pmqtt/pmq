@@ -111,7 +111,7 @@ void pmq::in_memory_storage::add_client(std::shared_ptr<pmq::mqtt_connect> &clie
 
 }
 
-void pmq::in_memory_storage::add_subscriber(const std::string topic, const std::shared_ptr<pmq::subscriber> &subscriber) {
+void pmq::in_memory_storage::add_subscriber(const std::string &topic, const std::shared_ptr<pmq::subscriber> &subscriber) {
     std::unique_lock<std::mutex> guard(mutex);
     std::vector<std::string> topics = pmq::detail::split_topic(topic);
     if(topics.size() > 2){

@@ -8,7 +8,7 @@
 namespace pmq{
     class login_factory{
     public:
-        virtual std::shared_ptr<pmq::login_handler> create(bool anonymous)const;
+        [[nodiscard]] virtual std::shared_ptr<pmq::login_handler> create(bool anonymous)const;
     };
 }
 

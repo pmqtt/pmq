@@ -17,7 +17,7 @@ namespace pmq{
     public:
         in_memory_storage() = default;
 
-        virtual ~in_memory_storage() = default;
+        ~in_memory_storage() override = default;
 
         void add_user(const std::string &name, const std::string &pwd) override;
 
@@ -48,22 +48,22 @@ namespace pmq{
         std::string restore_qos_two_publish_msg(const std::string & client_id ) override ;
         void add_client(std::shared_ptr<pmq::mqtt_connect> & client_connection) override ;
 
-        void add_subscriber(const std::string topic,const std::shared_ptr<pmq::subscriber> & subscriber) override ;
+        void add_subscriber(const std::string &topic, const std::shared_ptr<pmq::subscriber> & subscriber) override ;
 
         void add_retained_message(const std::shared_ptr<pmq::message> & msg) override;
-        std::vector<std::shared_ptr<pmq::message>> get_retained_messages()const override{
+        [[nodiscard]] std::vector<std::shared_ptr<pmq::message>> get_retained_messages()const override{
             return this->retained_messages;
         }
 
 
         std::vector<std::shared_ptr<pmq::subscriber>> get_subscriber(const std::string & topic) override;
-        std::map<std::string,pmq::message> get_all_will_messages()const override {
+        [[nodiscard]] std::map<std::string,pmq::message> get_all_will_messages()const override {
             return this->will_messages;
         }
         void remove_client(const std::string & client_id) override;
 
         void insert_configuration_for_subscribers(const pmq::config_module & config) override;
-        const pmq::config_module & get_configuration_for_subscribers()const override {
+        [[nodiscard]] const pmq::config_module & get_configuration_for_subscribers()const override {
             return this->cfg;
         }
 
