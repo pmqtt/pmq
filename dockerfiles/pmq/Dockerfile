@@ -17,7 +17,17 @@ RUN git clone https://github.com/pmqtt/pmq.git \
     && apk del make \
     && apk del zlib-dev \
     && apk del py-pip \
+    && apk del vim \
     && rm -rf third_party \
-    && rm -rf pmq
+    && rm -rf pmq \
+    && rm -rf /usr/include/* \
+    && rm -rf /usr/local/include/* \
+    && rm -rf /usr/lib/python2.7 \
+    && rm -rf /usr/lib/python3.6 \
+    && rm -rf /usr/lib/*.a \
+    && rm -rf /usr/local/lib/*.a \
+    && rm -rf /usr/local/lib64/*.a \
+    && rm -rf /usr/local/lib64/cpprestsdk \
+    && rm -rf /usr/local/share/*
 
 CMD ["PMQ"]
