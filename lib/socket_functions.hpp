@@ -8,6 +8,7 @@
 
 #include <boost/asio.hpp>
 #include <thread>
+#include <mutex>
 #include <string>
 
 #include "header/exception/socket_exception.hpp"
