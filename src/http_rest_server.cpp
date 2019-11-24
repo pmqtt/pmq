@@ -79,6 +79,10 @@ namespace pmq{
             if(paths[0] == pmq::rest::GET_WILL_MESSAGES){
                 BOOST_LOG_TRIVIAL(debug)<<"PARSE WILL MESSAGE";
                 message.reply(status_codes::OK,create_json_object_from_will_messages(storage_service));
+                return;
+            }
+            if(paths[0] == pmq::rest::UPDATE_CLIENT_CONFIG){
+                message.reply(status_code::OK);
             }
         }
 

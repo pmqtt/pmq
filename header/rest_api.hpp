@@ -12,6 +12,7 @@ namespace pmq::rest{
 
     const std::string CREATE_USER = "create_user";
     const std::string GET_WILL_MESSAGES = "get_will_messages";
+    const std::string UPDATE_CLIENT_CONFIG = "update_client_config";
 
     const std::string JSON_CREATE_USER_USER_VALUE = "user";
     const std::string JSON_CREATE_USER_PASSWORD_VALUE = "password";
