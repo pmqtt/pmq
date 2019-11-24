@@ -10,8 +10,10 @@ jobs:
     steps:
     - name: Update system
       run: sudo apt-get update
-    - name: Remove gcc g++
-      run: apt-get uninstall gcc g++
+    - name: Remove gcc
+      run: apt-get remove --auto-remove packagename gcc
+    - name: Remove g++
+      run: apt-get remove --auto-remove packagename g++ 
     - name: Install g++
       run: sudo add-apt-repository ppa:ubuntu-toolchain-r/test && sudo apt-get update && sudo apt-get install gcc-8 g++-8
     - name: Install Dependenicies
