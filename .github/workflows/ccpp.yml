@@ -16,7 +16,7 @@ jobs:
       run: sudo apt-get install libcpprest-dev
     - uses: actions/checkout@v1
     - name: build makefile
-      run: cmake .
+      run: cmake . -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake
     - name: compile
       run: make
       
