@@ -1,0 +1,19 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Install Dependenicies
+      run: sudo apt-get install libyaml-cpp-dev libcpprest-dev libboost-all-dev cmake
+    - uses: actions/checkout@v1
+    - name: build makefile
+      run: cmake .
+    - name: compile
+      run: make
+      
+     
