@@ -14,6 +14,8 @@ jobs:
       run: sudo apt-get install libyaml-cpp-dev libssl-dev libboost-all-dev cmake g++
     - name: Install cpprestsdk
       run: sudo apt-get install libcpprest-dev
+    - name: g++ version
+      run: g++ -v
     - uses: actions/checkout@v1
     - name: build makefile
       run: cmake . -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake
