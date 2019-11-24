@@ -11,7 +11,9 @@ jobs:
     - name: Update system
       run: sudo apt-get update
     - name: Install Dependenicies
-      run: sudo apt-get install libyaml-cpp-dev libcpprest-dev libboost-all-dev cmake
+      run: sudo apt-get install libyaml-cpp-dev libssl-dev libboost-all-dev cmake
+    - name: Install cpprestsdk
+      run: mkdir /third_party && cd /third_party  && git clone https://github.com/microsoft/cpprestsdk.git  && cd /third_party/cpprestsdk  && git submodule update --init   && cmake . && make -j4  && make install 
     - uses: actions/checkout@v1
     - name: build makefile
       run: cmake .
