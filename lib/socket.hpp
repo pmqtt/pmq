@@ -5,6 +5,7 @@
 #ifndef PMQ_SOCKET_HPP
 #define PMQ_SOCKET_HPP
 #include <boost/asio.hpp>
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/ssl.hpp>
 #include <boost/log/trivial.hpp>
 #include <iostream>

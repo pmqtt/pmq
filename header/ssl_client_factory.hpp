@@ -9,6 +9,8 @@
 
 #include "client_factory.hpp"
 #include "startup_configuration.hpp"
+#include <boost/asio/io_context.hpp>
+#include <boost/asio/ssl/context.hpp>
 
 namespace pmq{
     class ssl_client_factory : public client_factory{

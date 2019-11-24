@@ -7,6 +7,8 @@
 #include "header/exception/acceptor_exception.hpp"
 #include "client_factory.hpp"
 #include "startup_configuration.hpp"
+#include <boost/asio/io_context.hpp>
+
 
 #include <string>
 namespace pmq{
