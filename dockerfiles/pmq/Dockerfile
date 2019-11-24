@@ -1,4 +1,4 @@
-FROM pmqtt/dev
+FROM alpine
 ENV LD_LIBRARY_PATH /usr/local/lib64
 EXPOSE 1883
 RUN apk update \
