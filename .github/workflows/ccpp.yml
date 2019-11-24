@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Update system
+      run: sudo apt-get update
     - name: Install Dependenicies
       run: sudo apt-get install libyaml-cpp-dev libcpprest-dev libboost-all-dev cmake
     - uses: actions/checkout@v1
