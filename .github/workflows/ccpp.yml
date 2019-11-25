@@ -28,7 +28,6 @@ jobs:
       run: gcc -v
     - name: g++ Version
       run: g++ -v
-    - name: Clone cpp-yaml
     - uses: actions/checkout@v1
       with:
         repository: jbeder/yaml-cpp
