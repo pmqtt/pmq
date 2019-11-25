@@ -30,6 +30,11 @@ jobs:
       run: g++ -v
     - uses: actions/checkout@v1
       with:
+        repository: microsoft/cpprestsdk
+    - name: Build cpprestsdk
+      run: git submodule update --init && cmake . && make -j4 && make install 
+    - uses: actions/checkout@v1
+      with:
         repository: jbeder/yaml-cpp
     - name: Build ymal 
       run: cmake . && make -j4 && make install && rm -rf yaml-cpp
