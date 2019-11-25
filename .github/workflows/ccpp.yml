@@ -19,7 +19,7 @@ jobs:
     - name: Install boost
       run: sudo add-apt-repository ppa:mhier/libboost-latest && sudo apt update &&sudo apt install libboost1.67-dev
     - name: Install Dependenicies
-      run: sudo apt-get install libyaml-cpp-dev libssl-dev cmake g++
+      run: sudo apt-get install libssl-dev cmake g++
     - name: Install cpprestsdk
       run: sudo apt-get install libcpprest-dev
     - name: Switch g++ version
@@ -28,6 +28,12 @@ jobs:
       run: gcc -v
     - name: g++ Version
       run: g++ -v
+    - name: Clone cpp-yaml
+    - uses: actions/checkout@v1
+      with:
+        repository: jbeder/yaml-cpp
+    - name: Install
+      run: cd yaml-cpp && cmake . && make -j4 && make install && cd .. && rm -rf yaml-cpp
     - uses: actions/checkout@v1
     - name: build makefile
       run: cmake . -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake
