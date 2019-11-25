@@ -20,8 +20,6 @@ jobs:
       run: sudo add-apt-repository ppa:mhier/libboost-latest && sudo apt update &&sudo apt install libboost1.67-dev
     - name: Install Dependenicies
       run: sudo apt-get install libssl-dev cmake g++
-    - name: Install cpprestsdk
-      run: sudo apt-get install libcpprest-dev
     - name: Switch g++ version
       run: sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8 
     - name: gcc Version
