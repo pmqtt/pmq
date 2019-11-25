@@ -32,8 +32,7 @@ jobs:
     - uses: actions/checkout@v1
       with:
         repository: jbeder/yaml-cpp
-    - name: Install
-      run: cd yaml-cpp && cmake . && make -j4 && make install && cd .. && rm -rf yaml-cpp
+    - run: cmake . && make -j4 && make install && cd .. && rm -rf yaml-cpp
     - uses: actions/checkout@v1
     - name: build makefile
       run: cmake . -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake
