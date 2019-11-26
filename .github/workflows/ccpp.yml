@@ -13,7 +13,7 @@ jobs:
     - name: Install dependencies
       run: sudo sh install-deps.sh
     - name: build makefile
-      run: cmake . -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake
+      run: cmake . 
     - name: compile
       run: make
       
