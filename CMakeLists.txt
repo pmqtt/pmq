@@ -11,7 +11,7 @@ find_package( yaml-cpp REQUIRED )
 
 if(yaml-cpp_FOUND)
     if(NOT DEFINED ${YAML_CPP_LIBRARIES})
-        find_library(yaml-cpp)
+        find_library(YAML_CPP_LIBRARIES yaml-cpp)
         if(NOT DEFINED ${YAML_CPP_LIBRARIES})
             if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
                 set(YAML_CPP_LIBRARIES /usr/local/lib/libyaml-cpp.a)
