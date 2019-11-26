@@ -19,4 +19,4 @@ git clone https://github.com/jbeder/yaml-cpp.git
 cd /third_party/yaml-cpp
 cmake .
 make -j4
-sudo make DESTDIR=/usr/local/lib64 install
+sudo make install
