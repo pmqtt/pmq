@@ -8,31 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Update system
-      run: sudo apt-get update
-    - name: Remove gcc
-      run: sudo apt-get remove --auto-remove gcc
-    - name: Remove g++
-      run: sudo apt-get remove --auto-remove g++ 
-    - name: Install g++
-      run: sudo add-apt-repository ppa:ubuntu-toolchain-r/test && sudo apt-get update && sudo apt-get install gcc-8 g++-8
-    - name: Install boost
-      run: sudo add-apt-repository ppa:mhier/libboost-latest && sudo apt update &&sudo apt install libboost1.67-dev
-    - name: Install Dependenicies
-      run: sudo apt-get install libssl-dev cmake g++
-    - name: Switch g++ version
-      run: sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8 
-    - name: gcc Version
-      run: gcc -v
-    - name: g++ Version
-      run: g++ -v
+    
     - uses: actions/checkout@v1
-      with:
-        repository: jbeder/yaml-cpp
-        ref: origin/master  
-    - name: Build ymal 
-      run: cmake . && make -j4 && make install && rm -rf yaml-cpp
-    - uses: actions/checkout@v1
+    - name: Install dependencies
+      run: sudo sh install-deps.sh
     - name: build makefile
       run: cmake . -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake
     - name: compile
