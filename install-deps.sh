@@ -13,7 +13,7 @@ cd /third_party/cpprestsdk
 git submodule update --init
 cmake .
 make -j4
-sudo make install
+sudo make DESTDIR=/usr/local/lib64 install
 cd /third_party
 git clone https://github.com/jbeder/yaml-cpp.git
 cd /third_party/yaml-cpp
