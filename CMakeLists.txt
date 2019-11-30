@@ -9,6 +9,8 @@ find_package( cpprestsdk REQUIRED )
 find_package( OpenSSL REQUIRED )
 find_package( yaml-cpp REQUIRED )
 
+message(${CMAKE_INSTALL_PREFIX})
+
 if(yaml-cpp_FOUND)
     if(NOT DEFINED ${YAML_CPP_LIBRARIES})
         if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
