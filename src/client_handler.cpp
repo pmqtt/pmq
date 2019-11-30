@@ -10,14 +10,23 @@
 
 
 void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
-    BOOST_LOG_TRIVIAL(debug)<<"Handle connection";
-    login_creator->create(config.is_allow_anonymous_login())->handle(storage_service,msg);
-    std::shared_ptr<pmq::mqtt_connect> client_connection(msg,[](pmq::mqtt_connect* p){ });
-    storage_service->add_client(client_connection);
-    this->client_id = msg->get_client_id();
-    auto socket = msg->get_socket();
-    pmq::mqtt_connack connack( socket,0x0, 0x0);
-    connack.send();
+    try {
+        BOOST_LOG_TRIVIAL(debug) << "Handle connection";
+        login_creator->create(config.is_allow_anonymous_login())->handle(storage_service, msg);
+        std::shared_ptr<pmq::mqtt_connect> client_connection(msg, [](pmq::mqtt_connect *p) {});
+        storage_service->add_client(client_connection);
+        this->client_id = msg->get_client_id();
+        auto socket = msg->get_socket();
+        pmq::mqtt_connack connack(socket, 0x0, 0x0);
+        connack.send();
+    }catch (const pmq::exception::bad_connection_exception & e){
+        if(!config.is_allow_anonymous_login()){
+            auto socket = msg->get_socket();
+            pmq::mqtt_connack connack(socket, 0x0, 0x05);
+            connack.send();
+        }
+        throw e;
+    }
 }
 
 void pmq::client_handler::visit(pmq::mqtt_publish *msg) {
