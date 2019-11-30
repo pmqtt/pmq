@@ -9,7 +9,7 @@ find_package( cpprestsdk REQUIRED )
 find_package( OpenSSL REQUIRED )
 find_package( yaml-cpp REQUIRED )
 
-message(${CMAKE_INSTALL_PREFIX})
+message(${YAML_CPP_INCLUDE_DIR})
 
 if(yaml-cpp_FOUND)
     if(NOT DEFINED ${YAML_CPP_LIBRARIES})
