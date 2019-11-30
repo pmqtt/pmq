@@ -16,7 +16,7 @@ jobs:
       run: cmake . 
     - name: compile
       run: make
-    -name: Run test
+    - name: Run test
       run: sh run_test.sh   
       
      
