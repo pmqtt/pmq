@@ -41,7 +41,7 @@ add_library(pmqtt STATIC lib/control_packet_type.hpp
         lib/tls_socket.hpp lib/socket_functions.hpp lib/qos_handler.hpp lib/qos_zero_handler.cpp
         lib/qos_zero_handler.hpp lib/qos_one_handler.cpp lib/qos_one_handler.hpp lib/qos_two_handler.cpp
         lib/qos_two_handler.hpp lib/qos_handler_factory.cpp lib/qos_handler_factory.hpp lib/message.hpp
-        lib/message.cpp lib/mqtt_types.cpp lib/mqtt_message_processor.hpp lib/mqtt_message_processor.cpp lib/utf8.hpp)
+        lib/message.cpp lib/mqtt_types.cpp lib/mqtt_message_processor.hpp lib/mqtt_message_processor.cpp lib/utf8.hpp header/exception/login_exception.hpp)
 
 
 

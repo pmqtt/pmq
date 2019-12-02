@@ -1,6 +1,7 @@
 //
 // Created by pmqtt on 2019-06-29.
 //
+#include <header/exception/login_exception.hpp>
 #include "header/client_handler.hpp"
 #include "lib/message.hpp"
 #include "lib/mqtt_connect.hpp"
@@ -23,6 +24,13 @@ void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
         if(!config.is_allow_anonymous_login()){
             auto socket = msg->get_socket();
             pmq::mqtt_connack connack(socket, 0x0, 0x05);
+            connack.send();
+        }
+        throw e;
+    }catch (const pmq::exception::login_exception & e) {
+        if (!config.is_allow_anonymous_login()) {
+            auto socket = msg->get_socket();
+            pmq::mqtt_connack connack(socket, 0x0, 0x04);
             connack.send();
         }
         throw e;
