@@ -28,11 +28,9 @@ void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
         }
         throw e;
     }catch (const pmq::exception::login_exception & e) {
-        if (!config.is_allow_anonymous_login()) {
-            auto socket = msg->get_socket();
-            pmq::mqtt_connack connack(socket, 0x0, 0x04);
-            connack.send();
-        }
+        auto socket = msg->get_socket();
+        pmq::mqtt_connack connack(socket, 0x0, 0x04);
+        connack.send();
         throw e;
     }
 }
