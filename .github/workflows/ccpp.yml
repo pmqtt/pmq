@@ -17,6 +17,7 @@ jobs:
     - name: compile
       run: make
     - name: Build debian package
-      run: sh build-deb-package.sh
+      run: make package
+
 
      

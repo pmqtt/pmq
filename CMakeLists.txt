@@ -97,3 +97,12 @@ add_test_executable(test_utf8 test/test_utf8.cpp)
 
 ### install
 install(TARGETS PMQ EXPORT PMQ RUNTIME DESTINATION bin)
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_PACKAGE_VERSION_MAJOR "0")
+set(CPACK_PACKAGE_VERSION_MINOR "7")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libboost-all")
+set(CPACK_PACKAGE_DESCRIPTION "MQTT Message Broker")
+
+include(CPack)
