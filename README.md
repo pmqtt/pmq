@@ -88,7 +88,10 @@ commands:
 $ cd $PMQ/
 $ ./PMQ
 ```
-PMQ will start on port 1883
+PMQ will start on port 1883. It is also possible to start PMQ with a configuration file
+```
+$ ./PMQ -c configuration.yaml
+```
 
 ### Starting PMQ with TLS support
 ```shell

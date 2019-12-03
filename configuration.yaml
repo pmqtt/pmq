@@ -1,0 +1,8 @@
+SERVER:
+- port: "1883"
+#- rest-port: "1884"
+#- anonymous-login: "true"
+#- tls-certificat: ""
+#- tls-private-key: ""
+#- tls-dh-file: ""
+#- client-configuration-file: ""
