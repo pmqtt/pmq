@@ -9,23 +9,23 @@
 #include "header/exception/config_exception.hpp"
 
 namespace {
-    void create_tls_config_exception(const std::array<bool,3> & tls_setted_params) {
+    void create_tls_config_exception(const std::array<bool, 3> &tls_setted_params) {
         bool hasCertFile = tls_setted_params[0];
-        bool hasKeyFile  = tls_setted_params[1];
-        bool hasDHFile   = tls_setted_params[2];
+        bool hasKeyFile = tls_setted_params[1];
+        bool hasDHFile = tls_setted_params[2];
         std::string missing_diffie_hellman = "Missing Diffie-Hellman file - Certificate file and private key file was set - \n";
-                    missing_diffie_hellman += "\t To generate Diffie-Hellman file try this command \n";
-                    missing_diffie_hellman += "\t $> openssl dhparam -out dh2018.pem 2048";
+        missing_diffie_hellman += "\t To generate Diffie-Hellman file try this command \n";
+        missing_diffie_hellman += "\t $> openssl dhparam -out dh2018.pem 2048";
 
         std::string missing_private_key = "Missing private key file - Certificate file and Diffie-Hellman file was set - \n";
-                    missing_private_key += "\t To generate private key file try this command \n";
-                    missing_private_key += "\t $> openssl genrsa -des3 -out server.key 1024";
+        missing_private_key += "\t To generate private key file try this command \n";
+        missing_private_key += "\t $> openssl genrsa -des3 -out server.key 1024";
 
         std::string missing_pk_dh = "Missing Diffie-Hellman file and private key file - Certificate file was set - \n";
-                    missing_pk_dh += "\t To generate Diffie-Hellman file try this command \n";
-                    missing_pk_dh += "\t $> openssl dhparam -out dh2018.pem 2048\n";
-                    missing_pk_dh += "\t To generate Diffie-Hellman file try this command \n";
-                    missing_pk_dh += "\t $> openssl genrsa -des3 -out server.key 1024";
+        missing_pk_dh += "\t To generate Diffie-Hellman file try this command \n";
+        missing_pk_dh += "\t $> openssl dhparam -out dh2018.pem 2048\n";
+        missing_pk_dh += "\t To generate Diffie-Hellman file try this command \n";
+        missing_pk_dh += "\t $> openssl genrsa -des3 -out server.key 1024";
 
         std::string missing_cert = "Missing certificate file - Private key file and Diffie-Hellman file was set - \n";
         missing_cert += "\t To generate Certificat file try this command \n";
@@ -56,25 +56,26 @@ namespace {
         // 1  0  1  Missing private key                     ok
         // 1  1  0  Missing diffie hellman                  ok
         // 1  1  1  not used
-        if(!hasCertFile && !hasKeyFile && hasDHFile){
+        if (!hasCertFile && !hasKeyFile && hasDHFile) {
             throw pmq::exception::config_exception(missing_cert_pk);
         }
-        if(!hasCertFile && hasKeyFile && !hasDHFile){
+        if (!hasCertFile && hasKeyFile && !hasDHFile) {
             throw pmq::exception::config_exception(missing_cert_dh);
         }
-        if(!hasCertFile && hasKeyFile && hasDHFile){
+        if (!hasCertFile && hasKeyFile && hasDHFile) {
             throw pmq::exception::config_exception(missing_cert);
         }
-        if(hasCertFile && !hasKeyFile && !hasDHFile){
+        if (hasCertFile && !hasKeyFile && !hasDHFile) {
             throw pmq::exception::config_exception(missing_pk_dh);
         }
-        if(hasCertFile && !hasKeyFile && hasDHFile){
+        if (hasCertFile && !hasKeyFile && hasDHFile) {
             throw pmq::exception::config_exception(missing_private_key);
-        }
-        if(hasCertFile && hasKeyFile && !hasDHFile){
-            throw pmq::exception::config_exception(missing_diffie_hellman);
-        }
 
+            if (hasCertFile && hasKeyFile && !hasDHFile) {
+                throw pmq::exception::config_exception(missing_diffie_hellman);
+            }
+
+        }
     }
 }
 
@@ -114,6 +115,8 @@ namespace pmq{
             }
             return *this;
         }
+
+        void load_from_file(const std::string & filename);
 
         void set_tls_cert_path(const std::string & cert_file){
             this->cert_file = cert_file;

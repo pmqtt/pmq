@@ -6,6 +6,7 @@
 #define BOOST_TEST_MODULE test_login_handler
 
 #include <boost/test/unit_test.hpp>
+#include <header/exception/login_exception.hpp>
 
 #include "header/exception/bad_connection_exception.hpp"
 #include "../header/login_handler.hpp"
@@ -120,7 +121,7 @@ BOOST_AUTO_TEST_CASE( TEST_FAILED_LOGIN_NO_USER_HANDLER )
     try {
         handler.handle(fake, connect);
         BOOST_CHECK(false);
-    }catch(pmq::exception::bad_connection_exception e){
+    }catch(pmq::exception::login_exception e){
         BOOST_CHECK(true);
     }
     delete connect;
@@ -137,7 +138,7 @@ BOOST_AUTO_TEST_CASE( TEST_FAILED_LOGIN_WRONG_PASSWORD_HANDLER )
     try {
         handler.handle(fake, connect);
         BOOST_CHECK(false);
-    }catch(pmq::exception::bad_connection_exception e){
+    }catch(pmq::exception::login_exception e){
         BOOST_CHECK(true);
     }
     delete connect;

@@ -3,6 +3,8 @@
 //
 
 #include <boost/program_options.hpp>
+#include <boost/log/sources/logger.hpp>
+#include <boost/log/trivial.hpp>
 #include <iostream>
 #include <fstream>
 #include "yaml-cpp/yaml.h"
@@ -17,6 +19,7 @@ pmq::config parse_program_options(int argc,char **argv){
     desc.add_options()
             ("help,h", "Help screen")
             ("version,v", "print version")
+            ("config-file,c",boost::program_options::value<std::string>(),"Path to configuration file")
             ("port,p", boost::program_options::value<int>()->default_value(1883) ,"MQTT Broker port")
             ("rest-port,rp",boost::program_options::value<int>()->default_value(1884) ,"REST Interface port")
             ("tls-certificate",boost::program_options::value<std::string>(),"TLS certificate file")
@@ -39,6 +42,9 @@ pmq::config parse_program_options(int argc,char **argv){
         exit(0);
     }
     pmq::config conf;
+    if(vm.count("config-file")){
+        conf.load_from_file(vm["config-file"].as<std::string>());
+    }
     if(vm.count("port")){
         conf.set_port(vm["port"].as<int>());
     }
@@ -61,6 +67,7 @@ pmq::config parse_program_options(int argc,char **argv){
         conf.load_configuration_file(vm["client-configuration-file"].as<std::string>());
     }
 
+
     return conf;
 }
 
@@ -79,8 +86,47 @@ std::string parse_node(const YAML::detail::iterator_value & node){
 
 }
 
+
+void pmq::config::load_from_file(const std::string & filename) {
+    YAML::Node config = YAML::LoadFile(filename);
+    for(const auto & node: config){
+        if(node.first.Scalar() == "SERVER"){
+            for(auto item = node.second.begin(); item != node.second.end(); ++item){
+                for(auto sub_item = item->begin(); sub_item != item->end(); ++sub_item) {
+                    std::string key = sub_item->first.Scalar();
+                    std::string value = sub_item->second.Scalar();
+                    if(key == "port"){
+                        this->set_port(std::atoi(value.c_str()));
+                    }else if(key == "rest-port"){
+                        this->set_rest_port(std::atoi(value.c_str()));
+                    }else if(key == "anonymous-login"){
+                        if(value == "true")
+                            this->set_allow_anonymous_login(true);
+                        else
+                            this->set_allow_anonymous_login(false);
+                    }else if(key == "tls-certificat"){
+                        if(!value.empty())
+                            this->set_tls_cert_path(value);
+                    }else if(key == "tls-private-key"){
+                        if(!value.empty())
+                            this->set_tls_private_key(value);
+                    }else if(key == "tls-dh-file"){
+                        if(!value.empty())
+                            this->set_tls_dh_file(value);
+                    }else if(key == "client-configuration-file"){
+                        if(!value.empty())
+                            this->load_configuration_file(value);
+                    }
+                }
+            }
+        }else{
+            BOOST_LOG_TRIVIAL(error)<<"Configuration error: " + node.first.Scalar() + " not supported" ;
+            break;
+        }
+    }
+}
+
 void pmq::config::load_configuration_file(const std::string &filename) {
-    std::cout<<"Load_file"<<std::endl;
     YAML::Node config = YAML::LoadFile(filename);
     std::map<std::string,std::string> general_config;
     std::map<std::string,std::string> specific_config;
