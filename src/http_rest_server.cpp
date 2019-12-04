@@ -50,7 +50,7 @@ namespace pmq{
         try {
             return json::value::parse(obj);
         }catch(...){
-            BOOST_LOG_TRIVIAL(debug)<<"parsing error";
+            BOOST_LOG_TRIVIAL(error)<<"JSON parse error: " + obj;
             return json::value::string(obj);
         }
     }
