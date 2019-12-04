@@ -172,7 +172,8 @@ namespace pmq{
             allow_anonymous_login = allowAnonymousLogin;
         }
 
-        void load_configuration_file(const std::string & filename);
+        void load_client_configuration_file(const std::string & filename);
+        void load_action_rule_file(const std::string & filename);
 
         const pmq::config_module & get_client_config()const{
             return cfg;

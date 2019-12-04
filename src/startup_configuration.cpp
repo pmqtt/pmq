@@ -64,7 +64,7 @@ pmq::config parse_program_options(int argc,char **argv){
         conf.set_allow_anonymous_login(vm["anonymous-login"].as<bool>());
     }
     if(vm.count("client-configuration-file")){
-        conf.load_configuration_file(vm["client-configuration-file"].as<std::string>());
+        conf.load_client_configuration_file(vm["client-configuration-file"].as<std::string>());
     }
 
 
@@ -115,7 +115,10 @@ void pmq::config::load_from_file(const std::string & filename) {
                             this->set_tls_dh_file(value);
                     }else if(key == "client-configuration-file"){
                         if(!value.empty())
-                            this->load_configuration_file(value);
+                            this->load_client_configuration_file(value);
+                    }else if (key == "transformation-rule-file"){
+                        if(!value.empty())
+                            this->load_action_rule_file(value);
                     }
                 }
             }
@@ -126,7 +129,7 @@ void pmq::config::load_from_file(const std::string & filename) {
     }
 }
 
-void pmq::config::load_configuration_file(const std::string &filename) {
+void pmq::config::load_client_configuration_file(const std::string &filename) {
     YAML::Node config = YAML::LoadFile(filename);
     std::map<std::string,std::string> general_config;
     std::map<std::string,std::string> specific_config;
@@ -145,4 +148,8 @@ void pmq::config::load_configuration_file(const std::string &filename) {
     }
     cfg.set_general_config(general_config);
     cfg.set_specific_config(specific_config);
+}
+
+void pmq::config::load_action_rule_file(const std::string & filename) {
+
 }

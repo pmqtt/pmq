@@ -13,7 +13,9 @@
 void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
     try {
         BOOST_LOG_TRIVIAL(debug) << "Handle connection";
-        login_creator->create(config.is_allow_anonymous_login())->handle(storage_service, msg);
+        auto login_guard = login_creator->create(config.is_allow_anonymous_login());
+        login_guard->handle(storage_service, msg);
+
         std::shared_ptr<pmq::mqtt_connect> client_connection(msg, [](pmq::mqtt_connect *p) {});
         storage_service->add_client(client_connection);
         this->client_id = msg->get_client_id();

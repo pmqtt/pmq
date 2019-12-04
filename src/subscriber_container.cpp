@@ -100,7 +100,6 @@ pmq::detail::subscriber_container::tree_down(const pmq::detail::node_ptr &root,
     if(sub_topics.size() == 1){
         if(sub_topics[0] == " "){
             return std::vector<std::shared_ptr<pmq::subscriber>>();
-
         }
         iter = iter->get_child(sub_topics[0]);
         if(iter) {
