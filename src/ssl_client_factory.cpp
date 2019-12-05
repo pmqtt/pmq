@@ -7,6 +7,7 @@
 #include "header/tls_handshake_exception.hpp"
 #include "header/ssl_client_factory.hpp"
 
+#if 0
 namespace {
     bool verify_certificate_cb(bool preverified, boost::asio::ssl::verify_context& ctx)
     {
@@ -43,6 +44,7 @@ namespace {
         return preverified;
     }
 }
+#endif
 
 namespace pmq{
     /*
@@ -56,9 +58,10 @@ namespace pmq{
                     boost::asio::ssl::context::default_workarounds
                     | boost::asio::ssl::context::no_sslv2
                     | boost::asio::ssl::context::single_dh_use);
+#if 0
             ssl_contex.set_verify_mode(boost::asio::ssl::verify_peer | boost::asio::ssl::verify_fail_if_no_peer_cert);
-
             ssl_contex.set_verify_callback(&verify_certificate_cb);
+#endif
             ssl_contex.set_password_callback(boost::bind(&ssl_client_factory::get_password, this));
             ssl_contex.use_certificate_chain_file(cfg.get_tls_cert_path());
 
