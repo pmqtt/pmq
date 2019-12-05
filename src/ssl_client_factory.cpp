@@ -72,7 +72,7 @@ namespace pmq{
 
     }
     std::string ssl_client_factory::get_password()const {
-        return "fzuimg57";
+        return " ";
     }
 
 
