@@ -18,10 +18,10 @@ namespace {
         X509_STORE_CTX *cts = ctx.native_handle();
         int32_t length = 0;
         X509* cert = X509_STORE_CTX_get_current_cert(ctx.native_handle());
-        std::cout << "CTX ERROR : " << cts->error << std::endl;
+        //std::cout << "CTX ERROR : " << cts->error << std::endl;
 
         int32_t depth = X509_STORE_CTX_get_error_depth(cts);
-        std::cout << "CTX DEPTH : " << depth << std::endl;
+        //std::cout << "CTX DEPTH : " << depth << std::endl;
 
         switch (cts->error)
         {
