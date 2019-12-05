@@ -3,11 +3,13 @@
 //
 #include <boost/asio/ssl.hpp>
 #include <boost/bind.hpp>
+#include <openssl/crypto.h>
+
 #include "header/exception/acceptor_exception.hpp"
 #include "header/tls_handshake_exception.hpp"
 #include "header/ssl_client_factory.hpp"
 
-#if 0
+#if 1
 namespace {
     bool verify_certificate_cb(bool preverified, boost::asio::ssl::verify_context& ctx)
     {
@@ -58,7 +60,7 @@ namespace pmq{
                     boost::asio::ssl::context::default_workarounds
                     | boost::asio::ssl::context::no_sslv2
                     | boost::asio::ssl::context::single_dh_use);
-#if 0
+#if 1
             ssl_contex.set_verify_mode(boost::asio::ssl::verify_peer | boost::asio::ssl::verify_fail_if_no_peer_cert);
             ssl_contex.set_verify_callback(&verify_certificate_cb);
 #endif
