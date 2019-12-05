@@ -22,8 +22,8 @@ namespace {
 
         int32_t depth = X509_STORE_CTX_get_error_depth(cts);
         //std::cout << "CTX DEPTH : " << depth << std::endl;
-
-        switch (cts->error)
+        auto error = X509_STORE_CTX_get_error(cts);
+        switch (error)
         {
             case X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT:
                 break;
@@ -77,7 +77,7 @@ namespace pmq{
 
     }
     std::string ssl_client_factory::get_password()const {
-        return " ";
+        return "fzuimg57";
     }
 
 
