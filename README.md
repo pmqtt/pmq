@@ -25,8 +25,8 @@ and defined as YAML.The configuration is organized hierarchically. The hierarchy
 * Support Wildcard subscriptions **Finished**
     * [x] \# Wildcard (Multi level Wildcard) 
     * [x] \+ Wildcard (Single level Wildcard)
-* Support Authentification Client authentificate server -  **Finished!**
-* Support Authentification Server authentificate client -  **Finished!**
+* Support Authentification: Client authentificate server -  **Finished!**
+* Support Authentification: Server authentificate client -  **Finished!**
 * Support TLS - **Finished!**
 * Support for Websockets
 
