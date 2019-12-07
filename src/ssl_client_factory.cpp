@@ -9,7 +9,6 @@
 #include "header/tls_handshake_exception.hpp"
 #include "header/ssl_client_factory.hpp"
 
-#if 1
 namespace {
     bool verify_certificate_cb(bool preverified, boost::asio::ssl::verify_context& ctx)
     {
@@ -42,7 +41,6 @@ namespace {
         return preverified;
     }
 }
-#endif
 
 namespace pmq{
     /*
@@ -71,7 +69,7 @@ namespace pmq{
 
     }
     std::string ssl_client_factory::get_password()const {
-        return "fzuimg57";
+        return config.get_passphrase();
     }
 
 

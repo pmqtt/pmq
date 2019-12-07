@@ -25,6 +25,7 @@ pmq::config parse_program_options(int argc,char **argv){
             ("tls-certificate",boost::program_options::value<std::string>(),"TLS certificate file")
             ("tls-private-key",boost::program_options::value<std::string>(),"TLS private key")
             ("tls-dh-file",boost::program_options::value<std::string>(),"Diffie-Hellman file")
+            ("tls-certificate-passphrase",boost::program_options::value<std::string>(),"Passphrase to unlock certificate")
             ("anonymous-login",boost::program_options::value<bool>()->default_value(true),"Allow or permit anoymous connection. Default is true")
             ("client-configuration-file",boost::program_options::value<std::string>(),"Path to client configuration")
             ;
@@ -65,6 +66,9 @@ pmq::config parse_program_options(int argc,char **argv){
     }
     if(vm.count("client-configuration-file")){
         conf.load_client_configuration_file(vm["client-configuration-file"].as<std::string>());
+    }
+    if(vm.count("tls-certificate-passphrase")){
+        conf.set_tls_certificate_passphrase(vm["tls-certificate-passphrase"].as<std::string>());
     }
 
 
@@ -119,6 +123,9 @@ void pmq::config::load_from_file(const std::string & filename) {
                     }else if (key == "transformation-rule-file"){
                         if(!value.empty())
                             this->load_action_rule_file(value);
+                    }else if( key == "tls-certificate-passphrase"){
+                        if(!value.empty())
+                            this->set_tls_certificate_passphrase(value);
                     }
                 }
             }

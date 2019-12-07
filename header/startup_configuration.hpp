@@ -88,6 +88,7 @@ namespace pmq{
         std::string cert_file="";
         std::string private_key_file="";
         std::string dh_file="";
+        std::string passphrase="";
         bool allow_anonymous_login = true;
         pmq::config_module cfg;
     public:
@@ -101,7 +102,10 @@ namespace pmq{
             use_tls(rhs.use_tls),
             cert_file(rhs.cert_file),
             private_key_file(rhs.private_key_file),
-            dh_file(rhs.dh_file),allow_anonymous_login(rhs.allow_anonymous_login){
+            dh_file(rhs.dh_file),
+            allow_anonymous_login(rhs.allow_anonymous_login),
+            passphrase(rhs.passphrase),
+            cfg(rhs.cfg){
         }
         config & operator=(const config &rhs){
             if(this != &rhs) {
@@ -112,6 +116,8 @@ namespace pmq{
                 this->private_key_file = rhs.private_key_file;
                 this->dh_file = rhs.dh_file;
                 this->allow_anonymous_login = rhs.allow_anonymous_login;
+                this->passphrase = rhs.passphrase;
+                this->cfg = rhs.cfg;
             }
             return *this;
         }
@@ -170,6 +176,12 @@ namespace pmq{
 
         void set_allow_anonymous_login(bool allowAnonymousLogin) {
             allow_anonymous_login = allowAnonymousLogin;
+        }
+        void set_tls_certificate_passphrase(const std::string & pwd){
+            passphrase = pwd;
+        }
+        std::string get_passphrase()const{
+            return passphrase;
         }
 
         void load_client_configuration_file(const std::string & filename);
