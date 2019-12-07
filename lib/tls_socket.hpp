@@ -57,7 +57,7 @@ namespace pmq {
             return *this;
         }
 
-        virtual ~tls_socket() {
+        ~tls_socket() override {
             if (inner_socket->lowest_layer().is_open()) {
                 this->inner_socket->lowest_layer().close();
             }
