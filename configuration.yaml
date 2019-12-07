@@ -5,4 +5,5 @@ SERVER:
 - tls-certificat: "certificate/ca.crt"
 - tls-private-key: "certificate/ca.key"
 - tls-dh-file: "certificate/dh2018.pem"
+- tls-certificate-passphrase: "test123"
 #- client-configuration-file: ""
