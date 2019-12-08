@@ -3,10 +3,21 @@
 #define PMQ_STARTUP_CONFIGURATION_HPP
 
 #include <array>
+#include <boost/program_options.hpp>
+#include <boost/program_options/value_semantic.hpp>
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/split.hpp>
 #include <cstdio>
+#include <iostream>
+#include <map>
 #include <string>
+#include <tuple>
+#include <vector>
+
 #include <header/module/config_module.hpp>
-#include "header/exception/config_exception.hpp"
+#include <header/exception/config_exception.hpp>
+#include <header/PMQConfigure.hpp>
+
 
 namespace {
     void create_tls_config_exception(const std::array<bool, 3> &tls_setted_params) {
@@ -80,6 +91,8 @@ namespace {
 }
 
 namespace pmq{
+    typedef std::function<void(const std::string &)> CONFIG_FUNC;
+
     struct config{
     private:
         std::size_t port;
@@ -91,7 +104,10 @@ namespace pmq{
         std::string passphrase="";
         bool allow_anonymous_login = true;
         pmq::config_module cfg;
-    public:
+        std::vector<std::tuple<std::string,const boost::program_options::value_semantic*,std::string>> options;
+        std::map<std::string,CONFIG_FUNC> callable;
+        boost::program_options::options_description desc{"Options"};
+
 
 
     public:
@@ -120,6 +136,15 @@ namespace pmq{
                 this->cfg = rhs.cfg;
             }
             return *this;
+        }
+
+        void print_version(const std::string & not_used){
+            std::cout << "PMQ 2019 - v" << VERSION <<" - " <<std::endl;
+            exit(0);
+        }
+        void print_help(const std::string & not_used){
+            std::cout << desc << '\n';
+            exit(0);
         }
 
         void load_from_file(const std::string & filename);
@@ -189,6 +214,70 @@ namespace pmq{
 
         const pmq::config_module & get_client_config()const{
             return cfg;
+        }
+    public:
+        config & add_configuration(){
+            return *this;
+        }
+        config & operator()(const std::string & name , const std::string &  description,const CONFIG_FUNC & invoke){
+            std::vector<std::string> splittedString;
+            boost::split(splittedString,name,boost::is_any_of(","));
+            callable[splittedString[0]] = invoke;
+
+            options.emplace_back(name, nullptr,description);
+
+            return *this;
+        }
+
+        config& operator()(const std::string & name, const boost::program_options::value_semantic* s,const CONFIG_FUNC & invoke){
+            std::vector<std::string> splittedString;
+            boost::split(splittedString,name,boost::is_any_of(","));
+            callable[splittedString[0]] = invoke;
+
+            options.emplace_back(name, s , "");
+            return *this;
+        }
+
+        config& operator()(const std::string& name, const boost::program_options::value_semantic* s, const std::string & description,const CONFIG_FUNC & invoke){
+            std::vector<std::string> splittedString;
+            boost::split(splittedString,name,boost::is_any_of(","));
+            callable[splittedString[0]] = invoke;
+
+            options.emplace_back(name, s,description);
+            return *this;
+        }
+
+        void init_cli(std::size_t argc,char**argv){
+            auto iter = desc.add_options();
+            for(auto item: options){
+                auto first = std::get<0>(item);
+                auto second = std::get<1>(item);
+                auto third = std::get<2>(item);
+                if(second != nullptr){
+                    if(third.empty()){
+                        iter = iter(first.c_str(),second);
+                    }else{
+                        iter = iter(first.c_str(),second,third.c_str());
+                    }
+                }else{
+                    iter = iter(first.c_str(),third.c_str());
+                }
+
+            }
+
+
+            boost::program_options::variables_map vm;
+            store(parse_command_line(argc, argv, desc), vm);
+            notify(vm);
+
+            for(const auto &parameter : vm) {
+                if (callable.count(parameter.first)) {
+                    callable[parameter.first](parameter.second.as<std::string>());
+                } else {
+                    print_help("");
+                }
+            }
+
         }
 
     };

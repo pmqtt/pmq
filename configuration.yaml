@@ -2,7 +2,7 @@ SERVER:
 - port: "1883"
 - rest-port: "1884"
 - anonymous-login: "true"
-- tls-certificat: "certificate/ca.crt"
+- tls-certificate: "certificate/ca.crt"
 - tls-private-key: "certificate/ca.key"
 - tls-dh-file: "certificate/dh2018.pem"
 - tls-certificate-passphrase: "test123"
