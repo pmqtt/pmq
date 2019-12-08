@@ -12,6 +12,7 @@
 
 #include "header/storage.hpp"
 
+#include <functional>
 #include <map>
 
 
@@ -21,6 +22,13 @@ using namespace utility;
 using namespace http::experimental::listener;
 
 namespace pmq {
+    enum HTTP_METHOD_TYPE{
+        GET,PUT,POST,DELETE
+    };
+
+    typedef std::function<void(http_request)> HTTP_REST_FUNC;
+    typedef std::function<void(http_request,std::shared_ptr<pmq::storage>&)> HTTP_REST_FUNC_WITH_STORAGE_ACCESS;
+
     class http_rest_server {
     public:
         http_rest_server() = default;
@@ -30,6 +38,16 @@ namespace pmq {
         pplx::task<void> open() { return listener.open(); }
 
         pplx::task<void> close() { return listener.close(); }
+
+        http_rest_server & add_router(){
+            return *this;
+        }
+        http_rest_server & operator()(HTTP_METHOD_TYPE method_type, const std::string & route,const HTTP_REST_FUNC & method){
+            return *this;
+        }
+        http_rest_server & operator()(HTTP_METHOD_TYPE method_type, const std::string & route,const HTTP_REST_FUNC_WITH_STORAGE_ACCESS & method){
+            return *this;
+        }
 
     private:
         void handle_get(http_request message);
@@ -41,6 +59,7 @@ namespace pmq {
         void handle_delete(http_request message);
 
     private:
+
 
         http_listener listener;
         std::shared_ptr<pmq::storage> storage_service;

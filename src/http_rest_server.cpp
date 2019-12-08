@@ -83,6 +83,7 @@ namespace pmq{
             }
             if(paths[0] == pmq::rest::UPDATE_CLIENT_CONFIG){
                 message.reply(status_codes::OK);
+                return;
             }
         }
 

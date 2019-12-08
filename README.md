@@ -126,19 +126,18 @@ The format of the configuration file must look like this
 ````yaml
 # General configuration for all clients
 GLOBAL:
-- PROXY 127.0.0.14:8888
-- NTP 127.0.0.15:8177
+- PROXY: 127.0.0.14:8888
+- NTP: 127.0.0.15:8177
 
-# General configuration for a client family
 MACHINE_SERVICE_01:
-- CONNECTION 192.168.0.133
+- CONNECTION: 192.168.0.133
+MACHINE_SERVICE_01/01:
+- PORT: 2001
 
-# Specific configuration for a client
+
 MACHINE_SERVICE_01/02:
-- PORT 2001
+- PORT: 2002
 
-MACHINE_SERVICE_01/03:
-- PORT 2002
 ````
 To subscribe for the configuration, you have to use the special topic $CONFIG_MODULE/[YAML RULE].
 For example with mosquitto_sub:
@@ -159,7 +158,7 @@ You will received from PMQ this message:
   },
   "SPECIFIC":
   {
-    "PORT":"2001"
+    "PORT":"2002"
   }
 }
 ```
