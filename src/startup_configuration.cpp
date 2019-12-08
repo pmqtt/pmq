@@ -1,7 +1,7 @@
 //
 // Created by pmqtt on 2019-07-03.
 //
-
+#include <boost/bind.hpp>
 #include <boost/program_options.hpp>
 #include <boost/log/sources/logger.hpp>
 #include <boost/log/trivial.hpp>
@@ -17,17 +17,18 @@
 pmq::config parse_program_options(int argc,char **argv){
     pmq::config conf;
 
-    pmq::CONFIG_FUNC print_help = [&](const std::string & unsed){ conf.print_help(unsed); };
-    pmq::CONFIG_FUNC print_version = [&](const std::string & unsed){ conf.print_version(unsed); };
-    pmq::CONFIG_FUNC load_from_file = [&](const std::string & value){ conf.load_from_file(value); };
-    pmq::CONFIG_FUNC set_port = [&](const std::string & value){ conf.set_port(std::atoi(value.c_str())); };
-    pmq::CONFIG_FUNC set_rest_port = [&](const std::string & value){ conf.set_rest_port(std::atoi(value.c_str())); };
-    pmq::CONFIG_FUNC set_tls_certificate = [&](const std::string & value){ conf.set_tls_cert_path(value); };
-    pmq::CONFIG_FUNC set_private_key = [&](const std::string & value){ conf.set_tls_private_key(value); };
-    pmq::CONFIG_FUNC set_dh_file = [&](const std::string & value){ conf.set_tls_dh_file(value); };
-    pmq::CONFIG_FUNC set_tls_passphrase = [&](const std::string & value){ conf.set_tls_certificate_passphrase(value); };
-    pmq::CONFIG_FUNC set_anonymous_login = [&](const std::string & value){ value=="true" ? conf.set_allow_anonymous_login(true) : conf.set_allow_anonymous_login(false); };
-    pmq::CONFIG_FUNC load_client_configuration = [&](const std::string & value){ conf.load_client_configuration_file(value); };
+    auto print_help = std::bind(&pmq::config::print_help,&conf, std::placeholders::_1);
+    auto print_version = std::bind(&pmq::config::print_version,&conf, std::placeholders::_1);
+    auto load_from_file = std::bind(&pmq::config::load_from_file,&conf, std::placeholders::_1);
+    auto set_port = [&](const std::string & value){ conf.set_port(std::atoi(value.c_str())); };
+    auto set_rest_port = [&](const std::string & value){ conf.set_rest_port(std::atoi(value.c_str())); };
+    auto set_tls_certificate = std::bind(&pmq::config::set_tls_cert_path,&conf, std::placeholders::_1);;
+    auto set_private_key = std::bind(&pmq::config::set_tls_private_key,&conf, std::placeholders::_1);
+    auto set_dh_file = std::bind(&pmq::config::set_tls_dh_file,&conf, std::placeholders::_1);
+    auto set_tls_passphrase = std::bind(&pmq::config::set_tls_certificate_passphrase,&conf, std::placeholders::_1);
+    auto set_anonymous_login = [&](const std::string & value){ value=="true" ? conf.set_allow_anonymous_login(true) : conf.set_allow_anonymous_login(false); };
+    auto load_client_configuration = std::bind(&pmq::config::load_client_configuration_file,&conf, std::placeholders::_1);;
+
 
 
     conf.add_configuration()("help,h", "Help screen",print_help)
