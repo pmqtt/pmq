@@ -76,12 +76,19 @@ add_library(pmq_obj_lib OBJECT header/exception/acceptor_exception.hpp
         src/login_allow_anonymous_handler.cpp
         src/login_handler.cpp
         header/login_factory.hpp
-        src/login_factory.cpp src/subscriber_container.cpp
-        header/subscriber_container.hpp src/string.cpp
+        src/login_factory.cpp
+        src/subscriber_container.cpp
+        header/subscriber_container.hpp
+        src/string.cpp
         header/subscriber_node.hpp
         src/subscriber_node.cpp
         header/string.hpp
-        header/rest_handler.hpp header/module/config_module.hpp header/module/transformation_module.hpp header/module/transformation_identity.hpp)
+        header/rest_handler.hpp
+        header/route_handler.hpp
+        src/route_handler.cpp
+        header/module/config_module.hpp
+        header/module/transformation_module.hpp
+        header/module/transformation_identity.hpp)
 
 add_executable(PMQ src/main.cpp $<TARGET_OBJECTS:pmq_obj_lib> )
 target_link_libraries(PMQ ${Boost_LIBRARIES} ${YAML_CPP_LIBRARIES} pmqtt cpprestsdk::cpprest )
@@ -94,6 +101,8 @@ add_test_executable(test_login_handler test/test_login_handler.cpp)
 add_test_executable(test_login_factory test/test_login_factory.cpp)
 add_test_executable(test_subscriber_container test/test_subscriber_container.cpp)
 add_test_executable(test_utf8 test/test_utf8.cpp)
+add_test_executable(test_http_rest_server test/test_http_rest_server.cpp)
+
 
 ### install
 install(TARGETS PMQ EXPORT PMQ RUNTIME DESTINATION bin)

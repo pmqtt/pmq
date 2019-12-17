@@ -43,12 +43,16 @@ namespace pmq {
             return *this;
         }
         http_rest_server & operator()(HTTP_METHOD_TYPE method_type, const std::string & route,const HTTP_REST_FUNC & method){
+            auto &item = router_functions[method_type];
+            item[route] = method;
             return *this;
         }
         http_rest_server & operator()(HTTP_METHOD_TYPE method_type, const std::string & route,const HTTP_REST_FUNC_WITH_STORAGE_ACCESS & method){
+            auto &item = router_functions_with_storage[method_type];
+            item[route] = method;
             return *this;
         }
-
+        bool call_api(HTTP_METHOD_TYPE method_type,http_request message);
     private:
         void handle_get(http_request message);
 
@@ -60,13 +64,15 @@ namespace pmq {
 
     private:
 
-
+        std::map<HTTP_METHOD_TYPE,std::map<std::string,HTTP_REST_FUNC>> router_functions;
+        std::map<HTTP_METHOD_TYPE,std::map<std::string,HTTP_REST_FUNC_WITH_STORAGE_ACCESS>> router_functions_with_storage;
         http_listener listener;
         std::shared_ptr<pmq::storage> storage_service;
     };
 
     void on_initialize(const string_t& address,std::shared_ptr<pmq::storage> & storage_service);
     void on_shutdown();
+    std::shared_ptr<http_rest_server> get_rest_server();
 
 }
 

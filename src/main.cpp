@@ -10,12 +10,14 @@
 #include "header/http_rest_server.hpp"
 #include "header/in_memory_storage.hpp"
 #include "header/PMQConfigure.hpp"
+#include "header/route_handler.hpp"
 #include "header/security.hpp"
 #include "header/server.hpp"
 #include "header/startup_configuration.hpp"
 #include "header/storage.hpp"
 #include "header/ssl_client_factory.hpp"
 #include "header/tcp_client_factory.hpp"
+
 
 
 
@@ -33,6 +35,9 @@ void init_rest_api(pmq::server & server,pmq::config & conf,std::shared_ptr<pmq::
     BOOST_LOG_TRIVIAL(info)<< "START REST API: "<< rest_api_address;
     pmq::on_initialize(rest_api_address,storage_service);
 }
+
+
+
 
 int main(int argc,char **argv,char **envp){
 

@@ -89,29 +89,6 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/local/Cellar/cmake/3.11.2/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/local/Cellar/cmake/3.11.2/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
-
-# Special rule for the target package
-package: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool..."
-	/usr/local/Cellar/cmake/3.11.2/bin/cpack --config ./CPackConfig.cmake
-.PHONY : package
-
-# Special rule for the target package
-package/fast: package
-
-.PHONY : package/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -145,6 +122,29 @@ install/local/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
 	/usr/local/Cellar/cmake/3.11.2/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/local/Cellar/cmake/3.11.2/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/local/Cellar/cmake/3.11.2/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
+# Special rule for the target package
+package: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool..."
+	/usr/local/Cellar/cmake/3.11.2/bin/cpack --config ./CPackConfig.cmake
+.PHONY : package
+
+# Special rule for the target package
+package/fast: package
+
+.PHONY : package/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -203,6 +203,32 @@ test_utf8: cmake_check_build_system
 test_utf8/fast:
 	$(MAKE) -f CMakeFiles/test_utf8.dir/build.make CMakeFiles/test_utf8.dir/build
 .PHONY : test_utf8/fast
+
+#=============================================================================
+# Target rules for targets named test_login_handler
+
+# Build rule for target.
+test_login_handler: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_login_handler
+.PHONY : test_login_handler
+
+# fast build rule for target.
+test_login_handler/fast:
+	$(MAKE) -f CMakeFiles/test_login_handler.dir/build.make CMakeFiles/test_login_handler.dir/build
+.PHONY : test_login_handler/fast
+
+#=============================================================================
+# Target rules for targets named test_http_rest_server
+
+# Build rule for target.
+test_http_rest_server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_http_rest_server
+.PHONY : test_http_rest_server
+
+# fast build rule for target.
+test_http_rest_server/fast:
+	$(MAKE) -f CMakeFiles/test_http_rest_server.dir/build.make CMakeFiles/test_http_rest_server.dir/build
+.PHONY : test_http_rest_server/fast
 
 #=============================================================================
 # Target rules for targets named test_subscriber_container
@@ -281,19 +307,6 @@ pmqtt: cmake_check_build_system
 pmqtt/fast:
 	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/build
 .PHONY : pmqtt/fast
-
-#=============================================================================
-# Target rules for targets named test_login_handler
-
-# Build rule for target.
-test_login_handler: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test_login_handler
-.PHONY : test_login_handler
-
-# fast build rule for target.
-test_login_handler/fast:
-	$(MAKE) -f CMakeFiles/test_login_handler.dir/build.make CMakeFiles/test_login_handler.dir/build
-.PHONY : test_login_handler/fast
 
 client/messenger.o: client/messenger.cpp.o
 
@@ -862,6 +875,33 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/PMQ.dir/build.make CMakeFiles/PMQ.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/route_handler.o: src/route_handler.cpp.o
+
+.PHONY : src/route_handler.o
+
+# target to build an object file
+src/route_handler.cpp.o:
+	$(MAKE) -f CMakeFiles/pmq_obj_lib.dir/build.make CMakeFiles/pmq_obj_lib.dir/src/route_handler.cpp.o
+.PHONY : src/route_handler.cpp.o
+
+src/route_handler.i: src/route_handler.cpp.i
+
+.PHONY : src/route_handler.i
+
+# target to preprocess a source file
+src/route_handler.cpp.i:
+	$(MAKE) -f CMakeFiles/pmq_obj_lib.dir/build.make CMakeFiles/pmq_obj_lib.dir/src/route_handler.cpp.i
+.PHONY : src/route_handler.cpp.i
+
+src/route_handler.s: src/route_handler.cpp.s
+
+.PHONY : src/route_handler.s
+
+# target to generate assembly for a file
+src/route_handler.cpp.s:
+	$(MAKE) -f CMakeFiles/pmq_obj_lib.dir/build.make CMakeFiles/pmq_obj_lib.dir/src/route_handler.cpp.s
+.PHONY : src/route_handler.cpp.s
+
 src/server.o: src/server.cpp.o
 
 .PHONY : src/server.o
@@ -1051,6 +1091,33 @@ src/tcp_client_factory.cpp.s:
 	$(MAKE) -f CMakeFiles/pmq_obj_lib.dir/build.make CMakeFiles/pmq_obj_lib.dir/src/tcp_client_factory.cpp.s
 .PHONY : src/tcp_client_factory.cpp.s
 
+test/test_http_rest_server.o: test/test_http_rest_server.cpp.o
+
+.PHONY : test/test_http_rest_server.o
+
+# target to build an object file
+test/test_http_rest_server.cpp.o:
+	$(MAKE) -f CMakeFiles/test_http_rest_server.dir/build.make CMakeFiles/test_http_rest_server.dir/test/test_http_rest_server.cpp.o
+.PHONY : test/test_http_rest_server.cpp.o
+
+test/test_http_rest_server.i: test/test_http_rest_server.cpp.i
+
+.PHONY : test/test_http_rest_server.i
+
+# target to preprocess a source file
+test/test_http_rest_server.cpp.i:
+	$(MAKE) -f CMakeFiles/test_http_rest_server.dir/build.make CMakeFiles/test_http_rest_server.dir/test/test_http_rest_server.cpp.i
+.PHONY : test/test_http_rest_server.cpp.i
+
+test/test_http_rest_server.s: test/test_http_rest_server.cpp.s
+
+.PHONY : test/test_http_rest_server.s
+
+# target to generate assembly for a file
+test/test_http_rest_server.cpp.s:
+	$(MAKE) -f CMakeFiles/test_http_rest_server.dir/build.make CMakeFiles/test_http_rest_server.dir/test/test_http_rest_server.cpp.s
+.PHONY : test/test_http_rest_server.cpp.s
+
 test/test_login_factory.o: test/test_login_factory.cpp.o
 
 .PHONY : test/test_login_factory.o
@@ -1195,8 +1262,13 @@ help:
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... edit_cache"
+	@echo "... rebuild_cache"
+	@echo "... package_source"
 	@echo "... test_server"
 	@echo "... test_utf8"
+	@echo "... install/local"
+	@echo "... test_login_handler"
+	@echo "... test_http_rest_server"
 	@echo "... test_subscriber_container"
 	@echo "... test_login_factory"
 	@echo "... install/strip"
@@ -1204,11 +1276,7 @@ help:
 	@echo "... package"
 	@echo "... PMQ"
 	@echo "... pmq_obj_lib"
-	@echo "... rebuild_cache"
-	@echo "... package_source"
 	@echo "... pmqtt"
-	@echo "... install/local"
-	@echo "... test_login_handler"
 	@echo "... client/messenger.o"
 	@echo "... client/messenger.i"
 	@echo "... client/messenger.s"
@@ -1272,6 +1340,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/route_handler.o"
+	@echo "... src/route_handler.i"
+	@echo "... src/route_handler.s"
 	@echo "... src/server.o"
 	@echo "... src/server.i"
 	@echo "... src/server.s"
@@ -1293,6 +1364,9 @@ help:
 	@echo "... src/tcp_client_factory.o"
 	@echo "... src/tcp_client_factory.i"
 	@echo "... src/tcp_client_factory.s"
+	@echo "... test/test_http_rest_server.o"
+	@echo "... test/test_http_rest_server.i"
+	@echo "... test/test_http_rest_server.s"
 	@echo "... test/test_login_factory.o"
 	@echo "... test/test_login_factory.i"
 	@echo "... test/test_login_factory.s"
