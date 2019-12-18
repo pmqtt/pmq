@@ -26,10 +26,8 @@ namespace pmq{
 
     bool http_rest_server::call_api(HTTP_METHOD_TYPE method_type,http_request message){
         auto paths = http::uri::split_path(http::uri::decode(message.relative_uri().path()));
-        std::string path;
-        if(paths.empty()){
-            path ="/";
-        }else{
+        std::string path = "/";
+        if(!paths.empty()){
             path = paths[0];
         }
         if(router_functions.count(method_type) > 0){
@@ -45,7 +43,7 @@ namespace pmq{
             if(item.count(path)>0){
                 auto func = item[path];
                 func(message,storage_service);
-                return false;
+                return true;
             }
         }
         return false;
@@ -84,7 +82,6 @@ namespace pmq{
             }
             api_server->close().wait();
         }
-
     }
     std::shared_ptr<http_rest_server> get_rest_server(){
         return api_server;
@@ -92,7 +89,6 @@ namespace pmq{
 
     void on_shutdown(){
         runLoop = false;
-
     }
 
 }

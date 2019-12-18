@@ -12,10 +12,9 @@
 
 void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
     try {
-        BOOST_LOG_TRIVIAL(debug) << "Handle connection";
+        BOOST_LOG_TRIVIAL(debug) << "[visit connect]";
         auto login_guard = login_creator->create(config.is_allow_anonymous_login());
         login_guard->handle(storage_service, msg);
-
         std::shared_ptr<pmq::mqtt_connect> client_connection(msg, [](pmq::mqtt_connect *p) {});
         storage_service->add_client(client_connection);
         this->client_id = msg->get_client_id();
@@ -38,7 +37,7 @@ void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
 }
 
 void pmq::client_handler::visit(pmq::mqtt_publish *msg) {
-    BOOST_LOG_TRIVIAL(debug) << "[visit publish] ";
+    BOOST_LOG_TRIVIAL(debug) << "[visit publish]";
     msg->set_client_id(client_id);
     qos_factory->create(msg->get_qos())->handle(storage_service,msg);
     if(msg->is_retained()){
@@ -90,9 +89,9 @@ void pmq::client_handler::handle_config_subscription(const std::string & topic){
 }
 
 void pmq::client_handler::visit(pmq::mqtt_subscribe *msg) {
+    BOOST_LOG_TRIVIAL(debug)<<"[visit subscription] QOS:"<<msg->get_qos();
     const std::string topic = msg->get_topic();
     auto socket = msg->get_socket();
-    BOOST_LOG_TRIVIAL(debug)<<"SUBSCRIBED WITH QOS:"<<msg->get_qos();
     std::shared_ptr<pmq::subscriber> subscriber = std::make_shared<pmq::subscriber>(socket,topic,msg->get_qos());
     storage_service->add_subscriber(topic,subscriber);
     pmq::mqtt_suback suback(socket,msg->get_msg_msb(),msg->get_msg_lsb(),2);
@@ -113,7 +112,7 @@ void pmq::client_handler::visit(pmq::mqtt_subscribe *msg) {
 }
 
 void pmq::client_handler::visit(pmq::mqtt_ping_request *msg) {
-    BOOST_LOG_TRIVIAL(info)<<"SEND PING RESPONE";
+    BOOST_LOG_TRIVIAL(debug)<<"[visit ping request]";
     auto client_socket = msg->get_socket();
     pmq::mqtt_ping_response response(client_socket);
     response.send();
@@ -126,16 +125,16 @@ void pmq::client_handler::visit(pmq::mqtt_ping_response * msg) {
 }
 
 void pmq::client_handler::visit(pmq::mqtt_disconnect *msg) {
-    BOOST_LOG_TRIVIAL(info)<<"RECV: disconnect";
+    BOOST_LOG_TRIVIAL(debug)<<"[visit disconnect]";
     msg->get_socket()->close();
 }
 
 void pmq::client_handler::visit(pmq::mqtt_pubcomp *msg) {
-    BOOST_LOG_TRIVIAL(info)<<"RECV: pubcomp";
+    BOOST_LOG_TRIVIAL(debug)<<"[visit pubcomp]";
 }
 
 void pmq::client_handler::visit(pmq::mqtt_pubrec *msg) {
-    BOOST_LOG_TRIVIAL(info)<<"RECEIVED PUBREC";
+    BOOST_LOG_TRIVIAL(debug)<<"[visit pubrec]";
     auto sock = msg->get_socket();
     pmq::mqtt_pubrel pubrel(sock);
     pmq::u_int8 msb = msg->get_msb();
@@ -148,7 +147,7 @@ void pmq::client_handler::visit(pmq::mqtt_pubrec *msg) {
 }
 
 void pmq::client_handler::visit(pmq::mqtt_pubrel *msg) {
-    BOOST_LOG_TRIVIAL(info)<<"RECEIVED PUBREL";
+    BOOST_LOG_TRIVIAL(debug)<<"[visit pubrel]";
     pmq::u_int16 message_id = msg->get_message_id();
     try {
         std::string mid = storage_service->restore_qos_two_publish_msg(this->client_id);
@@ -156,7 +155,7 @@ void pmq::client_handler::visit(pmq::mqtt_pubrel *msg) {
         pmq::mqtt_pubcomp pubcomp(client_socket);
         pubcomp.send(mid);
     }catch(std::exception & e){
-        BOOST_LOG_TRIVIAL(error)<<e.what();
+        BOOST_LOG_TRIVIAL(error)<<"[client handling error] message: "<<e.what();
     }
 
 }
@@ -178,7 +177,6 @@ void pmq::client_handler::handleDisconnect() {
     auto subscribers = storage_service->get_subscriber(msg.get_topic());
     for(const auto & subscriber : subscribers){
         std::string will_msg = msg.get_payload();
-        BOOST_LOG_TRIVIAL(debug)<< "WILL PAYLOAD:"<< will_msg;
         *subscriber<<will_msg;
     }
     storage_service->remove_client(client_id);
