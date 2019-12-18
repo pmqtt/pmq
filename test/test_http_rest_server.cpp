@@ -7,7 +7,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "../header/http_rest_server.hpp"
+#include "lib/rest/http_rest_server.hpp"
 
 http_request create_request(const std::string str){
     http_request request;

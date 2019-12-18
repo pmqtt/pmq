@@ -6,12 +6,11 @@
 #define BOOST_TEST_MODULE test_login_handler
 
 #include <boost/test/unit_test.hpp>
-#include <header/exception/login_exception.hpp>
-
-#include "header/exception/bad_connection_exception.hpp"
-#include "../header/login_handler.hpp"
-#include "../lib/mqtt_connect.hpp"
-#include "../lib/socket.hpp"
+#include <lib/exception/login_exception.hpp>
+#include <lib/exception/bad_connection_exception.hpp>
+#include <lib/server/login/login_handler.hpp>
+#include <lib/mqtt/mqtt_connect.hpp>
+#include <lib/network/socket.hpp>
 
 class fake_storage : public pmq::storage{
 public:

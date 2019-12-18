@@ -1,22 +1,22 @@
 #include <boost/log/sources/logger.hpp>
 #include <boost/log/trivial.hpp>
 #include <iostream>
-#include <lib/qos_handler_factory.hpp>
+#include <lib/qos/qos_handler_factory.hpp>
 #include <thread>
 
 
-#include "header/client_creator.hpp"
-#include "header/client_handler.hpp"
-#include "header/http_rest_server.hpp"
-#include "header/in_memory_storage.hpp"
-#include "header/PMQConfigure.hpp"
-#include "header/route_handler.hpp"
-#include "header/security.hpp"
-#include "header/server.hpp"
-#include "header/startup_configuration.hpp"
-#include "header/storage.hpp"
-#include "header/ssl_client_factory.hpp"
-#include "header/tcp_client_factory.hpp"
+#include "lib/server/client_creator.hpp"
+#include "lib/server/client_handler.hpp"
+#include "lib/rest/http_rest_server.hpp"
+#include "lib/storage/in_memory_storage.hpp"
+#include "lib/server/PMQConfigure.hpp"
+#include "lib/rest/route_handler.hpp"
+#include "lib/server/security.hpp"
+#include "lib/server/server.hpp"
+#include "lib/server/startup_configuration.hpp"
+#include "lib/storage/storage.hpp"
+#include "lib/network/ssl_client_factory.hpp"
+#include "lib/network/tcp_client_factory.hpp"
 
 
 

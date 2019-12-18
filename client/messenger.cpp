@@ -5,7 +5,7 @@
 
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
-#include <lib/socket.hpp>
+#include <lib/network/socket.hpp>
 
 #include "messenger.hpp"
 

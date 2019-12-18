@@ -6,10 +6,10 @@
 
 #include <boost/test/unit_test.hpp>
 #include <iostream>
-#include <lib/socket.hpp>
-#include <lib/subscriber.hpp>
-#include "../header/string.hpp"
-#include "../header/subscriber_container.hpp"
+#include <lib/network/socket.hpp>
+#include <lib/container/subscriber.hpp>
+#include "lib/detail/string.hpp"
+#include "lib/container/subscriber_container.hpp"
 
 BOOST_AUTO_TEST_CASE( split_topic_test)
 {
@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE( subscriber_node_remove_subscriber )
     node.add_subscriber(sub1,false);
     node.add_subscriber(sub2,true);
     node.add_subscriber(sub3,false);
-    node.remove_subsriber(sub2);
+    node.remove_subscriber(sub2);
     std::vector<std::shared_ptr<pmq::subscriber>> res = node.get_subscribers();
     BOOST_CHECK(res[0].get() == sub1.get());
     BOOST_CHECK(res[1].get() == sub3.get());

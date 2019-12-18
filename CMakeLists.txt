@@ -31,64 +31,64 @@ include_directories(${PROJECT_BINARY_DIR} ${Boost_INCLUDE_DIRS} ${OPENSSL_INCLUD
 
 add_library(pmqttclient STATIC client/messenger.cpp client/messenger.hpp)
 
-add_library(pmqtt STATIC lib/control_packet_type.hpp
-        lib/mqtt_message.hpp lib/mqtt_types.hpp lib/mqtt_message.cpp
-        lib/mqtt_package.cpp lib/mqtt_package.hpp lib/mqtt_connect.cpp lib/mqtt_connect.hpp
-        lib/mqtt_publish.cpp lib/mqtt_publish.hpp lib/mqtt_static_package.hpp
-        lib/mqtt_subscribe.cpp lib/mqtt_subscribe.hpp lib/pmqtt.hpp lib/mqtt_exception.hpp
-        lib/mqtt_connection_info.hpp lib/mqtt_bad_header_exception.hpp lib/mqtt_visitor.hpp
-        lib/subscriber.cpp lib/subscriber.hpp
-        lib/tls_socket.hpp lib/socket_functions.hpp lib/qos_handler.hpp lib/qos_zero_handler.cpp
-        lib/qos_zero_handler.hpp lib/qos_one_handler.cpp lib/qos_one_handler.hpp lib/qos_two_handler.cpp
-        lib/qos_two_handler.hpp lib/qos_handler_factory.cpp lib/qos_handler_factory.hpp lib/message.hpp
-        lib/message.cpp lib/mqtt_types.cpp lib/mqtt_message_processor.hpp lib/mqtt_message_processor.cpp lib/utf8.hpp header/exception/login_exception.hpp)
+add_library(pmqtt STATIC lib/mqtt/control_packet_type.hpp
+        lib/mqtt/mqtt_message.hpp lib/mqtt/mqtt_types.hpp lib/mqtt/mqtt_message.cpp
+        lib/mqtt/mqtt_package.cpp lib/mqtt/mqtt_package.hpp lib/mqtt/mqtt_connect.cpp lib/mqtt/mqtt_connect.hpp
+        lib/mqtt/mqtt_publish.cpp lib/mqtt/mqtt_publish.hpp lib/mqtt/mqtt_static_package.hpp
+        lib/mqtt/mqtt_subscribe.cpp lib/mqtt/mqtt_subscribe.hpp lib/mqtt/pmqtt.hpp lib/exception/mqtt_exception.hpp
+        lib/mqtt/mqtt_connection_info.hpp lib/exception/mqtt_bad_header_exception.hpp lib/mqtt/mqtt_visitor.hpp
+        lib/container/subscriber.cpp lib/container/subscriber.hpp
+        lib/network/tls_socket.hpp lib/network/socket_functions.hpp lib/qos/qos_handler.hpp lib/qos/qos_zero_handler.cpp
+        lib/qos/qos_zero_handler.hpp lib/qos/qos_one_handler.cpp lib/qos/qos_one_handler.hpp lib/qos/qos_two_handler.cpp
+        lib/qos/qos_two_handler.hpp lib/qos/qos_handler_factory.cpp lib/qos/qos_handler_factory.hpp lib/mqtt/message.hpp
+        lib/mqtt/message.cpp lib/mqtt/mqtt_types.cpp lib/mqtt/mqtt_message_processor.hpp lib/mqtt/mqtt_message_processor.cpp lib/detail/utf8.hpp lib/exception/login_exception.hpp)
 
 
 
-add_library(pmq_obj_lib OBJECT header/exception/acceptor_exception.hpp
-        header/exception/bad_connection_exception.hpp
-        header/exception/config_exception.hpp
-        src/server.cpp
-        header/server.hpp
-        header/null_deleter.hpp
-        header/PMQConfigure.hpp
-        header/security.hpp
-        header/startup_configuration.hpp
-        lib/socket.hpp
-        header/exception/socket_exception.hpp
-        header/http_rest_server.hpp
-        src/http_rest_server.cpp
-        header/client_factory.hpp
-        header/tcp_client_factory.hpp
-        src/tcp_client_factory.cpp
-        header/ssl_client_factory.hpp
-        src/ssl_client_factory.cpp
-        header/client_handler.hpp
-        src/client_handler.cpp
-        header/storage.hpp
-        header/in_memory_storage.hpp
-        src/in_memory_storage.cpp
-        header/exception/bad_connection_exception.hpp
-        header/rest_api.hpp src/startup_configuration.cpp
-        header/client_creator.hpp
-        header/login_handler.hpp
-        header/login_allow_anonymous_handler.hpp
-        src/login_allow_anonymous_handler.cpp
-        src/login_handler.cpp
-        header/login_factory.hpp
-        src/login_factory.cpp
-        src/subscriber_container.cpp
-        header/subscriber_container.hpp
-        src/string.cpp
-        header/subscriber_node.hpp
-        src/subscriber_node.cpp
-        header/string.hpp
-        header/rest_handler.hpp
-        header/route_handler.hpp
-        src/route_handler.cpp
-        header/module/config_module.hpp
-        header/module/transformation_module.hpp
-        header/module/transformation_identity.hpp)
+add_library(pmq_obj_lib OBJECT lib/exception/acceptor_exception.hpp
+        lib/exception/bad_connection_exception.hpp
+        lib/exception/config_exception.hpp
+        lib/server/server.cpp
+        lib/server/server.hpp
+        lib/server/null_deleter.hpp
+        lib/server/PMQConfigure.hpp
+        lib/server/security.hpp
+        lib/server/startup_configuration.hpp
+        lib/network/socket.hpp
+        lib/exception/socket_exception.hpp
+        lib/rest/http_rest_server.hpp
+        lib/rest/http_rest_server.cpp
+        lib/server/client_factory.hpp
+        lib/network/tcp_client_factory.hpp
+        lib/network/tcp_client_factory.cpp
+        lib/network/ssl_client_factory.hpp
+        lib/network/ssl_client_factory.cpp
+        lib/server/client_handler.hpp
+        lib/server/client_handler.cpp
+        lib/storage/storage.hpp
+        lib/storage/in_memory_storage.hpp
+        lib/storage/in_memory_storage.cpp
+        lib/exception/bad_connection_exception.hpp
+        lib/rest/rest_api.hpp lib/server/startup_configuration.cpp
+        lib/server/client_creator.hpp
+        lib/server/login/login_handler.hpp
+        lib/server/login/login_allow_anonymous_handler.hpp
+        lib/server/login/login_allow_anonymous_handler.cpp
+        lib/server/login/login_handler.cpp
+        lib/server/login/login_factory.hpp
+        lib/server/login/login_factory.cpp
+        lib/container/subscriber_container.cpp
+        lib/container/subscriber_container.hpp
+        lib/detail/string.cpp
+        lib/container/subscriber_node.hpp
+        lib/container/subscriber_node.cpp
+        lib/detail/string.hpp
+        lib/rest/rest_handler.hpp
+        lib/rest/route_handler.hpp
+        lib/rest/route_handler.cpp
+        lib/module/config_module.hpp
+        lib/module/transformation_module.hpp
+        lib/module/transformation_identity.hpp)
 
 add_executable(PMQ src/main.cpp $<TARGET_OBJECTS:pmq_obj_lib> )
 target_link_libraries(PMQ ${Boost_LIBRARIES} ${YAML_CPP_LIBRARIES} pmqtt cpprestsdk::cpprest )

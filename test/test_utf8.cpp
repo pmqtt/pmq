@@ -7,7 +7,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "../lib/utf8.hpp"
+#include "lib/detail/utf8.hpp"
 
 BOOST_AUTO_TEST_CASE( UTF8_VALIDATION_TEST )
 {

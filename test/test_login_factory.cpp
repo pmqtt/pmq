@@ -7,9 +7,9 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "../header/login_factory.hpp"
-#include "../header/login_handler.hpp"
-#include "../header/login_allow_anonymous_handler.hpp"
+#include "lib/server/login/login_factory.hpp"
+#include "lib/server/login/login_handler.hpp"
+#include "lib/server/login/login_allow_anonymous_handler.hpp"
 
 template<typename Base, typename T>
 inline bool instanceof(const T *ptr) {

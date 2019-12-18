@@ -6,7 +6,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "../header/server.hpp"
+#include "lib/server/server.hpp"
 
 BOOST_AUTO_TEST_CASE( constructors_test )
 {
