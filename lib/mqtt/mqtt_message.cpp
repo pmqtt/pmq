@@ -2,15 +2,15 @@
 // Created by PMQTT on 2019-03-28.
 //
 
-#include "mqtt_package.hpp"
+#include <lib/exception/mqtt_bad_header_exception.hpp>
+#include <lib/exception/mqtt_exception.hpp>
+
 #include "control_packet_type.hpp"
-#include "lib/exception/mqtt_bad_header_exception.hpp"
+#include "mqtt_package.hpp"
 #include "mqtt_connect.hpp"
 #include "mqtt_connection_info.hpp"
-#include "lib/exception/mqtt_exception.hpp"
 #include "mqtt_message.hpp"
-#include "mqtt_message_processor.hpp"
-
+#include "lib/detail/mqtt_message_processor.hpp"
 #include "mqtt_publish.hpp"
 #include "mqtt_subscribe.hpp"
 #include "mqtt_types.hpp"
@@ -37,7 +37,7 @@ std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package( std::share
 
                 return connect_message;
             }
-            throw pmq::exception::mqtt_bad_header_exception("Unexpected connect header received, client is already connected" );
+            throw pmq::exception::mqtt_bad_header_exception("Unexpected connect header received, client_api is already connected" );
         }
         break;
         case pmq::CONTROL_PACKET_TYPE::CONNACK: {
@@ -111,7 +111,7 @@ std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package( std::share
         break;
         case pmq::CONTROL_PACKET_TYPE::DISCONNECT: {
             check_valid_connection(connection_info);
-            BOOST_LOG_TRIVIAL(debug)<<"Disconnect client : " << connection_info->client_id;
+            BOOST_LOG_TRIVIAL(debug)<<"Disconnect client_api : " << connection_info->client_id;
             this->client_socket->close();
             return std::make_shared<pmq::mqtt_disconnect>(this->client_socket);
         }
@@ -128,6 +128,6 @@ std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package( std::share
 
 void pmq::mqtt_message::check_valid_connection(std::shared_ptr<pmq::mqtt_connection_info> & connection_info){
     if(!connection_info->is_valid()){
-        throw pmq::exception::mqtt_bad_header_exception("Unexpected header received, client is not connected" );
+        throw pmq::exception::mqtt_bad_header_exception("Unexpected header received, client_api is not connected" );
     }
 }

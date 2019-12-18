@@ -12,9 +12,8 @@
 #include <thread>
 #include <vector>
 
-
+#include <lib/exception/socket_exception.hpp>
 #include "socket_functions.hpp"
-#include "lib/exception/socket_exception.hpp"
 
 using boost::asio::ip::tcp;
 typedef boost::asio::ssl::stream<boost::asio::ip::tcp::socket> ssl_socket;

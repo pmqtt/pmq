@@ -11,7 +11,7 @@ namespace pmq::client{
     /*HOW TO USE
      *
      * int main(int argc,char **argv){
-     *  pmq::client::messenger messenger;
+     *  pmq::client_api::messenger messenger;
      *  messenger
      *      .set_broker_address("127.0.0.1",1883)
      *      .set_qos(1)

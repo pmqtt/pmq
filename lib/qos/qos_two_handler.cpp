@@ -2,8 +2,8 @@
 // Created by pmqtt on 2019-07-07.
 //
 
+#include <lib/mqtt/mqtt_static_package.hpp>
 #include "qos_two_handler.hpp"
-#include "lib/mqtt/mqtt_static_package.hpp"
 
 void pmq::qos_two_handler::handle(std::shared_ptr<pmq::storage> & storage,pmq::mqtt_publish *msg) {
     storage->save_qos_two_message_id(msg->get_message_id(),msg->get_client_id());

@@ -5,8 +5,8 @@
 #ifndef PMQ_QOS_HANDLER_FACTORY_HPP
 #define PMQ_QOS_HANDLER_FACTORY_HPP
 
+#include <lib/mqtt/mqtt_types.hpp>
 #include "qos_handler.hpp"
-#include "lib/mqtt/mqtt_types.hpp"
 namespace pmq {
     class qos_handler_factory {
     public:

@@ -41,7 +41,7 @@ pmq::config parse_program_options(int argc,char **argv){
             ("tls-dh-file",boost::program_options::value<std::string>(),"Diffie-Hellman file",set_dh_file)
             ("tls-certificate-passphrase",boost::program_options::value<std::string>(),"Passphrase to unlock certificate",set_tls_passphrase)
             ("anonymous-login",boost::program_options::value<std::string>()->default_value("true"),"Allow or permit anoymous connection. Default is true",set_anonymous_login)
-            ("client-configuration-file",boost::program_options::value<std::string>(),"Path to client configuration",load_client_configuration)
+            ("client_api-configuration-file",boost::program_options::value<std::string>(),"Path to client_api configuration",load_client_configuration)
 
             ;
 

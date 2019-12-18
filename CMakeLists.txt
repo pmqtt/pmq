@@ -29,7 +29,7 @@ add_definitions(-DBOOST_LOG_DYN_LINK)
 
 include_directories(${PROJECT_BINARY_DIR} ${Boost_INCLUDE_DIRS} ${OPENSSL_INCLUDE_DIR}  )
 
-add_library(pmqttclient STATIC client/messenger.cpp client/messenger.hpp)
+add_library(pmqttclient STATIC lib/client_api/messenger.cpp lib/client_api/messenger.hpp)
 
 add_library(pmqtt STATIC lib/mqtt/control_packet_type.hpp
         lib/mqtt/mqtt_message.hpp lib/mqtt/mqtt_types.hpp lib/mqtt/mqtt_message.cpp
@@ -41,7 +41,7 @@ add_library(pmqtt STATIC lib/mqtt/control_packet_type.hpp
         lib/network/tls_socket.hpp lib/network/socket_functions.hpp lib/qos/qos_handler.hpp lib/qos/qos_zero_handler.cpp
         lib/qos/qos_zero_handler.hpp lib/qos/qos_one_handler.cpp lib/qos/qos_one_handler.hpp lib/qos/qos_two_handler.cpp
         lib/qos/qos_two_handler.hpp lib/qos/qos_handler_factory.cpp lib/qos/qos_handler_factory.hpp lib/mqtt/message.hpp
-        lib/mqtt/message.cpp lib/mqtt/mqtt_types.cpp lib/mqtt/mqtt_message_processor.hpp lib/mqtt/mqtt_message_processor.cpp lib/detail/utf8.hpp lib/exception/login_exception.hpp)
+        lib/mqtt/message.cpp lib/mqtt/mqtt_types.cpp lib/detail/mqtt_message_processor.hpp lib/detail/mqtt_message_processor.cpp lib/detail/utf8.hpp lib/exception/login_exception.hpp)
 
 
 

@@ -11,7 +11,7 @@
 #include <mutex>
 #include <string>
 
-#include "lib/exception/socket_exception.hpp"
+#include <lib/exception/socket_exception.hpp>
 
 namespace pmq{
     namespace detail{

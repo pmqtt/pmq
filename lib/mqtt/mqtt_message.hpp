@@ -5,8 +5,8 @@
 #ifndef PMQ_MQTT_MESSAGE_HPP
 #define PMQ_MQTT_MESSAGE_HPP
 
+#include <lib/network/socket.hpp>
 #include "mqtt_connection_info.hpp"
-#include "lib/network/socket.hpp"
 
 namespace pmq {
     class mqtt_package;

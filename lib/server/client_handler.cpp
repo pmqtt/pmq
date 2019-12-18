@@ -155,7 +155,7 @@ void pmq::client_handler::visit(pmq::mqtt_pubrel *msg) {
         pmq::mqtt_pubcomp pubcomp(client_socket);
         pubcomp.send(mid);
     }catch(std::exception & e){
-        BOOST_LOG_TRIVIAL(error)<<"[client handling error] message: "<<e.what();
+        BOOST_LOG_TRIVIAL(error)<<"[client_api handling error] message: "<<e.what();
     }
 
 }

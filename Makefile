@@ -308,32 +308,32 @@ pmqtt/fast:
 	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/build
 .PHONY : pmqtt/fast
 
-client/messenger.o: client/messenger.cpp.o
+lib/client_api/messenger.o: lib/client_api/messenger.cpp.o
 
-.PHONY : client/messenger.o
+.PHONY : lib/client_api/messenger.o
 
 # target to build an object file
-client/messenger.cpp.o:
-	$(MAKE) -f CMakeFiles/pmqttclient.dir/build.make CMakeFiles/pmqttclient.dir/client/messenger.cpp.o
-.PHONY : client/messenger.cpp.o
+lib/client_api/messenger.cpp.o:
+	$(MAKE) -f CMakeFiles/pmqttclient.dir/build.make CMakeFiles/pmqttclient.dir/lib/client_api/messenger.cpp.o
+.PHONY : lib/client_api/messenger.cpp.o
 
-client/messenger.i: client/messenger.cpp.i
+lib/client_api/messenger.i: lib/client_api/messenger.cpp.i
 
-.PHONY : client/messenger.i
+.PHONY : lib/client_api/messenger.i
 
 # target to preprocess a source file
-client/messenger.cpp.i:
-	$(MAKE) -f CMakeFiles/pmqttclient.dir/build.make CMakeFiles/pmqttclient.dir/client/messenger.cpp.i
-.PHONY : client/messenger.cpp.i
+lib/client_api/messenger.cpp.i:
+	$(MAKE) -f CMakeFiles/pmqttclient.dir/build.make CMakeFiles/pmqttclient.dir/lib/client_api/messenger.cpp.i
+.PHONY : lib/client_api/messenger.cpp.i
 
-client/messenger.s: client/messenger.cpp.s
+lib/client_api/messenger.s: lib/client_api/messenger.cpp.s
 
-.PHONY : client/messenger.s
+.PHONY : lib/client_api/messenger.s
 
 # target to generate assembly for a file
-client/messenger.cpp.s:
-	$(MAKE) -f CMakeFiles/pmqttclient.dir/build.make CMakeFiles/pmqttclient.dir/client/messenger.cpp.s
-.PHONY : client/messenger.cpp.s
+lib/client_api/messenger.cpp.s:
+	$(MAKE) -f CMakeFiles/pmqttclient.dir/build.make CMakeFiles/pmqttclient.dir/lib/client_api/messenger.cpp.s
+.PHONY : lib/client_api/messenger.cpp.s
 
 lib/container/subscriber.o: lib/container/subscriber.cpp.o
 
@@ -415,6 +415,33 @@ lib/container/subscriber_node.s: lib/container/subscriber_node.cpp.s
 lib/container/subscriber_node.cpp.s:
 	$(MAKE) -f CMakeFiles/pmq_obj_lib.dir/build.make CMakeFiles/pmq_obj_lib.dir/lib/container/subscriber_node.cpp.s
 .PHONY : lib/container/subscriber_node.cpp.s
+
+lib/detail/mqtt_message_processor.o: lib/detail/mqtt_message_processor.cpp.o
+
+.PHONY : lib/detail/mqtt_message_processor.o
+
+# target to build an object file
+lib/detail/mqtt_message_processor.cpp.o:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/detail/mqtt_message_processor.cpp.o
+.PHONY : lib/detail/mqtt_message_processor.cpp.o
+
+lib/detail/mqtt_message_processor.i: lib/detail/mqtt_message_processor.cpp.i
+
+.PHONY : lib/detail/mqtt_message_processor.i
+
+# target to preprocess a source file
+lib/detail/mqtt_message_processor.cpp.i:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/detail/mqtt_message_processor.cpp.i
+.PHONY : lib/detail/mqtt_message_processor.cpp.i
+
+lib/detail/mqtt_message_processor.s: lib/detail/mqtt_message_processor.cpp.s
+
+.PHONY : lib/detail/mqtt_message_processor.s
+
+# target to generate assembly for a file
+lib/detail/mqtt_message_processor.cpp.s:
+	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/detail/mqtt_message_processor.cpp.s
+.PHONY : lib/detail/mqtt_message_processor.cpp.s
 
 lib/detail/string.o: lib/detail/string.cpp.o
 
@@ -523,33 +550,6 @@ lib/mqtt/mqtt_message.s: lib/mqtt/mqtt_message.cpp.s
 lib/mqtt/mqtt_message.cpp.s:
 	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/mqtt/mqtt_message.cpp.s
 .PHONY : lib/mqtt/mqtt_message.cpp.s
-
-lib/mqtt/mqtt_message_processor.o: lib/mqtt/mqtt_message_processor.cpp.o
-
-.PHONY : lib/mqtt/mqtt_message_processor.o
-
-# target to build an object file
-lib/mqtt/mqtt_message_processor.cpp.o:
-	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/mqtt/mqtt_message_processor.cpp.o
-.PHONY : lib/mqtt/mqtt_message_processor.cpp.o
-
-lib/mqtt/mqtt_message_processor.i: lib/mqtt/mqtt_message_processor.cpp.i
-
-.PHONY : lib/mqtt/mqtt_message_processor.i
-
-# target to preprocess a source file
-lib/mqtt/mqtt_message_processor.cpp.i:
-	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/mqtt/mqtt_message_processor.cpp.i
-.PHONY : lib/mqtt/mqtt_message_processor.cpp.i
-
-lib/mqtt/mqtt_message_processor.s: lib/mqtt/mqtt_message_processor.cpp.s
-
-.PHONY : lib/mqtt/mqtt_message_processor.s
-
-# target to generate assembly for a file
-lib/mqtt/mqtt_message_processor.cpp.s:
-	$(MAKE) -f CMakeFiles/pmqtt.dir/build.make CMakeFiles/pmqtt.dir/lib/mqtt/mqtt_message_processor.cpp.s
-.PHONY : lib/mqtt/mqtt_message_processor.cpp.s
 
 lib/mqtt/mqtt_package.o: lib/mqtt/mqtt_package.cpp.o
 
@@ -1277,9 +1277,9 @@ help:
 	@echo "... PMQ"
 	@echo "... pmq_obj_lib"
 	@echo "... pmqtt"
-	@echo "... client/messenger.o"
-	@echo "... client/messenger.i"
-	@echo "... client/messenger.s"
+	@echo "... lib/client_api/messenger.o"
+	@echo "... lib/client_api/messenger.i"
+	@echo "... lib/client_api/messenger.s"
 	@echo "... lib/container/subscriber.o"
 	@echo "... lib/container/subscriber.i"
 	@echo "... lib/container/subscriber.s"
@@ -1289,6 +1289,9 @@ help:
 	@echo "... lib/container/subscriber_node.o"
 	@echo "... lib/container/subscriber_node.i"
 	@echo "... lib/container/subscriber_node.s"
+	@echo "... lib/detail/mqtt_message_processor.o"
+	@echo "... lib/detail/mqtt_message_processor.i"
+	@echo "... lib/detail/mqtt_message_processor.s"
 	@echo "... lib/detail/string.o"
 	@echo "... lib/detail/string.i"
 	@echo "... lib/detail/string.s"
@@ -1301,9 +1304,6 @@ help:
 	@echo "... lib/mqtt/mqtt_message.o"
 	@echo "... lib/mqtt/mqtt_message.i"
 	@echo "... lib/mqtt/mqtt_message.s"
-	@echo "... lib/mqtt/mqtt_message_processor.o"
-	@echo "... lib/mqtt/mqtt_message_processor.i"
-	@echo "... lib/mqtt/mqtt_message_processor.s"
 	@echo "... lib/mqtt/mqtt_package.o"
 	@echo "... lib/mqtt/mqtt_package.i"
 	@echo "... lib/mqtt/mqtt_package.s"

@@ -4,7 +4,7 @@
 
 #include <string>
 #include <lib/mqtt/control_packet_type.hpp>
-#include <lib/mqtt/mqtt_message_processor.hpp>
+#include <lib/detail/mqtt_message_processor.hpp>
 #include <lib/mqtt/mqtt_types.hpp>
 #include <lib/network/socket.hpp>
 #include "subscriber.hpp"

@@ -14,10 +14,10 @@ namespace pmq{
         virtual std::string transform(const std::string & transform) = 0;
     };
 
-    class tranformation_module{
+    class transformation_module{
     public:
-        tranformation_module() = default;
-        ~tranformation_module() = default;
+        transformation_module() = default;
+        ~transformation_module() = default;
 
         std::string transform(const std::shared_ptr<transformation> & process,const std::string &msg){
             return process->transform(msg);

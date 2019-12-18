@@ -8,9 +8,10 @@
 #include <cstddef>
 #include <string>
 
+#include <lib/network/socket.hpp>
 #include "mqtt_types.hpp"
 #include "mqtt_visitor.hpp"
-#include "lib/network/socket.hpp"
+
 
 namespace pmq {
     class mqtt_package {

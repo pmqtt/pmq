@@ -17,8 +17,8 @@ namespace pmq{
 
     class mqtt_visitor{
     public:
-        mqtt_visitor(){}
-        virtual ~mqtt_visitor(){}
+        mqtt_visitor()= default;
+        virtual ~mqtt_visitor()= default;
 
         virtual void visit(mqtt_connect * msg) = 0;
         virtual void visit(mqtt_publish * msg) = 0;

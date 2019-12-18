@@ -1,11 +1,10 @@
 //
 // Created by PMQTT on 2019-03-31.
 //
+
+#include <lib/network/socket.hpp>
 #include "mqtt_package.hpp"
 #include "mqtt_subscribe.hpp"
-#include "lib/network/socket.hpp"
-
-
 
 pmq::mqtt_subscribe::mqtt_subscribe(std::shared_ptr<pmq::socket> & client_socket, std::size_t payload_length)
         :pmq::mqtt_package(client_socket),payload_length(payload_length){

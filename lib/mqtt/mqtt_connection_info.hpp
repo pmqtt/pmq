@@ -4,7 +4,7 @@
 
 #ifndef PMQ_MQTT_CONNECTION_INFO_HPP
 #define PMQ_MQTT_CONNECTION_INFO_HPP
-#include "lib/network/socket.hpp"
+#include <lib/network/socket.hpp>
 namespace pmq {
     enum ConnectionState{
         NOT_CONNECTED = 0,

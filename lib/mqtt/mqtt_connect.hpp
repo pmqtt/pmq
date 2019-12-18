@@ -15,73 +15,73 @@ namespace pmq {
         mqtt_connect(std::shared_ptr<pmq::socket> & client_socket, std::size_t payload_length);
         ~mqtt_connect() override = default;
 
-        std::size_t get_payload_length() const override {
+        [[nodiscard]] std::size_t get_payload_length() const override {
             return this->payload_length;
         }
         void parse(const std::string & payload) override ;
 
-        const std::string & get_client_id()const{
+        [[nodiscard]] const std::string & get_client_id()const{
             return this->client_id;
         }
 
         void accept(mqtt_visitor & v) override ;
 
-        unsigned int get_version() const {
+        [[nodiscard]] unsigned int get_version() const {
             return version;
         }
 
-        unsigned int get_keep_alive() const {
+        [[nodiscard]] unsigned int get_keep_alive() const {
             return keep_alive;
         }
         void set_user_name_flag(){
             user_name_flag = true;
         }
 
-        bool is_user_name_flag() const {
+        [[nodiscard]] bool is_user_name_flag() const {
             return user_name_flag;
         }
 
-        bool is_password_flag() const {
+        [[nodiscard]] bool is_password_flag() const {
             return password_flag;
         }
 
-        bool is_will_retain() const {
+        [[nodiscard]] bool is_will_retain() const {
             return will_retain;
         }
 
-        size_t get_will_qos() const {
+        [[nodiscard]] size_t get_will_qos() const {
             return will_qos;
         }
 
-        bool is_will_flag() const {
+        [[nodiscard]] bool is_will_flag() const {
             return will_flag;
         }
 
-        bool is_clean_start() const {
+        [[nodiscard]] bool is_clean_start() const {
             return clean_start;
         }
 
-        bool is_reserved() const {
+        [[nodiscard]] bool is_reserved() const {
             return reserved;
         }
 
-        const std::string &get_will_topic() const {
+        [[nodiscard]] const std::string &get_will_topic() const {
             return will_topic;
         }
 
-        const std::string &get_will_payload() const {
+        [[nodiscard]] const std::string &get_will_payload() const {
             return will_payload;
         }
 
-        const std::string &get_user_name() const {
+        [[nodiscard]] const std::string &get_user_name() const {
             return user_name;
         }
 
-        const std::string &get_password() const {
+        [[nodiscard]] const std::string &get_password() const {
             return password;
         }
 
-        const std::shared_ptr<mqtt_api> &get_api() const {
+        [[nodiscard]]const std::shared_ptr<mqtt_api> &get_api() const {
             return api;
         }
 

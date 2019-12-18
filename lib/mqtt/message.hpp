@@ -4,9 +4,8 @@
 
 #ifndef PMQ_MESSAGE_HPP
 #define PMQ_MESSAGE_HPP
-
+#include <lib/mqtt/mqtt_types.hpp>
 #include <string>
-#include "lib/mqtt/mqtt_types.hpp"
 
 namespace pmq{
     class message{

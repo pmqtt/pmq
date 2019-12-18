@@ -1,17 +1,16 @@
 //
 // Created by PMQTT on 2019-04-03.
 //
-
 #ifndef PMQ_PMQTT_HPP
 #define PMQ_PMQTT_HPP
+#include <lib/exception/mqtt_version_exception.hpp>
 #include <string>
-#include "lib/mqtt/mqtt_types.hpp"
-#include "lib/exception/mqtt_version_exception.hpp"
+#include "mqtt_types.hpp"
+
 namespace pmq {
 
     struct mqtt_api {
         virtual std::string get_mqtt_name() const = 0;
-
         virtual pmq::u_int8 get_version() const = 0;
     };
 

@@ -72,7 +72,7 @@ void pmq::mqtt_connect::parse(const std::string &payload) {
                              << "\n\t password flag  : " << this->password_flag
                              << "\n\t user name flag : " << this->user_name_flag
                              << "\n\t keep alive msb : " << this->keep_alive
-                             << "\n\t client id      : " << this->client_id
+                             << "\n\t client_api id      : " << this->client_id
                              << "\n\t will topic     : " << this->will_topic
                              << "\n\t will payload   : " << this->will_payload
                              << "\n\t user name      : " << this->user_name

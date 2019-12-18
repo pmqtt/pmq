@@ -4,6 +4,7 @@
 
 #ifndef PMQ_MQTT_SUBSCRIBE_HPP
 #define PMQ_MQTT_SUBSCRIBE_HPP
+
 #include <tuple>
 #include <vector>
 
@@ -14,25 +15,25 @@ namespace pmq {
         mqtt_subscribe(std::shared_ptr<pmq::socket> & client_socket, std::size_t payload_length);
         virtual ~mqtt_subscribe(){}
 
-        std::size_t get_payload_length() const override {
+        [[nodiscard]] std::size_t get_payload_length() const override {
             return this->payload_length;
         }
         void parse(const std::string & payload) override ;
         void accept(mqtt_visitor & v) override;
 
-        const std::string & get_topic()const{
+        [[nodiscard]] const std::string & get_topic()const{
             return this->topic;
         }
         pmq::u_int16  get_qos(){
             return this->topic_qos;
         }
-        pmq::u_int16 get_msg_id()const{
+        [[nodiscard]] pmq::u_int16 get_msg_id()const{
             return this->msg_id;
         }
-        constexpr pmq::u_int8 get_msg_msb()const{
+        [[nodiscard]] constexpr pmq::u_int8 get_msg_msb()const{
             return this->msg_msb;
         }
-        constexpr pmq::u_int8 get_msg_lsb()const{
+        [[nodiscard]] constexpr pmq::u_int8 get_msg_lsb()const{
             return this->msg_lsb;
         }
 
