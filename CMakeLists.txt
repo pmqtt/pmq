@@ -58,11 +58,12 @@ add_library(pmq_obj_lib OBJECT lib/exception/acceptor_exception.hpp
         lib/exception/socket_exception.hpp
         lib/rest/http_rest_server.hpp
         lib/rest/http_rest_server.cpp
-        lib/server/client_factory.hpp
+        lib/network/client_factory.hpp
         lib/network/tcp_client_factory.hpp
         lib/network/tcp_client_factory.cpp
         lib/network/ssl_client_factory.hpp
         lib/network/ssl_client_factory.cpp
+        lib/network/connection_factory.hpp
         lib/server/client_handler.hpp
         lib/server/client_handler.cpp
         lib/storage/storage.hpp

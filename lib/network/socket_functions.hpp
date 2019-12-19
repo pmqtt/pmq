@@ -12,9 +12,20 @@
 #include <string>
 
 #include <lib/exception/socket_exception.hpp>
+#include <sys/socket.h>
+
 
 namespace pmq{
     namespace detail{
+
+        template<class SOCKET>
+        bool is_ssl_handshake(SOCKET * inner_socket){
+            auto native_socket = inner_socket->get_inner_socket()->native_handle();
+            char buffer;
+            ::recv(native_socket,&buffer,1,MSG_PEEK);
+            return buffer == 0x16;
+        }
+
         template<class SOCKET>
         std::string read(SOCKET * inner_socket,std::size_t size){
             try {

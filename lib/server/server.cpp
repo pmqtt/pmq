@@ -3,7 +3,7 @@
 //
 #include <functional>
 #include "lib/exception/bad_connection_exception.hpp"
-#include "lib/server/client_factory.hpp"
+#include "lib/network/client_factory.hpp"
 #include "lib/server/server.hpp"
 
 

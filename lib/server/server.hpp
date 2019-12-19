@@ -10,7 +10,7 @@
 #include <boost/log/trivial.hpp>
 #include <vector>
 
-#include "client_factory.hpp"
+#include "lib/network/client_factory.hpp"
 
 #include "lib/mqtt/control_packet_type.hpp"
 #include "lib/mqtt/mqtt_message.hpp"

@@ -7,7 +7,7 @@
 
 #include <lib/exception/acceptor_exception.hpp>
 #include <lib/exception/tls_handshake_exception.hpp>
-#include <lib/network/ssl_client_factory.hpp>
+#include "ssl_client_factory.hpp"
 
 namespace {
     bool verify_certificate_cb(bool preverified, boost::asio::ssl::verify_context& ctx)
@@ -65,9 +65,7 @@ namespace pmq{
             throw pmq::exception::config_exception(e.what());
         }
     }
-    ssl_client_factory::~ssl_client_factory() {
-
-    }
+    ssl_client_factory::~ssl_client_factory() = default;
     std::string ssl_client_factory::get_password()const {
         return config.get_passphrase();
     }
@@ -81,6 +79,9 @@ namespace pmq{
 
             tcp::acceptor acceptor(context, tcp::endpoint(tcp::v4(), config.get_port() ) );
             acceptor.accept(socket->lowest_layer());
+            if(!pmq::detail::is_ssl_handshake(s_socket.get())){
+                throw pmq::exception::socket_exception("Plain socket connection detected but only tls socket configured");
+            }
             boost::system::error_code  ec;
 
             socket->handshake(boost::asio::ssl::stream_base::server,ec);

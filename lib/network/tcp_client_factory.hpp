@@ -5,7 +5,7 @@
 #ifndef PMQ_TCP_CLIENT_FACTORY_HPP
 #define PMQ_TCP_CLIENT_FACTORY_HPP
 #include <lib/exception/acceptor_exception.hpp>
-#include <lib/server/client_factory.hpp>
+#include "client_factory.hpp"
 #include <lib/server/startup_configuration.hpp>
 #include <boost/asio/io_context.hpp>
 

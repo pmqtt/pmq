@@ -6,7 +6,7 @@
 #define PMQ_CLIENT_FACTORY_HPP
 #include <thread>
 #include <functional>
-#include <lib/network/socket.hpp>
+#include "socket.hpp"
 namespace pmq{
     class client_factory{
     public:

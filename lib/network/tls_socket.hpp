@@ -12,8 +12,8 @@
 #include <vector>
 
 #include <lib/exception/socket_exception.hpp>
-#include <lib/network/socket_functions.hpp>
-#include <lib/network/socket.hpp>
+#include "socket_functions.hpp"
+#include "socket.hpp"
 
 namespace pmq {
 

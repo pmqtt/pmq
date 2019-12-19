@@ -26,6 +26,7 @@ pmq::config parse_program_options(int argc,char **argv){
     auto set_private_key = std::bind(&pmq::config::set_tls_private_key,&conf, std::placeholders::_1);
     auto set_dh_file = std::bind(&pmq::config::set_tls_dh_file,&conf, std::placeholders::_1);
     auto set_tls_passphrase = std::bind(&pmq::config::set_tls_certificate_passphrase,&conf, std::placeholders::_1);
+    auto set_allowed_connection_type = std::bind(&pmq::config::set_allowed_connection_type,&conf,std::placeholders::_1);
     auto set_anonymous_login = [&](const std::string & value){ value=="true" ? conf.set_allow_anonymous_login(true) : conf.set_allow_anonymous_login(false); };
     auto load_client_configuration = std::bind(&pmq::config::load_client_configuration_file,&conf, std::placeholders::_1);;
 
@@ -42,7 +43,7 @@ pmq::config parse_program_options(int argc,char **argv){
             ("tls-certificate-passphrase",boost::program_options::value<std::string>(),"Passphrase to unlock certificate",set_tls_passphrase)
             ("anonymous-login",boost::program_options::value<std::string>()->default_value("true"),"Allow or permit anoymous connection. Default is true",set_anonymous_login)
             ("client_api-configuration-file",boost::program_options::value<std::string>(),"Path to client_api configuration",load_client_configuration)
-
+            ("allowed-connection-type",boost::program_options::value<std::string>()->default_value("plain"),"Allowed connection types. Raw socket connection (plain) | Only tls(tls) | Tls and raw (plain-tls)",set_allowed_connection_type)
             ;
 
     conf.init_cli(argc,argv);

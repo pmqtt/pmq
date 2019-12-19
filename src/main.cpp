@@ -15,6 +15,7 @@
 #include <lib/storage/storage.hpp>
 #include <lib/network/ssl_client_factory.hpp>
 #include <lib/network/tcp_client_factory.hpp>
+#include <lib/network/connection_factory.hpp>
 
 
 
@@ -27,6 +28,9 @@ std::shared_ptr<pmq::client_factory>  create_tcp_client_factory(const pmq::confi
     return std::make_shared<pmq::tcp_client_factory>(cfg);
 }
 
+std::shared_ptr<pmq::client_factory>  create_ssl_client_or_non_ssl_factory(const pmq::config & cfg){
+    return std::make_shared<pmq::connection_factory>(cfg);
+}
 
 void init_rest_api(pmq::server & server,pmq::config & conf,std::shared_ptr<pmq::storage> & storage_service){
     const std::string rest_api_address = "http://localhost:"+std::to_string(conf.get_rest_port());
@@ -46,8 +50,9 @@ int main(int argc,char **argv,char **envp){
 
 
     pmq::client_creator creator;
-    creator.bind_creator("TCP",create_tcp_client_factory);
-    creator.bind_creator("TLS",create_ssl_client_factory);
+    creator.bind_creator("plain",create_tcp_client_factory);
+    creator.bind_creator("tls",create_ssl_client_factory);
+    creator.bind_creator("plain-tls",create_ssl_client_or_non_ssl_factory);
 
     std::shared_ptr<pmq::login_factory> login_creator = std::make_shared<pmq::login_factory>();
     std::shared_ptr<pmq::storage> storage_service = std::make_shared<pmq::in_memory_storage>();

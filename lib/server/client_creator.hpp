@@ -6,7 +6,7 @@
 #define PMQ_CLIENT_CREATOR_HPP
 
 #include <map>
-#include "client_factory.hpp"
+#include "lib/network/client_factory.hpp"
 #include "startup_configuration.hpp"
 
 namespace pmq{

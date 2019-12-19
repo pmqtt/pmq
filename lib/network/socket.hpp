@@ -24,8 +24,6 @@ namespace pmq{
     class socket{
     public:
         virtual std::string read(std::size_t size){
-            ssl_socket sock;
-            sock.lowest_layer() = inner_socket;
             return pmq::detail::read<boost::asio::ip::tcp::socket>(inner_socket,size);
         }
 

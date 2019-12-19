@@ -92,9 +92,14 @@ namespace {
 
 namespace pmq{
     typedef std::function<void(const std::string &)> CONFIG_FUNC;
-
+    enum CONNECTION_TYPE{
+        PLAIN,
+        TLS,
+        PLAIN_TLS
+    };
     struct config{
     private:
+        CONNECTION_TYPE connection_type;
         std::size_t port;
         std::size_t rest_port;
         std::array<bool,3> use_tls = {false,false,false};
@@ -113,6 +118,7 @@ namespace pmq{
     public:
         config() : port(1883),rest_port(1884) { }
         config(const config & rhs):
+            connection_type(CONNECTION_TYPE::PLAIN),
             port(rhs.port),
             rest_port(rhs.rest_port),
             use_tls(rhs.use_tls),
@@ -174,10 +180,12 @@ namespace pmq{
         std::string get_tls_dh_file()    const { return this->dh_file; }
 
         std::string get_connection_type()const {
-            if(should_use_tls()){
-                return "TLS";
+            switch (connection_type){
+                case CONNECTION_TYPE::PLAIN: return "plain";
+                case CONNECTION_TYPE::TLS:   return "tls";
+                case CONNECTION_TYPE::PLAIN_TLS: return "plain-tls";
+                default: return "none";
             }
-            return "TCP";
         }
 
         bool should_use_tls()const{
@@ -195,6 +203,24 @@ namespace pmq{
             create_tls_config_exception(use_tls);
             return false; //should never call
         }
+
+        void set_allowed_connection_type(const std::string & value){
+            if( value == "plain"){
+                connection_type = CONNECTION_TYPE::PLAIN;
+            }
+            else if (value == "tls" || value == "plain-tls" ){
+                if( should_use_tls() ){
+                    if(value == "plain-tls") {
+                        connection_type = CONNECTION_TYPE::PLAIN_TLS;
+                    }else {
+                        connection_type = CONNECTION_TYPE::TLS;
+                    }
+                }
+            }else{
+                throw pmq::exception::config_exception("Unknow connection type "+value );
+            }
+        }
+
         bool is_allow_anonymous_login() const {
             return allow_anonymous_login;
         }
