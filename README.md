@@ -13,7 +13,7 @@ Imagine that you have to configure many microservices and they do not have a RES
 In this case, the distribution of configurations via PMQ can be helpful. Configurations are transferred in JSON format 
 and defined as YAML.The configuration is organized hierarchically. The hierarchy is three-level global, General for a client family and Specific for a single client. 
 
-### TLS and NON TLS Connection on the same port
+#### TLS and non-TLS Connection on the same port
 PMQ supports TLS and non-TLS connections on the same port at the same time.
 This means that a client can connect to the server using a certificate and another client can
 can connect to the server via a raw socket connection.
