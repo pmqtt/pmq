@@ -13,6 +13,11 @@ Imagine that you have to configure many microservices and they do not have a RES
 In this case, the distribution of configurations via PMQ can be helpful. Configurations are transferred in JSON format 
 and defined as YAML.The configuration is organized hierarchically. The hierarchy is three-level global, General for a client family and Specific for a single client. 
 
+### TLS and NON TLS Connection on the same port
+PMQ supports TLS and non-TLS connections on the same port at the same time.
+This means that a client can connect to the server using a certificate and another client can
+can connect to the server via a raw socket connection.
+
 ### Roadmap
 * REST API to configure and manage PMQ Message Broker
 * Distribute configuration to broker clients **Finished** 
@@ -94,11 +99,20 @@ PMQ will start on port 1883. It is also possible to start PMQ with a configurati
 $ ./PMQ -c configuration.yaml
 ```
 
-### Starting PMQ with TLS support
+### Starting PMQ with different connection type
+For raw connection
 ```shell
-$ cd $PMQ/
-$ ./PMQ  --tls-certificat [server certificat] --tls-private-key [private key file] --tls-dh-file [Diffie file]
+$ ./PMQ  --allowed-connection-type plain
 ```
+For TLS connection
+```shell
+$ ./PMQ  --allowed-connection-type tls --tls-certificat [server certificat] --tls-private-key [private key file] --tls-dh-file [Diffie file]
+```
+For both connection types
+```shell
+$ ./PMQ  --allowed-connection-type plain-tls --tls-certificat [server certificat] --tls-private-key [private key file] --tls-dh-file [Diffie file]
+```
+
 
 ### Starting PMQ with permited anonymous connection
 ```
@@ -162,5 +176,8 @@ You will received from PMQ this message:
   }
 }
 ```
+
+
+
 
 
