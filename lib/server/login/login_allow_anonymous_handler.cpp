@@ -3,7 +3,7 @@
 //
 #include "login_allow_anonymous_handler.hpp"
 namespace pmq {
-    void login_allow_anonymous_handler::handle(const std::shared_ptr<pmq::storage> &storage,const pmq::mqtt_connect * msg) {
+    void login_allow_anonymous_handler::handle(const pmq::config & cfg,const std::shared_ptr<pmq::storage> &storage, pmq::mqtt_connect * msg) {
 
     }
 

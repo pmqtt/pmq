@@ -64,7 +64,7 @@ void pmq::init_route_handling() {
     ( pmq::GET,pmq::rest::UPDATE_CLIENT_CONFIG,[&](http_request message){
         message.reply(status_codes::OK);
     })
-    ( pmq::POST,"",[&](http_request message,std::shared_ptr<pmq::storage>& storage){
+    ( pmq::POST,pmq::rest::CREATE_USER,[&](http_request message,std::shared_ptr<pmq::storage>& storage){
         pplx::task<json::value> result = message.extract_json();
         result.wait();
 

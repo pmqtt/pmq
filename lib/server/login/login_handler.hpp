@@ -5,6 +5,7 @@
 #ifndef PMQ_LOGIN_HANDLER_HPP
 #define PMQ_LOGIN_HANDLER_HPP
 
+#include "lib/server/startup_configuration.hpp"
 #include "lib/storage/storage.hpp"
 #include "lib/mqtt/mqtt_connect.hpp"
 
@@ -14,7 +15,7 @@ namespace pmq{
         login_handler() = default;
         virtual ~login_handler() = default;
 
-        virtual void handle(const std::shared_ptr<pmq::storage> & storage,const pmq::mqtt_connect * msg);
+        virtual void handle(const pmq::config & cfg,const std::shared_ptr<pmq::storage> & storage, pmq::mqtt_connect * msg);
     };
 }
 

@@ -25,11 +25,13 @@ namespace pmq{
     }
 
     bool http_rest_server::call_api(HTTP_METHOD_TYPE method_type,http_request message){
+
         auto paths = http::uri::split_path(http::uri::decode(message.relative_uri().path()));
         std::string path = "/";
         if(!paths.empty()){
             path = paths[0];
         }
+        BOOST_LOG_TRIVIAL(debug)<<"CALL REST API - "<< path;
         if(router_functions.count(method_type) > 0){
             auto item = router_functions[method_type];
             if(item.count(path)>0){

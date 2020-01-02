@@ -18,36 +18,7 @@
 
 
 namespace pmq{
-    bool verify_certificate_cb(bool preverified, boost::asio::ssl::verify_context& ctx)
-    {
-        int8_t subject_name[256];
-        X509_STORE_CTX *cts = ctx.native_handle();
-        int32_t length = 0;
-        X509* cert = X509_STORE_CTX_get_current_cert(ctx.native_handle());
-        int32_t depth = X509_STORE_CTX_get_error_depth(cts);
-        auto error = X509_STORE_CTX_get_error(cts);
-        switch (error)
-        {
-            case X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT:
-                break;
-            case X509_V_ERR_CERT_NOT_YET_VALID:
-            case X509_V_ERR_ERROR_IN_CERT_NOT_BEFORE_FIELD:
-                break;
-            case X509_V_ERR_CERT_HAS_EXPIRED:
-            case X509_V_ERR_ERROR_IN_CERT_NOT_AFTER_FIELD:
-                break;
-            case X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN:
-                preverified = true;
-                break;
-            default:
-                break;
-        }
-        const int32_t name_length = 256;
-        X509_NAME_oneline(X509_get_subject_name(cert), reinterpret_cast<char*>(subject_name), name_length);
-        std::cout<<"Subject name:" <<  subject_name <<std::endl;
 
-        return preverified;
-    }
 
 
     class connection_factory : public client_factory{
@@ -61,7 +32,8 @@ namespace pmq{
                             | boost::asio::ssl::context::single_dh_use);
                     ssl_contex.set_verify_mode(
                             boost::asio::ssl::verify_peer | boost::asio::ssl::verify_fail_if_no_peer_cert);
-                    ssl_contex.set_verify_callback(&verify_certificate_cb);
+
+                    //ssl_contex.set_verify_callback(&verify_certificate_cb);
                     ssl_contex.set_password_callback(boost::bind(&connection_factory::get_password, this));
                     ssl_contex.use_certificate_chain_file(cfg.get_tls_cert_path());
 
@@ -77,11 +49,17 @@ namespace pmq{
         virtual std::shared_ptr<std::thread> create_client_thread( std::function< void(std::shared_ptr<socket>&)> &  process){
             try{
                 std::shared_ptr<pmq::socket> socket = std::make_shared<pmq::socket>(new tcp::socket(context));
+                auto verify_certificate_cb = [&](bool preverified, boost::asio::ssl::verify_context& ctx)->bool{
+                    return socket->verify_certificate(preverified,ctx);
+                };
+
+
+                ssl_contex.set_verify_callback(verify_certificate_cb);
+
                 tcp::acceptor acceptor(context,tcp::endpoint(tcp::v4(),config.get_port()));
                 acceptor.accept(*socket->get_inner_socket());
                 if( pmq::detail::is_ssl_handshake(socket.get()) ){
                     return create_ssl_client_thread(socket,process);
-
                 }
                 auto f = std::bind(process,socket);
                 return std::make_shared<std::thread>(f);
@@ -109,6 +87,7 @@ namespace pmq{
 
                 std::shared_ptr<pmq::socket> s_socket = std::make_shared<pmq::tls_socket>(ssl_socket);
 
+
                 boost::system::error_code  ec;
 
                 ssl_socket->handshake(boost::asio::ssl::stream_base::server,ec);
@@ -120,7 +99,8 @@ namespace pmq{
                                                                   + " - Error message : "
                                                                   + ec.message() );
                 }
-
+                BOOST_LOG_TRIVIAL(debug)<<"Received client certificate name:"<<socket->get_normalized_subject_name()<<std::endl;
+                s_socket->set_subject_name(socket->get_subject_name());
                 auto f = std::bind(process, s_socket);
                 return std::make_shared<std::thread>(f);
             }catch( const boost::system::system_error & e ){

@@ -3,10 +3,12 @@
 #define PMQ_STARTUP_CONFIGURATION_HPP
 
 #include <array>
+
 #include <boost/program_options.hpp>
 #include <boost/program_options/value_semantic.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
+#include <boost/log/trivial.hpp>
 #include <cstdio>
 #include <iostream>
 #include <map>
@@ -109,6 +111,7 @@ namespace pmq{
         std::string passphrase="";
         bool allow_anonymous_login = true;
         pmq::config_module cfg;
+        bool client_certificate_as_username = false;
         std::vector<std::tuple<std::string,const boost::program_options::value_semantic*,std::string>> options;
         std::map<std::string,CONFIG_FUNC> callable;
         boost::program_options::options_description desc{"Options"};
@@ -127,7 +130,7 @@ namespace pmq{
             dh_file(rhs.dh_file),
             allow_anonymous_login(rhs.allow_anonymous_login),
             passphrase(rhs.passphrase),
-            cfg(rhs.cfg){
+            cfg(rhs.cfg),client_certificate_as_username(rhs.client_certificate_as_username){
         }
         config & operator=(const config &rhs){
             if(this != &rhs) {
@@ -140,6 +143,7 @@ namespace pmq{
                 this->allow_anonymous_login = rhs.allow_anonymous_login;
                 this->passphrase = rhs.passphrase;
                 this->cfg = rhs.cfg;
+                this->client_certificate_as_username = rhs.client_certificate_as_username;
             }
             return *this;
         }
@@ -219,6 +223,19 @@ namespace pmq{
             }else{
                 throw pmq::exception::config_exception("Unknow connection type "+value );
             }
+        }
+
+        void use_client_certificate_as_username(const std::string & value){
+            BOOST_LOG_TRIVIAL(debug)<<"using client certificat as username : "<<value;
+            if(value == "true" || value == "TRUE" || value == "True"){
+                BOOST_LOG_TRIVIAL(debug)<<"set client_certificate_as_username: "<<value;
+                client_certificate_as_username = true;
+            }else{
+                client_certificate_as_username = false;
+            }
+        }
+        bool is_client_certificate_username()const{
+            return client_certificate_as_username;
         }
 
         bool is_allow_anonymous_login() const {

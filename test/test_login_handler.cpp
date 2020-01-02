@@ -11,6 +11,7 @@
 #include <lib/server/login/login_handler.hpp>
 #include <lib/mqtt/mqtt_connect.hpp>
 #include <lib/network/socket.hpp>
+#include <lib/server/startup_configuration.hpp>
 
 class fake_storage : public pmq::storage{
 public:
@@ -101,7 +102,8 @@ BOOST_AUTO_TEST_CASE( TEST_LOGIN_HANDLER )
     pmq::mqtt_connect * connect = create_fake_mqtt_connect();
     pmq::login_handler handler;
     try {
-        handler.handle(fake, connect);
+        pmq::config cfg;
+        handler.handle(cfg,fake, connect);
         BOOST_CHECK(true);
     }catch(...){
         BOOST_CHECK(false);
@@ -118,7 +120,8 @@ BOOST_AUTO_TEST_CASE( TEST_FAILED_LOGIN_NO_USER_HANDLER )
 
     pmq::login_handler handler;
     try {
-        handler.handle(fake, connect);
+        pmq::config cfg;
+        handler.handle(cfg, fake, connect);
         BOOST_CHECK(false);
     }catch(pmq::exception::login_exception e){
         BOOST_CHECK(true);
@@ -135,7 +138,8 @@ BOOST_AUTO_TEST_CASE( TEST_FAILED_LOGIN_WRONG_PASSWORD_HANDLER )
 
     pmq::login_handler handler;
     try {
-        handler.handle(fake, connect);
+        pmq::config cfg;
+        handler.handle(cfg, fake, connect);
         BOOST_CHECK(false);
     }catch(pmq::exception::login_exception e){
         BOOST_CHECK(true);
@@ -151,7 +155,8 @@ BOOST_AUTO_TEST_CASE( TEST_FAILED_LOGIN_NO_USER_FLAG_HANDLER )
     pmq::mqtt_connect connect;
     pmq::login_handler handler;
     try {
-        handler.handle(fake, &connect);
+        pmq::config cfg;
+        handler.handle(cfg, fake, &connect);
         BOOST_CHECK(false);
     }catch(pmq::exception::bad_connection_exception e){
         BOOST_CHECK(true);

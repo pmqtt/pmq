@@ -29,7 +29,7 @@ pmq::config parse_program_options(int argc,char **argv){
     auto set_allowed_connection_type = std::bind(&pmq::config::set_allowed_connection_type,&conf,std::placeholders::_1);
     auto set_anonymous_login = [&](const std::string & value){ value=="true" ? conf.set_allow_anonymous_login(true) : conf.set_allow_anonymous_login(false); };
     auto load_client_configuration = std::bind(&pmq::config::load_client_configuration_file,&conf, std::placeholders::_1);;
-
+    auto use_client_certificate_as_username = std::bind(&pmq::config::use_client_certificate_as_username,&conf,std::placeholders::_1);
 
 
     conf.add_configuration()("help,h", "Help screen",print_help)
@@ -41,9 +41,10 @@ pmq::config parse_program_options(int argc,char **argv){
             ("tls-private-key",boost::program_options::value<std::string>(),"TLS private key",set_private_key)
             ("tls-dh-file",boost::program_options::value<std::string>(),"Diffie-Hellman file",set_dh_file)
             ("tls-certificate-passphrase",boost::program_options::value<std::string>(),"Passphrase to unlock certificate",set_tls_passphrase)
+            ("allowed-connection-type",boost::program_options::value<std::string>()->default_value("plain"),"Allowed connection types. Raw socket connection (plain) | Only tls(tls) | Tls and raw (plain-tls)",set_allowed_connection_type)
+            ("client-certificate-as-username",boost::program_options::value<std::string>()->default_value("false"),"Use client certificate as username",use_client_certificate_as_username)
             ("anonymous-login",boost::program_options::value<std::string>()->default_value("true"),"Allow or permit anoymous connection. Default is true",set_anonymous_login)
             ("client_api-configuration-file",boost::program_options::value<std::string>(),"Path to client_api configuration",load_client_configuration)
-            ("allowed-connection-type",boost::program_options::value<std::string>()->default_value("plain"),"Allowed connection types. Raw socket connection (plain) | Only tls(tls) | Tls and raw (plain-tls)",set_allowed_connection_type)
             ;
 
     conf.init_cli(argc,argv);
