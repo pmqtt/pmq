@@ -44,7 +44,7 @@ pmq::config parse_program_options(int argc,char **argv){
             ("allowed-connection-type",boost::program_options::value<std::string>()->default_value("plain"),"Allowed connection types. Raw socket connection (plain) | Only tls(tls) | Tls and raw (plain-tls)",set_allowed_connection_type)
             ("client-certificate-as-username",boost::program_options::value<std::string>()->default_value("false"),"Use client certificate as username",use_client_certificate_as_username)
             ("anonymous-login",boost::program_options::value<std::string>()->default_value("true"),"Allow or permit anoymous connection. Default is true",set_anonymous_login)
-            ("client_api-configuration-file",boost::program_options::value<std::string>(),"Path to client_api configuration",load_client_configuration)
+            ("client-configuration-file",boost::program_options::value<std::string>(),"Path to client configuration",load_client_configuration)
             ;
 
     conf.init_cli(argc,argv);
