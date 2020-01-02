@@ -16,6 +16,8 @@ namespace pmq{
             if(!subject.empty()) {
                 msg->set_user_name_flag();
                 msg->set_user_name(subject);
+            }else{
+                use_client_certificate_as_username = false;
             }
         }
 

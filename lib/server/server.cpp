@@ -2,6 +2,7 @@
 // Created by PMQTT on 2019-03-03.
 //
 #include <functional>
+#include <lib/exception/login_exception.hpp>
 #include "lib/exception/bad_connection_exception.hpp"
 #include "lib/network/client_factory.hpp"
 #include "lib/server/server.hpp"
@@ -51,6 +52,12 @@ void pmq::server::process(std::shared_ptr<pmq::socket> & socket) {
     }
     catch (pmq::exception::socket_exception &e) {
         BOOST_LOG_TRIVIAL(info) << "Client closed the connection: " << e.what();
+        handler->handleDisconnect();
+    }catch (const pmq::exception::login_exception & e){
+        BOOST_LOG_TRIVIAL(info)<<e.what();
+        handler->handleDisconnect();
+    }catch(...){
+        BOOST_LOG_TRIVIAL(info)<<"Unknown exception";
         handler->handleDisconnect();
     }
 }
