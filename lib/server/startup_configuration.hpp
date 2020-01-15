@@ -20,6 +20,8 @@
 #include <lib/exception/config_exception.hpp>
 #include <lib/server/PMQConfigure.hpp>
 
+#include "../user/acl.hpp"
+
 
 namespace {
     void create_tls_config_exception(const std::array<bool, 3> &tls_setted_params) {
@@ -115,7 +117,7 @@ namespace pmq{
         std::vector<std::tuple<std::string,const boost::program_options::value_semantic*,std::string>> options;
         std::map<std::string,CONFIG_FUNC> callable;
         boost::program_options::options_description desc{"Options"};
-
+        pmq::acl access_list;
 
 
     public:
@@ -252,6 +254,7 @@ namespace pmq{
             return passphrase;
         }
 
+        void load_acl_file(const std::string & filename);
         void load_client_configuration_file(const std::string & filename);
         void load_action_rule_file(const std::string & filename);
 

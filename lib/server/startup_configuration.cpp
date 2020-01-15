@@ -30,7 +30,7 @@ pmq::config parse_program_options(int argc,char **argv){
     auto set_anonymous_login = [&](const std::string & value){ value=="true" ? conf.set_allow_anonymous_login(true) : conf.set_allow_anonymous_login(false); };
     auto load_client_configuration = std::bind(&pmq::config::load_client_configuration_file,&conf, std::placeholders::_1);;
     auto use_client_certificate_as_username = std::bind(&pmq::config::use_client_certificate_as_username,&conf,std::placeholders::_1);
-
+    auto load_acl_configuration = std::bind(&pmq::config::load_acl_file,&conf,std::placeholders::_1);
 
     conf.add_configuration()("help,h", "Help screen",print_help)
             ("version,v", "print version",print_version)
@@ -45,6 +45,7 @@ pmq::config parse_program_options(int argc,char **argv){
             ("client-certificate-as-username",boost::program_options::value<std::string>()->default_value("false"),"Use client certificate as username",use_client_certificate_as_username)
             ("anonymous-login",boost::program_options::value<std::string>()->default_value("true"),"Allow or permit anoymous connection. Default is true",set_anonymous_login)
             ("client-configuration-file",boost::program_options::value<std::string>(),"Path to client configuration",load_client_configuration)
+            ("acl-file",boost::program_options::value<std::string>(),"Path to access list configuration",load_acl_configuration)
             ;
 
     conf.init_cli(argc,argv);
@@ -113,6 +114,34 @@ void pmq::config::load_client_configuration_file(const std::string &filename) {
     cfg.set_general_config(general_config);
     cfg.set_specific_config(specific_config);
 }
+
+void pmq::config::load_acl_file(const std::string & filename){
+    YAML::Node acl = YAML::LoadFile(filename);
+    for(const auto & node : acl){
+        BOOST_LOG_TRIVIAL(debug)<<"READ: "<<node.first.Scalar();
+        std::string group_name = node.first.Scalar();
+        for(const auto & elements : node.second){
+            std::string value = elements.first.Scalar();
+            if( value == "kind"){
+
+            }else if ( value == "rules"){
+
+            }else if( value == "types"){
+
+            }else if( value == "topic"){
+
+            }else if (value == "flag"){
+
+            }else if (value == "access"){
+
+            }else{
+                BOOST_LOG_TRIVIAL(error)<<"Parisin error in "<<filename<< " node-type "<<value<<" doesn't exist";
+            }
+        }
+    }
+}
+
+
 
 void pmq::config::load_action_rule_file(const std::string & filename) {
 

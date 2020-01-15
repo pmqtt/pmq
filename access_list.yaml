@@ -1,0 +1,61 @@
+DENY_ANY:
+  kind: RULE
+  types:
+    - SUBSCRIBE
+    - PUBLISH
+  topic: "#"
+  access: DENY
+
+ALLOW_ANY:
+  kind: RULE
+  types:
+    - SUBSCRIBE
+    - PUBLISH
+  topic: "#"
+  access: ALLOW
+
+ALLOW_PUBLISH_TO_X:
+  kind: RULE
+  types:
+    - PUBLISH
+  topic: "X"
+  access: ALLOW
+
+ALLOW_SUBSCRIBE_TO_X:
+  kind: RULE
+  types:
+    - SUBSCRIBE
+  topic: "X"
+  access: ALLOW
+
+DENY_PUBLISH_TO_X_RETAINED:
+  kind: RULE
+  types:
+   - PUBLISH
+  flag: RETAINED
+  topic: "X"
+  access: DENY
+
+all-users:
+  rules:
+    - DENY_ANY
+
+michael:
+  kind: USERNAME
+  rules:
+    - DENY_PUBLISH_TO_X_RETAINED
+    - ALLOW_ANY
+
+client:
+  kind: username
+  rules:
+    - ALLOW_PUBLISH_TO_X
+    - DENY_ANY
+
+pmq-id1:
+  kind: client_id
+  rules:
+    - ALLOW_SUBSCRIBE_TO_X
+    - DENY_ANY
+
+

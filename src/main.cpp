@@ -21,6 +21,7 @@
 
 
 
+
 std::shared_ptr<pmq::client_factory>  create_ssl_client_factory(const pmq::config & cfg){
     return std::make_shared<pmq::ssl_client_factory>(cfg);
 }
@@ -42,7 +43,6 @@ void init_rest_api(pmq::server & server,pmq::config & conf,std::shared_ptr<pmq::
 
 
 int main(int argc,char **argv,char **envp){
-
     pmq::config conf = parse_program_options(argc,argv);
     BOOST_LOG_TRIVIAL(info)<<"Start PMQ "<<VERSION;
     pmq::ring_zero::clean_argv(argc,&argv);
@@ -74,7 +74,7 @@ int main(int argc,char **argv,char **envp){
         std::shared_ptr<pmq::client_factory> client_factory = creator.get(conf.get_connection_type())(conf);
         server.run(client_factory);
     }catch (const pmq::exception::config_exception & e){
-        std::cout<<e.what()<<std::endl;
+        BOOST_LOG_TRIVIAL(error)<<e.what();
         pmq::on_shutdown();
     }
     rest_api_thread.join();
