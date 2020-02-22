@@ -1,3 +1,4 @@
+#ifdef RESTAPI
 //
 // Created by pmqtt on 17.12.19.
 //
@@ -10,3 +11,4 @@ namespace pmq{
 }
 
 #endif //PMQ_ROUTE_HANDLER_HPP
+#endif

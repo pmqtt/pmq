@@ -32,13 +32,13 @@ std::shared_ptr<pmq::client_factory>  create_tcp_client_factory(const pmq::confi
 std::shared_ptr<pmq::client_factory>  create_ssl_client_or_non_ssl_factory(const pmq::config & cfg){
     return std::make_shared<pmq::connection_factory>(cfg);
 }
-
+#ifdef RESTAPI
 void init_rest_api(pmq::server & server,pmq::config & conf,std::shared_ptr<pmq::storage> & storage_service){
     const std::string rest_api_address = "http://localhost:"+std::to_string(conf.get_rest_port());
     BOOST_LOG_TRIVIAL(info)<< "START REST API: "<< rest_api_address;
     pmq::on_initialize(rest_api_address,storage_service);
 }
-
+#endif
 
 
 
@@ -68,16 +68,22 @@ int main(int argc,char **argv,char **envp){
 
 
     pmq::server server(handler);
+#ifdef RESTAPI
     auto rest_api_func = std::bind(&init_rest_api, std::ref(server), std::ref(conf), std::ref(storage_service));
     std::thread rest_api_thread(rest_api_func);
+#endif
     try {
         std::shared_ptr<pmq::client_factory> client_factory = creator.get(conf.get_connection_type())(conf);
         server.run(client_factory);
     }catch (const pmq::exception::config_exception & e){
         BOOST_LOG_TRIVIAL(error)<<e.what();
+#ifdef RESTAPI
         pmq::on_shutdown();
+#endif
     }
+#ifdef RESTAPI
     rest_api_thread.join();
+#endif
 
     return 0;
 }

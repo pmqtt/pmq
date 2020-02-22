@@ -117,7 +117,7 @@ namespace pmq{
         std::vector<std::tuple<std::string,const boost::program_options::value_semantic*,std::string>> options;
         std::map<std::string,CONFIG_FUNC> callable;
         boost::program_options::options_description desc{"Options"};
-        pmq::acl access_list;
+        pmq::acl_module::acl access_list;
 
 
     public:

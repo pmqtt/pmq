@@ -1,3 +1,4 @@
+#ifdef RESTAPI
 //
 // Created by pmqtt on 17.12.19.
 //
@@ -82,3 +83,4 @@ void pmq::init_route_handling() {
 
 
 }
+#endif

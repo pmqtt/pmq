@@ -4,10 +4,12 @@
 
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE test_server
-
 #include <boost/test/unit_test.hpp>
 
 #include "lib/rest/http_rest_server.hpp"
+
+
+#ifdef RESTAPI
 
 http_request create_request(const std::string str){
     http_request request;
@@ -56,3 +58,8 @@ BOOST_AUTO_TEST_CASE( TEST_ADD_ROUTES ) {
     BOOST_CHECK(t1 == t2 == t3 == true);
 
 }
+#else
+BOOST_AUTO_TEST_CASE( DUMMY ){
+
+}
+#endif
