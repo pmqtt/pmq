@@ -4,15 +4,18 @@ set(CMAKE_CXX_STANDARD 17)
 
 message(HALLO WELT)
 
+
+
+
 find_package( Boost REQUIRED COMPONENTS system program_options thread date_time chrono unit_test_framework log log_setup)
-# find_package( cpprestsdk REQUIRED )
+find_package( cpprestsdk REQUIRED )
 find_package( OpenSSL REQUIRED )
 if(OPENSSL_FOUND)
     if(APPLE)
-        include_directories(/usr/local/Cellar/openssl@1.1/1.1.1d/include)
-        list(APPEND LIB_LIST /usr/local/Cellar/openssl@1.1/1.1.1d/lib/libssl.dylib)
-        list(APPEND LIB_LIST /usr/local/Cellar/openssl@1.1/1.1.1d/lib/libcrypto.dylib)
-        message(STATUS  " APPLE OpenSSL Version: ${OPENSSL_VERSION} ${OPENSSL_INCLUDE_DIR} ${OPENSSL_LIBRARIES}")
+        include_directories(/usr/local/Cellar/openssl/1.1.1d/include)
+        list(APPEND LIB_LIST /usr/local/Cellar/openssl/1.1.1d/lib/libssl.dylib)
+        list(APPEND LIB_LIST /usr/local/Cellar/openssl/1.1.1d/lib/libcrypto.dylib)
+        message(STATUS  " APPLE OpenSSL Version:${OPENSSL_LIBRARIES}  ${OPENSSL_INCLUDE_DIR} ${LIB_LIST}")
     else()
         include_directories(${OPENSSL_INCLUDE_DIR})
         list(APPEND LIB_LIST ${OPENSSL_LIBRARIES})
@@ -104,8 +107,7 @@ add_library(pmq_obj_lib OBJECT lib/exception/acceptor_exception.hpp
         lib/module/transformation_identity.hpp)
 
 add_executable(PMQ src/main.cpp $<TARGET_OBJECTS:pmq_obj_lib> )
-# target_link_libraries(PMQ ${Boost_LIBRARIES} ${YAML_CPP_LIBRARIES} pmqtt cpprestsdk::cpprest )
-target_link_libraries(PMQ ${Boost_LIBRARIES} ${YAML_CPP_LIBRARIES} pmqtt ${LIB_LIST} )
+target_link_libraries(PMQ  ${Boost_LIBRARIES} ${YAML_CPP_LIBRARIES} pmqtt cpprestsdk::cpprest ${LIB_LIST} )
 
 ### TEST
 include(CMakeFunctions/add_test_executable.txt)
