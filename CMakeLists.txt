@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 message(HALLO WELT)
 
 
-
+add_definitions(-DRESTAPI)
 
 find_package( Boost REQUIRED COMPONENTS system program_options thread date_time chrono unit_test_framework log log_setup)
 find_package( cpprestsdk REQUIRED )

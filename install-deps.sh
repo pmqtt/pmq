@@ -8,6 +8,11 @@ sudo add-apt-repository ppa:mhier/libboost-latest && sudo apt update &&sudo apt 
 sudo apt-get install libssl-dev cmake g++
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8
 mkdir /third_party && cd /third_party
+git clone https://github.com/stefan-floeren/websocketpp.git
+cd /third_party/websocketpp
+cmake .
+sudo make install
+cd ..
 git clone https://github.com/microsoft/cpprestsdk.git
 cd /third_party/cpprestsdk
 git submodule update --init

@@ -21,7 +21,6 @@
 
 
 
-
 std::shared_ptr<pmq::client_factory>  create_ssl_client_factory(const pmq::config & cfg){
     return std::make_shared<pmq::ssl_client_factory>(cfg);
 }
@@ -69,6 +68,7 @@ int main(int argc,char **argv,char **envp){
 
     pmq::server server(handler);
 #ifdef RESTAPI
+    BOOST_LOG_TRIVIAL(info)<<"Activate REST interface ...";
     auto rest_api_func = std::bind(&init_rest_api, std::ref(server), std::ref(conf), std::ref(storage_service));
     std::thread rest_api_thread(rest_api_func);
 #endif
