@@ -16,7 +16,7 @@ cd ..
 git clone https://github.com/microsoft/cpprestsdk.git
 cd /third_party/cpprestsdk
 git submodule update --init
-cmake .
+cmake -DWERROR=FALSE .
 make -j4
 sudo make  install
 cd /third_party
