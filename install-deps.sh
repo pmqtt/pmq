@@ -17,7 +17,7 @@ git clone https://github.com/microsoft/cpprestsdk.git
 cd /third_party/cpprestsdk
 git submodule update --init
 cmake -DWERROR=FALSE .
-make -j4
+make -j8
 sudo make  install
 cd /third_party
 git clone https://github.com/jbeder/yaml-cpp.git
