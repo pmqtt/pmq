@@ -5,7 +5,10 @@ set(CMAKE_CXX_STANDARD 17)
 message(HALLO WELT)
 
 
-add_definitions(-DRESTAPI -DBOOST_LOG_DYN_LINK )
+add_definitions(-DRESTAPI )
+if(APPLE)
+    add_definitions(-DBOOST_LOG_DYN_LINK)
+endif()
 
 find_package( Boost REQUIRED COMPONENTS system program_options thread date_time chrono unit_test_framework log log_setup)
 find_package( cpprestsdk REQUIRED )
@@ -40,7 +43,6 @@ if(yaml-cpp_FOUND)
 endif(yaml-cpp_FOUND)
 
 
-add_definitions(-DBOOST_LOG_DYN_LINK)
 
 include_directories(${PROJECT_BINARY_DIR} ${OPENSSL_INCLUDE_DIR} ${Boost_INCLUDE_DIRS}   )
 
