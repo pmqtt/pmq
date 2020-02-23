@@ -9,7 +9,7 @@ add_definitions(-DRESTAPI )
 if(APPLE)
     add_definitions(-DBOOST_LOG_DYN_LINK)
 else()
-    SET(Boost_USE_STATIC_LIBS ON)
+    add_definitions(-DBOOST_ALL_DYN_LINK)
 endif()
 
 
