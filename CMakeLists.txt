@@ -6,11 +6,11 @@ message(HALLO WELT)
 
 
 add_definitions(-DRESTAPI )
-if(APPLE)
-    add_definitions(-DBOOST_LOG_DYN_LINK)
-endif()
+add_definitions(-DBOOST_LOG_DYN_LINK)
 
-find_package( Boost REQUIRED COMPONENTS system program_options thread date_time chrono unit_test_framework log log_setup)
+
+
+find_package( Boost REQUIRED COMPONENTS system program_options unit_test_framework log )
 find_package( cpprestsdk REQUIRED )
 find_package( OpenSSL REQUIRED )
 if(OPENSSL_FOUND)
