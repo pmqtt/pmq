@@ -1,4 +1,4 @@
-
+![C/C++ CI](https://github.com/pmqtt/pmq/workflows/C/C++%20CI/badge.svg)
 # PMQ: MQTT Message Broker and Message bus
 
 
