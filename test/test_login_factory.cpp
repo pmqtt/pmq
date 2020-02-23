@@ -2,7 +2,9 @@
 // Created by pmqtt on 2019-07-19.
 //
 
+#ifndef __linux__
 #define BOOST_TEST_DYN_LINK
+#endif
 #define BOOST_TEST_MODULE test_login_factory
 
 #include <boost/test/unit_test.hpp>
