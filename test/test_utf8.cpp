@@ -7,8 +7,8 @@
 #endif
 #define BOOST_TEST_MODULE test_server
 
-#include <boost/test/unit_test.hpp>
-
+//#include <boost/test/unit_test.hpp>
+#include <boost/test/included/unit_test.hpp>
 #include "lib/detail/utf8.hpp"
 
 BOOST_AUTO_TEST_CASE( UTF8_VALIDATION_TEST )

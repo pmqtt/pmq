@@ -6,7 +6,7 @@
 #endif
 #define BOOST_TEST_MODULE test_subscriber_container
 
-#include <boost/test/unit_test.hpp>
+#include <boost/test/included/unit_test.hpp>
 #include <iostream>
 #include <lib/network/socket.hpp>
 #include <lib/container/subscriber.hpp>

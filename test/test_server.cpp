@@ -6,7 +6,7 @@
 #endif
 #define BOOST_TEST_MODULE test_server
 
-#include <boost/test/unit_test.hpp>
+#include <boost/test/included/unit_test.hpp>
 
 #include "lib/server/server.hpp"
 

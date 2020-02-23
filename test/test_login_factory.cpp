@@ -7,7 +7,7 @@
 #endif
 #define BOOST_TEST_MODULE test_login_factory
 
-#include <boost/test/unit_test.hpp>
+#include <boost/test/included/unit_test.hpp>
 
 #include "lib/server/login/login_factory.hpp"
 #include "lib/server/login/login_handler.hpp"
