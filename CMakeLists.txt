@@ -6,8 +6,11 @@ message(HALLO WELT)
 
 
 add_definitions(-DRESTAPI )
-add_definitions(-DBOOST_LOG_DYN_LINK)
-
+if(APPLE)
+    add_definitions(-DBOOST_LOG_DYN_LINK)
+else()
+    SET(Boost_USE_STATIC_LIBS ON)
+endif()
 
 
 find_package( Boost REQUIRED COMPONENTS system program_options unit_test_framework log )
