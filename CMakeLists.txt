@@ -2,15 +2,10 @@ cmake_minimum_required(VERSION 3.9)
 project(PMQ)
 set(CMAKE_CXX_STANDARD 17)
 
-message(HALLO WELT)
 
 
 add_definitions(-DRESTAPI )
-if(APPLE)
-    add_definitions(-DBOOST_LOG_DYN_LINK)
-else()
-    add_definitions(-DBOOST_LOG_DYN_LINK)
-endif()
+add_definitions(-DBOOST_LOG_DYN_LINK)
 
 
 find_package( Boost REQUIRED COMPONENTS system program_options unit_test_framework log )
