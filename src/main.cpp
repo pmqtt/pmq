@@ -20,10 +20,9 @@
 
 
 template<class T>
-auto && create_connection_fatory(const pmq::config & cfg){
-    std::move(std::make_unique<T>(cfg));
+auto create_connection_fatory(const pmq::config & cfg){
+    return std::make_unique<T>(cfg);
 }
-
 
 
 #ifdef RESTAPI
@@ -44,9 +43,9 @@ int main(int argc,char **argv,char **envp){
 
 
     pmq::client_creator creator;
-    creator.bind_creator("plain",create_tcp_client_factory);
-    creator.bind_creator("tls",create_ssl_client_factory);
-    creator.bind_creator("plain-tls",create_ssl_client_or_non_ssl_factory);
+    creator.bind_creator("plain",create_connection_fatory<pmq::tcp_client_factory>);
+    creator.bind_creator("tls",create_connection_fatory<pmq::ssl_client_factory>);
+    creator.bind_creator("plain-tls",create_connection_fatory<pmq::connection_factory>);
 
     std::shared_ptr<pmq::login_factory> login_creator = std::make_shared<pmq::login_factory>();
     std::shared_ptr<pmq::storage> storage_service = std::make_shared<pmq::in_memory_storage>();
@@ -68,8 +67,9 @@ int main(int argc,char **argv,char **envp){
     std::thread rest_api_thread(rest_api_func);
 #endif
     try {
-        std::shared_ptr<pmq::client_factory> client_factory = creator.get(conf.get_connection_type())(conf);
-        server.run(client_factory);
+        std::unique_ptr<pmq::client_factory> client_factory = creator.get(conf.get_connection_type())(conf);
+        BOOST_LOG_TRIVIAL(debug)<<"client factory created";
+        server.run(std::move(client_factory));
     }catch (const pmq::exception::config_exception & e){
         BOOST_LOG_TRIVIAL(error)<<e.what();
 #ifdef RESTAPI

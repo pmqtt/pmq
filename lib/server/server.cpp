@@ -14,7 +14,7 @@ pmq::server::~server() {
     clean_up();
 }
 
-void pmq::server::run(std::shared_ptr<pmq::client_factory> & socket_factory){
+void pmq::server::run(std::unique_ptr<pmq::client_factory> && socket_factory){
 
     while(this->should_service_run){
         try {

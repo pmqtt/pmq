@@ -81,7 +81,7 @@ namespace pmq{
         }
         virtual ~server();
 
-        virtual void run( std::shared_ptr<pmq::client_factory> & socket_factory );
+        virtual void run( std::unique_ptr<pmq::client_factory> && socket_factory );
         void process(std::shared_ptr<pmq::socket> & socket);
 
 
