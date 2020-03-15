@@ -14,9 +14,9 @@
 namespace pmq{
     class tcp_client_factory : public client_factory{
     public:
-        tcp_client_factory(const pmq::config & cfg);
+        explicit tcp_client_factory(const pmq::config & cfg);
 
-        virtual ~tcp_client_factory();
+        ~tcp_client_factory() override;
         std::shared_ptr<std::thread> create_client_thread( std::function< void(std::shared_ptr<socket>&)> & process) override;
 
     private:

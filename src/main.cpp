@@ -1,6 +1,5 @@
 #include <boost/log/sources/logger.hpp>
 #include <boost/log/trivial.hpp>
-#include <iostream>
 #include <thread>
 
 #include <lib/qos/qos_handler_factory.hpp>
@@ -16,6 +15,8 @@
 #include <lib/network/ssl_client_factory.hpp>
 #include <lib/network/tcp_client_factory.hpp>
 #include <lib/network/connection_factory.hpp>
+
+
 
 
 
