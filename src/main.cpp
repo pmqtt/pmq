@@ -19,6 +19,10 @@
 
 
 
+template<class T>
+auto && create_connection_fatory(const pmq::config & cfg){
+    std::move(std::make_unique<T>(cfg));
+}
 
 
 
@@ -32,6 +36,7 @@ std::shared_ptr<pmq::client_factory>  create_tcp_client_factory(const pmq::confi
 std::shared_ptr<pmq::client_factory>  create_ssl_client_or_non_ssl_factory(const pmq::config & cfg){
     return std::make_shared<pmq::connection_factory>(cfg);
 }
+
 #ifdef RESTAPI
 void init_rest_api(pmq::server & server,pmq::config & conf,std::shared_ptr<pmq::storage> & storage_service){
     const std::string rest_api_address = "http://localhost:"+std::to_string(conf.get_rest_port());
