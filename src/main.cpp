@@ -68,7 +68,6 @@ int main(int argc,char **argv,char **envp){
 #endif
     try {
         std::unique_ptr<pmq::client_factory> client_factory = creator.get(conf.get_connection_type())(conf);
-        BOOST_LOG_TRIVIAL(debug)<<"client factory created";
         server.run(std::move(client_factory));
     }catch (const pmq::exception::config_exception & e){
         BOOST_LOG_TRIVIAL(error)<<e.what();

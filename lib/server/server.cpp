@@ -38,7 +38,7 @@ void pmq::server::process(std::shared_ptr<pmq::socket> & socket) {
 
         pmq::mqtt_message message(socket);
 
-        std::shared_ptr<pmq::mqtt_package> package = message.create_package(client_info->connection_info);
+        std::unique_ptr<pmq::mqtt_package> package = message.create_package(client_info->connection_info);
         package->accept(*(handler.get()));
 
         while (socket->is_connected()) {

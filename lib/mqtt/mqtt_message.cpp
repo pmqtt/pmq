@@ -17,7 +17,7 @@
 #include "mqtt_static_package.hpp"
 
 
-std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package( std::shared_ptr<pmq::mqtt_connection_info> & connection_info){
+std::unique_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package( std::shared_ptr<pmq::mqtt_connection_info> & connection_info){
     BOOST_LOG_TRIVIAL(debug)<<"[std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package] read";
     std::string msg = this->client_socket->read(1);
     pmq::u_int8 first_byte   = msg[0];
@@ -29,7 +29,7 @@ std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package( std::share
     switch(first_byte) {
         case pmq::CONTROL_PACKET_TYPE::CONNECT: {
             if(!connection_info->is_valid()) {
-                auto connect_message = std::make_shared<pmq::mqtt_connect>(this->client_socket, msg_length);
+                auto connect_message = std::make_unique<pmq::mqtt_connect>(this->client_socket, msg_length);
                 std::string payload = this->client_socket->read(msg_length);
                 connect_message->parse(payload);
                 connection_info->set_client_id(connect_message->get_client_id());
@@ -45,7 +45,7 @@ std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package( std::share
         break;
         case pmq::CONTROL_PACKET_TYPE::PUBLISH: {
             check_valid_connection(connection_info);
-            auto publish_message = std::make_shared<pmq::mqtt_publish>(this->client_socket,msg_length,msg[0]);
+            auto publish_message = std::make_unique<pmq::mqtt_publish>(this->client_socket,msg_length,msg[0]);
             std::string payload = this->client_socket->read(msg_length);
             publish_message->parse(payload);
             return publish_message;
@@ -55,33 +55,33 @@ std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package( std::share
             check_valid_connection(connection_info);
             std::string payload = this->client_socket->read(msg_length);
             BOOST_LOG_TRIVIAL(debug)<<"PUB_ACK: "<<(std::size_t)payload[0] << " | " << ( std::size_t) payload[1];
-            return std::make_shared<pmq::mqtt_puback>(this->client_socket,payload[0],payload[1]);
+            return std::make_unique<pmq::mqtt_puback>(this->client_socket,payload[0],payload[1]);
         }
         break;
         case pmq::CONTROL_PACKET_TYPE::PUBREC: {
             check_valid_connection(connection_info);
             std::string payload = this->client_socket->read(msg_length);
             BOOST_LOG_TRIVIAL(debug)<<"PUB_REC: "<<(std::size_t)payload[0] << " | " << ( std::size_t) payload[1];
-            return std::make_shared<pmq::mqtt_pubrec>(this->client_socket,payload[0],payload[1]);
+            return std::make_unique<pmq::mqtt_pubrec>(this->client_socket,payload[0],payload[1]);
         }
         break;
         case pmq::CONTROL_PACKET_TYPE::PUBREL: {
             check_valid_connection(connection_info);
             std::string payload = this->client_socket->read(msg_length);
             BOOST_LOG_TRIVIAL(debug)<<"PUB_REL: "<<(std::size_t)payload[0] << " | " << ( std::size_t) payload[1] ;
-            return std::make_shared<pmq::mqtt_pubrel>(this->client_socket,payload[0],payload[1]);
+            return std::make_unique<pmq::mqtt_pubrel>(this->client_socket,payload[0],payload[1]);
         }
         break;
         case pmq::CONTROL_PACKET_TYPE::PUBCOMP: {
             check_valid_connection(connection_info);
             std::string payload = this->client_socket->read(msg_length);
             BOOST_LOG_TRIVIAL(debug)<<"PUB_COMP: "<<(std::size_t)payload[0] << " | " << ( std::size_t) payload[1];
-            return std::make_shared<pmq::mqtt_pubcomp>(this->client_socket,payload[0],payload[1]);
+            return std::make_unique<pmq::mqtt_pubcomp>(this->client_socket,payload[0],payload[1]);
         }
         break;
         case pmq::CONTROL_PACKET_TYPE::SUBSCRIBE: {
             check_valid_connection(connection_info);
-            auto subscribe_message = std::make_shared<pmq::mqtt_subscribe>(this->client_socket,msg_length);
+            auto subscribe_message = std::make_unique<pmq::mqtt_subscribe>(this->client_socket,msg_length);
             std::string payload = this->client_socket->read(msg_length);
             subscribe_message->parse(payload);
             return subscribe_message;
@@ -101,7 +101,7 @@ std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package( std::share
         break;
         case pmq::CONTROL_PACKET_TYPE::PINGRQ: {
             check_valid_connection(connection_info);
-            return std::make_shared<pmq::mqtt_ping_request>(this->client_socket);
+            return std::make_unique<pmq::mqtt_ping_request>(this->client_socket);
         }
         break;
         case pmq::CONTROL_PACKET_TYPE::PINGRESP: {
@@ -112,7 +112,7 @@ std::shared_ptr<pmq::mqtt_package> pmq::mqtt_message::create_package( std::share
             check_valid_connection(connection_info);
             BOOST_LOG_TRIVIAL(debug)<<"Disconnect client_api : " << connection_info->client_id;
             this->client_socket->close();
-            return std::make_shared<pmq::mqtt_disconnect>(this->client_socket);
+            return std::make_unique<pmq::mqtt_disconnect>(this->client_socket);
         }
         break;
         case pmq::CONTROL_PACKET_TYPE::AUTH: {

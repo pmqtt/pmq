@@ -13,7 +13,7 @@ namespace pmq {
     class mqtt_message {
     public:
         explicit mqtt_message(std::shared_ptr<pmq::socket> &client_socket) : client_socket(client_socket){}
-        std::shared_ptr<pmq::mqtt_package> create_package(std::shared_ptr<pmq::mqtt_connection_info> & connection_info);
+        std::unique_ptr<pmq::mqtt_package> create_package(std::shared_ptr<pmq::mqtt_connection_info> & connection_info);
         virtual ~mqtt_message() = default;
     private:
         void check_valid_connection(std::shared_ptr<pmq::mqtt_connection_info> & connection_info);
