@@ -118,6 +118,7 @@ add_test_executable(test_login_factory test/test_login_factory.cpp)
 add_test_executable(test_subscriber_container test/test_subscriber_container.cpp)
 add_test_executable(test_utf8 test/test_utf8.cpp)
 add_test_executable(test_http_rest_server test/test_http_rest_server.cpp)
+add_test_executable(test_server_main test/test_server_main.cpp)
 
 
 ### install

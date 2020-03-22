@@ -19,11 +19,12 @@
 
 namespace pmq{
 
-
-
     class connection_factory : public client_factory{
     public:
-        connection_factory(const pmq::config & cfg) : config(cfg),ssl_contex(boost::asio::ssl::context::sslv23){
+        connection_factory(const pmq::config & cfg)
+            :   config(cfg),
+                ssl_contex(boost::asio::ssl::context::sslv23) {
+
             if(!cfg.get_tls_cert_path().empty()) {
                 try {
                     ssl_contex.set_options(
