@@ -17,7 +17,7 @@ jobs:
     - name: compile
       run: make
     - name: test
-      run: sh run_test.sh
+      run: sh test_all.sh
     - name: Build debian package
       run: make package
 
