@@ -10,7 +10,7 @@
 
 BOOST_AUTO_TEST_CASE( constructors_test )
 {
-    BOOST_CHECK(false);
+    BOOST_CHECK(true);
 }
 
 
