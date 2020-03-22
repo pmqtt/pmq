@@ -19,16 +19,25 @@
 #include <lib/network/tcp_client_factory.hpp>
 #include <lib/network/connection_factory.hpp>
 
-template<class T>
-auto create_connection_fatory(const pmq::config & cfg){
-    return std::make_unique<T>(cfg);
+
+static auto create_plain_connection_fatory(const pmq::config & cfg){
+    return std::make_unique<pmq::tcp_client_factory>(cfg);
 }
+
+static auto create_ssl_connection_fatory(const pmq::config & cfg){
+    return std::make_unique<pmq::tcp_client_factory>(cfg);
+}
+
+static auto create_plain_ssl_connection_fatory(const pmq::config & cfg){
+    return std::make_unique<pmq::tcp_client_factory>(cfg);
+}
+
 
 static pmq::client_creator create_client_creator(){
     pmq::client_creator creator;
-    creator.bind_creator("plain",create_connection_fatory<pmq::tcp_client_factory>);
-    creator.bind_creator("tls",create_connection_fatory<pmq::ssl_client_factory>);
-    creator.bind_creator("plain-tls",create_connection_fatory<pmq::connection_factory>);
+    creator.bind_creator("plain"    , create_plain_connection_fatory);
+    creator.bind_creator("tls"      , create_ssl_connection_fatory);
+    creator.bind_creator("plain-tls", create_plain_ssl_connection_fatory);
     return creator;
 }
 
