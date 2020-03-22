@@ -16,6 +16,8 @@ jobs:
       run: cmake . 
     - name: compile
       run: make
+    - name: test
+      run: sh run_test.sh
     - name: Build debian package
       run: make package
 

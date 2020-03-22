@@ -103,6 +103,8 @@ function trimString()
 
 
 table="TEST,RESULT\n"
+value=0
+
 while  IFS= read -r input 
 do
 	
@@ -110,9 +112,11 @@ do
 	if [ $? -ne 0 ]
 	then
 		table="$table$input,Failed\n"
+		value=-1
 	else
 		table="$table$input,OK\n"
 	fi
 done < "test_args.txt"
 
 printTable , $table
+exit $value
