@@ -39,11 +39,9 @@ int main(int argc,char **argv,char **envp){
         server.run(std::move(client_factory));
     }catch (const pmq::exception::config_exception & e){
         BOOST_LOG_TRIVIAL(error)<<e.what();
-#ifdef RESTAPI
-        pmq::on_shutdown();
-#endif
     }
 #ifdef RESTAPI
+    pmq::on_shutdown();
     rest_api_thread.join();
 #endif
 
