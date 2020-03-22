@@ -41,6 +41,18 @@ static pmq::client_creator create_client_creator(){
     return creator;
 }
 
+std::unique_ptr<pmq::mqtt_visitor> create_client_handler( std::shared_ptr<pmq::storage> storage_service, pmq::config &conf){
+    std::shared_ptr<pmq::login_factory> login_creator = std::make_shared<pmq::login_factory>();
+    storage_service->insert_configuration_for_subscribers(conf.get_client_config());
+
+    std::shared_ptr<pmq::qos_handler_factory> qos_factory = std::make_shared<pmq::qos_handler_factory>();
+    return std::make_unique<pmq::client_handler>(
+            login_creator,
+            qos_factory,
+            storage_service,
+            conf
+    );
+}
 
 #ifdef RESTAPI
 static void init_rest_api(pmq::server & server,pmq::config & conf,std::shared_ptr<pmq::storage> & storage_service){

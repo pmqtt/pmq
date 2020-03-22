@@ -74,9 +74,9 @@ namespace pmq{
 
     class server {
     public:
-        explicit server(  std::shared_ptr< pmq::mqtt_visitor> & handler ) :
+        explicit server(  std::unique_ptr< pmq::mqtt_visitor> && handler ) :
             should_service_run(true),
-            handler(handler){
+            handler(std::move(handler)){
             this->server_info = std::make_shared<server_information>();
         }
         virtual ~server();
@@ -91,7 +91,7 @@ namespace pmq{
 
     private:
         std::atomic_bool should_service_run;
-        std::shared_ptr< pmq::mqtt_visitor> handler;
+        std::unique_ptr< pmq::mqtt_visitor> handler;
         std::shared_ptr<server_information> server_info;
         std::vector<std::shared_ptr<std::thread>> client_threads;
 

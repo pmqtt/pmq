@@ -13,22 +13,10 @@ int main(int argc,char **argv,char **envp){
 
 
     pmq::client_creator creator = create_client_creator();
-
-
-    std::shared_ptr<pmq::login_factory> login_creator = std::make_shared<pmq::login_factory>();
     std::shared_ptr<pmq::storage> storage_service = std::make_shared<pmq::in_memory_storage>();
-    storage_service->insert_configuration_for_subscribers(conf.get_client_config());
+    auto handler = create_client_handler(storage_service,conf);
 
-    std::shared_ptr<pmq::qos_handler_factory> qos_factory = std::make_shared<pmq::qos_handler_factory>();
-    std::shared_ptr<pmq::mqtt_visitor> handler = std::make_shared<pmq::client_handler>(
-            login_creator,
-            qos_factory,
-            storage_service,
-            conf
-    );
-
-
-    pmq::server server(handler);
+    pmq::server server(std::move(handler));
 #ifdef RESTAPI
     BOOST_LOG_TRIVIAL(info)<<"Activate REST interface ...";
     auto rest_api_func = std::bind(&init_rest_api, std::ref(server), std::ref(conf), std::ref(storage_service));
