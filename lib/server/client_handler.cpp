@@ -19,6 +19,7 @@ void pmq::client_handler::visit(pmq::mqtt_connect *msg) {
         storage_service->add_client(client_connection);
         this->client_id = msg->get_client_id();
         auto socket = msg->get_socket();
+
         pmq::mqtt_connack connack(socket, 0x0, 0x0);
         connack.send();
     }catch (const pmq::exception::bad_connection_exception & e){

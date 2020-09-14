@@ -23,8 +23,7 @@ int main(int argc,char **argv,char **envp){
     std::thread rest_api_thread(rest_api_func);
 #endif
     try {
-        std::unique_ptr<pmq::client_factory> client_factory = creator.get(conf.get_connection_type())(conf);
-        server.run(std::move(client_factory));
+        server.run(std::move(creator.get(conf.get_connection_type())(conf)));
     }catch (const pmq::exception::config_exception & e){
         BOOST_LOG_TRIVIAL(error)<<e.what();
     }

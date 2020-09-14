@@ -36,7 +36,7 @@ namespace pmq{
                 std::string res = {buffers_begin(stream_buffer.data()), buffers_begin(stream_buffer.data()) + x};
                 stream_buffer.consume(x);
                 if (x - size != 0)
-                    throw pmq::exception::socket_exception("Not enoght data in socket stream");
+                    throw pmq::exception::socket_exception("Not enough data in socket stream");
 
                 return res;
             }catch(boost::system::system_error & e){

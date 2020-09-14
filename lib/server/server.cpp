@@ -49,17 +49,16 @@ void pmq::server::process(std::shared_ptr<pmq::socket> & socket) {
         BOOST_LOG_TRIVIAL(info)<<e.what();
         pmq::mqtt_disconnect disconnect(socket);
         disconnect.send();
+        return;
     }
     catch (pmq::exception::socket_exception &e) {
         BOOST_LOG_TRIVIAL(info) << "Client closed the connection: " << e.what();
-        handler->handleDisconnect();
     }catch (const pmq::exception::login_exception & e){
         BOOST_LOG_TRIVIAL(info)<<e.what();
-        handler->handleDisconnect();
     }catch(...){
         BOOST_LOG_TRIVIAL(info)<<"Unknown exception";
-        handler->handleDisconnect();
     }
+    handler->handleDisconnect();
 }
 
 void pmq::server::clean_up() {
