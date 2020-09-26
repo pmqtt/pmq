@@ -2,7 +2,7 @@
 // Created by pmqtt on 2019-07-19.
 //
 
-#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_DYN_LINK 1
 #define BOOST_TEST_MODULE test_login_factory
 
 #include <boost/test/included/unit_test.hpp>
