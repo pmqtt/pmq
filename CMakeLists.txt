@@ -107,7 +107,7 @@ add_library(pmq_obj_lib OBJECT lib/exception/acceptor_exception.hpp
         lib/module/transformation_identity.hpp)
 
 add_executable(PMQ src/main.cpp $<TARGET_OBJECTS:pmq_obj_lib> )
-target_link_libraries(PMQ  ${Boost_LIBRARIES} ${YAML_CPP_LIBRARIES} pmqtt cpprestsdk::cpprest ${LIB_LIST} )
+target_link_libraries(PMQ  ${Boost_LIBRARIES} ${YAML_CPP_LIBRARIES} pmqtt  ${Boost_LIBRARIES} cpprestsdk::cpprest ${LIB_LIST} )
 
 ### TEST
 include(CMakeFunctions/add_test_executable.txt)
