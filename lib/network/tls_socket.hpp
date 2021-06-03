@@ -28,7 +28,7 @@ namespace pmq {
            pmq::detail::write<ssl_socket>(inner_socket,mutex,msg);
         }
 
-        [[nodiscard]] std::string_view get_address() const override {
+        [[nodiscard]] std::string get_address() const override {
             return this->inner_socket->lowest_layer().local_endpoint().address().to_string();
         }
 

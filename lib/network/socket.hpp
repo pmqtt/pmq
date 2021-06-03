@@ -32,7 +32,7 @@ namespace pmq{
             pmq::detail::write<boost::asio::ip::tcp::socket>(inner_socket,mutex,msg);
         }
 
-        [[nodiscard]] virtual std::string_view get_address()const{
+        [[nodiscard]] virtual std::string get_address()const{
             return this->inner_socket->local_endpoint().address().to_string();
         }
         virtual void close(){

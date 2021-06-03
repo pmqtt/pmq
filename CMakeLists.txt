@@ -12,10 +12,11 @@ find_package( Boost REQUIRED COMPONENTS system program_options unit_test_framewo
 find_package( cpprestsdk REQUIRED )
 find_package( OpenSSL REQUIRED )
 if(OPENSSL_FOUND)
+    message(STATUS "OpenSSL Version: ${OPENSSL_VERSION} ${OPENSSL_INCLUDE_DIR} ${OPENSSL_LIBRARIES}")
     if(APPLE)
-        include_directories(/usr/local/Cellar/openssl/1.1.1d/include)
-        list(APPEND LIB_LIST /usr/local/Cellar/openssl/1.1.1d/lib/libssl.dylib)
-        list(APPEND LIB_LIST /usr/local/Cellar/openssl/1.1.1d/lib/libcrypto.dylib)
+        include_directories(/usr/local/Cellar/openssl@1.1/1.1.1i/)
+        list(APPEND LIB_LIST /usr/local/Cellar/openssl@1.1/1.1.1i/lib/libssl.dylib)
+        list(APPEND LIB_LIST /usr/local/Cellar/openssl@1.1/1.1.1i/lib/libcrypto.dylib)
         message(STATUS  " APPLE OpenSSL Version:${OPENSSL_LIBRARIES}  ${OPENSSL_INCLUDE_DIR} ${LIB_LIST}")
     else()
         include_directories(${OPENSSL_INCLUDE_DIR})
@@ -56,7 +57,8 @@ add_library(pmqtt STATIC lib/mqtt/control_packet_type.hpp
         lib/network/tls_socket.hpp lib/network/socket_functions.hpp lib/qos/qos_handler.hpp lib/qos/qos_zero_handler.cpp
         lib/qos/qos_zero_handler.hpp lib/qos/qos_one_handler.cpp lib/qos/qos_one_handler.hpp lib/qos/qos_two_handler.cpp
         lib/qos/qos_two_handler.hpp lib/qos/qos_handler_factory.cpp lib/qos/qos_handler_factory.hpp lib/mqtt/message.hpp
-        lib/mqtt/message.cpp lib/mqtt/mqtt_types.cpp lib/detail/mqtt_message_processor.hpp lib/detail/mqtt_message_processor.cpp lib/detail/utf8.hpp lib/exception/login_exception.hpp)
+        lib/mqtt/message.cpp lib/mqtt/mqtt_types.cpp lib/detail/mqtt_message_processor.hpp
+        lib/detail/mqtt_message_processor.cpp lib/detail/utf8.hpp lib/exception/login_exception.hpp)
 
 
 
@@ -107,10 +109,10 @@ add_library(pmq_obj_lib OBJECT lib/exception/acceptor_exception.hpp
         lib/module/transformation_identity.hpp)
 
 add_executable(PMQ src/main.cpp $<TARGET_OBJECTS:pmq_obj_lib> )
-target_link_libraries(PMQ  ${Boost_LIBRARIES} ${YAML_CPP_LIBRARIES} pmqtt  ${Boost_LIBRARIES} cpprestsdk::cpprest ${LIB_LIST} )
+target_link_libraries(PMQ  ${OPENSSL_LIBRARIES} ${Boost_LIBRARIES} ${YAML_CPP_LIBRARIES} pmqtt  ${Boost_LIBRARIES} cpprestsdk::cpprest ${LIB_LIST}  )
 
 ### TEST
-include(CMakeFunctions/add_test_executable.txt)
+#include(CMakeFunctions/add_test_executable.txt)
 
 #add_test_executable(test_server test/test_server.cpp)
 #add_test_executable(test_login_handler test/test_login_handler.cpp)

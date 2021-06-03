@@ -3,6 +3,7 @@
 #include <thread>
 
 #include <lib/server/main.hpp>
+#include <openssl/sha.h>
 
 
 int main(int argc,char **argv,char **envp){
