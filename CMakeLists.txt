@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 
 add_definitions(-DRESTAPI )
-#add_definitions(-DBOOST_LOG_DYN_LINK)
+add_definitions(-DBOOST_LOG_DYN_LINK)
 
 
 find_package( Boost REQUIRED COMPONENTS system program_options unit_test_framework log )
@@ -25,6 +25,7 @@ if(OPENSSL_FOUND)
     endif()
 endif()
 find_package( yaml-cpp REQUIRED )
+find_package( Boost REQUIRED COMPONENTS system program_options unit_test_framework log )
 
 if(yaml-cpp_FOUND)
     if(NOT DEFINED ${YAML_CPP_LIBRARIES})
